@@ -18,7 +18,7 @@
             <span>Welcome to MySite</span>
             <a href="#" id="profileAnchor">MyProfile</a>
             <div id="profile" class="position-absolute w-100 w-md-25 bg-white border p-5" style="display: none;">
-                <div class="text-right text-dark" style="font-size:35px;">
+                <div class="text-right text-dark" style="font-size:20px;">
                     <svg id="profileExit" class="bi bi-x" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
                     <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
                     <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
@@ -153,14 +153,14 @@
                     opacity: '100%'
                 }
                 const mapToComponents = (data) => {
-                    return data.map((item, i) => {
+                    return data.map((src, i) => {
                         return (
                             <div className="carousel-item" key={i}>
-                                <img src={item.src} className="d-block w-100"  />
+                                <img src={'./resource/img/' + src} className="d-block w-100"  />
                                 <div className="carousel-caption d-none d-md-block" style={captionStyle}>
-                                    <h5 style={textStyle}>{item.title}</h5>
-                                    <p style={textStyle}>{item.description}</p>
-                                    <p style={textStyle}><a href={item.url}>site</a> / <a href={item.document}>document</a></p>
+                                    <h5 style={textStyle}>{this.props.title}</h5>
+                                    <p style={textStyle}>{this.props.description}</p>
+                                    <p style={textStyle}><a href={this.props.siteUrl}>site</a> / <a href={this.props.documentUrl}>document</a></p>
                                 </div>
                             </div>
                         );
@@ -169,26 +169,28 @@
 
                 return (
                     <div>
-                        <div id="carouselControls" className="carousel slide" data-ride="carousel">
+                        <div className="mt-5">
+                            {this.props.no}.&nbsp;&nbsp;
+                            <strong>{this.props.title}</strong>
+                             - {this.props.description}
+                        </div>
+                        <div id={this.props.title} className="carousel slide" data-ride="carousel">
                             <div className="carousel-inner" ref={this.innerCarouselRef}>
                                 <div>{mapToComponents(this.props.list)}</div>
                             </div>
-                        <a className="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                        <a className="carousel-control-prev" href={"#"+this.props.title} role="button" data-slide="prev">
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span className="sr-only">Previous</span>
                         </a>
-                        <a className="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                        <a className="carousel-control-next" href={"#"+this.props.title} role="button" data-slide="next">
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="sr-only">Next</span>
                         </a>
                         </div>
+                        <div className="float-right"><a href={this.props.siteUrl}>site</a> / <a href={this.props.documentUrl}>document</a></div>
                     </div>
                 )
             }
-        }
-
-        Carousel.defaultProps = {
-            list: ['']
         }
 
         //
@@ -198,19 +200,32 @@
 
                 this.state = {
                     projectList: [
-                        {src: './resource/img/yolowa.jpg', title: 'yolow', description: 'spring team project!', url: 'http://www.itwill.site/yolowa', document: 'https://drive.google.com/drive/u/0/folders/1QujnU-IUHdILCoC2Oq7_ghIrkxsnL6aF'},
-                        {src: './resource/img/milk.jpg', title: 'milk', description: 'jsp team project - used angularJS!', url: 'http://www.itwill.site/milk/', document: 'https://drive.google.com/drive/u/0/folders/13kQb_3Vg6EUa5mwCo1swqwzwVm3e3j2t'},
-                        {src: './resource/img/wordchecker.jpg', title: 'wordchecker', description: 'restAPI project - used angularJS', url: 'http://taeksoolee.site/wordchecker', document: 'https://drive.google.com/drive/folders/1w67PL_vQ9zU7fl_207LdsGdabUHazRch?usp=sharing'}
-                    ],
-                    techniqueList: [
-                        {
-
-                        }
+                        {srcList: ['yolowa/1.jpg', 'yolowa/2.jpg', 'yolowa/3.jpg', 'yolowa/4.png', 'yolowa/5.jpg', 'yolowa/6.jpg', 'yolowa/7.png', 'yolowa/8.png', 'yolowa/9.png', 'yolowa/10.png', 'yolowa/11.png', 'yolowa/12.png', 'yolowa/13.jpg', 'yolowa/14.png', 'yolowa/15.png', 'yolowa/16.png', 'yolowa/17.jpg'], title: 'yolow', description: 'spring team project!', siteUrl: 'http://www.itwill.site/yolowa', documentUrl: 'https://drive.google.com/drive/u/0/folders/1QujnU-IUHdILCoC2Oq7_ghIrkxsnL6aF'},
+                        {srcList: ['milk/1.jpg', 'milk/2.jpg', 'milk/3.jpg', 'milk/4.jpg', 'milk/5.png', 'milk/6.png', 'milk/7.png', 'milk/8.png', 'milk/9.png', 'milk/10.png'], title: 'milk', description: 'jsp team project - used angularJS!', siteUrl: 'http://www.itwill.site/milk/', documentUrl: 'https://drive.google.com/drive/u/0/folders/13kQb_3Vg6EUa5mwCo1swqwzwVm3e3j2t'},
+                        {srcList: ['wc/1.jpg', 'wc/2.jpg', 'wc/3.jpg', 'wc/4.jpg', 'wc/5.jpg', 'wc/6.jpg', 'wc/7.jpg', 'wc/8.jpg', 'wc/9.jpg', 'wc/10.jpg', 'wc/11.jpg', 'wc/12.jpg'], title: 'wordchecker', description: 'restAPI project - used angularJS', siteUrl: 'http://taeksoolee.site/wordchecker', documentUrl: 'https://drive.google.com/drive/folders/1w67PL_vQ9zU7fl_207LdsGdabUHazRch?usp=sharing'}
                     ]
                 }
             }
 
+            
+
             render(){
+                const mapToComponents = (data) => {
+                    return data.map((project, i) => {
+                        return (
+                            <Carousel
+                                list={project.srcList}
+                                title={project.title}
+                                description={project.description}
+                                siteUrl={project.siteUrl}
+                                documentUrl={project.documentUrl}
+                                no={i+1}
+                                key={i}
+                            />
+                        );
+                    });
+                };
+
                 return (
                     <div>
                         <h2 className="text-center mb-5">
@@ -221,7 +236,7 @@
                             </svg>
                             &nbsp;&nbsp;project
                         </h2>
-                        <Carousel list={this.state.projectList}/>
+                        {mapToComponents(this.state.projectList)}
                     </div>
                 )
             }
