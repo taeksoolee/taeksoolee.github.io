@@ -145,14 +145,22 @@
             }
 
             render(){
+                const captionStyle = {
+                    background: 'black',
+                    opacity: '75%'
+                }
+                const textStyle = {
+                    opacity: '100%'
+                }
                 const mapToComponents = (data) => {
                     return data.map((item, i) => {
                         return (
                             <div className="carousel-item" key={i}>
                                 <img src={item.src} className="d-block w-100"  />
-                                <div className="carousel-caption d-none d-md-block bg-success">
-                                    <h5>{item.title}</h5>
-                                    <p>{item.description}</p>
+                                <div className="carousel-caption d-none d-md-block" style={captionStyle}>
+                                    <h5 style={textStyle}>{item.title}</h5>
+                                    <p style={textStyle}>{item.description}</p>
+                                    <p style={textStyle}><a href={item.url}>site</a> / <a href={item.document}>document</a></p>
                                 </div>
                             </div>
                         );
@@ -190,9 +198,9 @@
 
                 this.state = {
                     projectList: [
-                        {src: './resource/img/yolowa.jpg', title: 'yolow', description: 'spring team project!'},
-                        {src: './resource/img/milk.jpg', title: 'milk', description: 'jsp team project - used angularJS!'},
-                        {src: './resource/img/wordchecker.jpg', title: 'wordchecker', description: 'restAPI project - used angularJS'}
+                        {src: './resource/img/yolowa.jpg', title: 'yolow', description: 'spring team project!', url: 'http://www.itwill.site/yolowa', document: 'https://drive.google.com/drive/u/0/folders/1QujnU-IUHdILCoC2Oq7_ghIrkxsnL6aF'},
+                        {src: './resource/img/milk.jpg', title: 'milk', description: 'jsp team project - used angularJS!', url: 'http://www.itwill.site/milk/', document: 'https://drive.google.com/drive/u/0/folders/13kQb_3Vg6EUa5mwCo1swqwzwVm3e3j2t'},
+                        {src: './resource/img/wordchecker.jpg', title: 'wordchecker', description: 'restAPI project - used angularJS', url: 'http://taeksoolee.site/wordchecker', document: 'https://drive.google.com/drive/folders/1w67PL_vQ9zU7fl_207LdsGdabUHazRch?usp=sharing'}
                     ],
                     techniqueList: [
                         {
