@@ -4,7 +4,7 @@
             "name": "java",
             "level": "7",
             "lang": "java",
-            "description": ""
+            "description": "변수, 연산자, 분기문 등 기본문법을 사용할 수 있으며, 객체 지향개념에 대해 이해하고 있습니다. 예외처리나 스레드, jdbc 등 다양한 라이브러리를 이용한 프로그래밍 가능합니다"
         },
         {
             "name": "JSP-el-jstl",
