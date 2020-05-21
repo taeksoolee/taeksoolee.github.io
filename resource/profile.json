@@ -1,0 +1,56 @@
+{    
+    "name": "이택수",
+    "age": "28",
+    "birthday": "1993.02.11",
+    "github": "https://github.com/taeksoolee",
+    "site": "https://taeksoolee.github.io",
+    "degree": {
+        "college": "동원대학교",
+        "period": "2011.03~2013.02",
+        "major": "e-bussiness"
+    },
+    
+    "military": {
+        "category": "육군",
+        "army": "143정보대대",
+        "period": "2013.03~2014.12",
+        "classes": "병장"
+    },
+    "certificates": {
+        "it": [
+            {
+                "name": "정보처리기능사",
+                "publisher": "한국산업인력공단",
+                "Publication_date": "2013.12.13"
+            }
+        ],
+        "etc": [
+            {
+                "name": "운전면허-1종보통",
+                "publisher": "",
+                "Publication_date": ""
+            }
+        ]
+    },
+    "educations": [
+        {
+            "academy": "itwill",
+            "class_name": "빅데이터 분석 및 스프링 기반 프레임워크 기반 자바(JAVA) 개발자 양성과정",
+            "period": "2019.10.17~2020.04.27(992h)"
+        },
+        {
+            "academy": "더조은컴퓨터아카데미",
+            "class_name": "자바(JAVA) 프로그래밍(중급)",
+            "period": "2019.07.01~2019.08.01(60h)"
+        },
+        {
+            "academy": "더조은컴퓨터아카데미",
+            "class_name": "자바(JAVA) 프로그래밍(초급)",
+            "period": "2019.02.09~2019.03.16(60h)"
+        }
+    ],
+    "awords": [
+
+    ],
+    "introduce": ""
+}
