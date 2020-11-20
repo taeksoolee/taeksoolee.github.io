@@ -1,0 +1,84 @@
+const sourceMap = {
+// html
+  'html': {img: '', docs: ''},
+// css
+  'css': {img: '', docs: ''},
+// javascript
+  'javascript': {img: '', docs: ''},
+  'anuglar': {img: '', docs: ''},
+  'react': {img: '', docs: ''},
+  'react-native': {img: '', docs: ''},
+  'vue': {img: '', docs: ''},
+  'grunt': {img: '', docs: ''},
+  'webpack': {img: '', docs: ''},
+  'gulp': {img: '', docs: ''},
+  'typescript': {img: '', docs: ''},
+  'threejs': {img: '', docs: ''},
+  'amcharts': {img: '', docs: ''},
+  'jquery': {img: '', docs: ''},
+// nodejs
+  'nodejs': {img: '', docs: ''},
+  'express': {img: '', docs: ''},
+  'graphql': {img: '', docs: ''},
+  'nestjs': {img: '', docs: ''},
+  'socketio': {img: '', docs: ''},
+// java
+  'java': {img: '', docs: ''},
+  'spring': {img: '', docs: ''},
+  'springboot': {img: '', docs: ''},
+  'maven': {img: '', docs: ''},
+  'gradle': {img: '', docs: ''},
+  'android': {img: '', docs: ''},
+// python
+  'python': {img: '', docs: ''},
+// go
+  'go': {img: '', docs: ''},
+// c
+  'c': {img: '', docs: ''},
+  'c++': {img: '', docs: ''},
+  'c#': {img: '', docs: ''},
+  'unity': {img: '', docs: ''},
+// rust
+  'rust': {img: '', docs: ''},
+// linux
+  'linux': {img: '', docs: ''},
+  'vim': {img: '', docs: ''},
+  'tmux': {img: '', docs: ''},
+  'zsh': {img: '', docs: ''},
+  'ssh': {img: '', docs: ''},
+  'ssl': {img: '', docs: ''},
+// kali(hack)
+  'kali': {img: '', docs: ''},
+  'metasploit': {img: '', docs: ''},
+  'wireshark': {img: '', docs: ''},
+  'burpsuite': {img: '', docs: ''},
+// docker
+  'docker': {img: '', docs: ''},
+  'kubernetes': {img: '', docs: ''},
+// database
+  'database': {img: '', docs: ''},
+  'sql': {img: '', docs: ''},
+  'oracle': {img: '', docs: ''},
+  'mariadb': {img: '', docs: ''}, // + mysql
+  'nosql': {img: '', docs: ''},
+  'mongodb': {img: '', docs: ''},
+  'redis': {img: '', docs: ''},
+// nginx
+  'nginx': {img: '', docs: ''},
+// apache
+  'apache': {img: '', docs: ''},
+// firebase
+  'firebase': {img: '', docs: ''},
+// eclipse
+  'eclipse': {img: '', docs: ''},
+// vscode
+  'vscode': {img: '', docs: ''},
+// raspberrypi
+  'raspberrypi': {img: '', docs: ''},
+// etc
+  'etc': {img: '', docs: ''},
+  'architecture': {img: '', docs: ''},
+  'network': {img: '', docs: ''},
+  'hardware': {img: '', docs: ''},
+  'algorithm': {img: '', docs: ''},
+}

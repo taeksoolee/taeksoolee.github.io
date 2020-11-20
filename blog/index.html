@@ -3,9 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="./css/style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <title>Teaksoolee</title>
 </head>
 <body>
-  this is test in test folder!
+  <div id="app">
+    <div class="wrap">
+
+      <div class="header">
+        <h1>BLOG</h1>      
+      </div>
+
+      <div class="content-container">
+        <div class="content-header">
+          <a href="#" v-for="page in pageList" class="item btn" @click="postPage(page)">
+            <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false"/>
+            <div class="title">{{page.title}}</div>
+          </a>
+          <div v-if="pageList.length === 0" class="msg">page not found!</div>
+        </div>
+        <div class="content">
+          <code>
+            <pre>
+            package main
+
+            import "fmt"
+
+            func main() {
+              fmt.Println("hello golang")
+            }
+            </pre>
+          </code>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+
+    </div>
+
+    <div class="tip">
+      <div class="btn icon-img-box">
+        <img class="icon-img" src="./image/icon/linux.png">
+      </div>
+    </div>
+
+    <div class="nav" v-bind:class="{open: isOpendNav}">
+      <div class="items">
+        <a 
+          v-for="item in category"
+          v-bind:class="{selected: (item.name === selectedCategoryName)}" class="item btn" 
+          @click="selectItem(item.name)"
+        >
+          <img class="icon-img" v-bind:src="item.name | iconSrc" draggable="false"/>
+          <span v-bind:class="{hidden: !isOpendNav}">{{item.name}}</span>
+        </div>
+      </a>
+      <div class="btn bottom-btn" @click="toggleNav">
+        <i class="fas fa-angle-right"></i>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+  <script src="./js/schema.js"></script>
+  <script src="./js/category.js"></script>
+  <script src="./js/contents.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 </html>

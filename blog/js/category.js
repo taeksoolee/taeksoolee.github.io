@@ -1,0 +1,20 @@
+// require schema
+const category = [
+  { name: schema.html },
+  { name: schema.css },
+  { name: schema.javascript },
+  { name: schema.nodejs },
+  { name: schema.java },
+  { name: schema.python },
+  { name: schema.go },
+  { name: schema.c },
+  { name: schema.rust },
+  { name: schema.linux },
+  { name: schema.kali },
+  { name: schema.docker },
+  { name: schema.database },
+  { name: schema.server },
+  { name: schema.ide },
+  { name: schema.git },
+  { name: schema.etc },
+];
