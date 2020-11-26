@@ -1,0 +1,110 @@
+<pre>
+
+@버츄얼 환경
+1. Virtualenv
+pip install virtualenv
+cd [venv디렉토리]
+virtualenv venv
+
+pip install -f requirements.txt >> 패키지 저장 ( freeze 필요 )
+
+2. pipenv ( 버츄얼 환경의 단점을 개선 )
+pip install pipenv
+pipenv install 
+pip shell
+
+pip install [패키지] --dev
+
+3. conda ( 데이터 사이언티스트 등 필요패지지가 설치 되어있음 : Numpy / Scipy 등 )
+[설치 후...]
+
+conda create --name [가상환경 이름] python = [파이썬 버전]
+환경 내보내기 : conda env export > environment.ymi
+환경 재생성 : conda env create -f envirmnment.ymi
+
+@ 삼항연산자
+if - else 이용
+a = 10
+b = 20
+result = (a-b) if a == b else (a+b)    # 결과는 a+b = 30
+
+and / or 이용
+a = 10
+b = 10
+result = a == b and a-b or a+b    # 결과는 a+b = 20 ???????
+
+
+aa 가 0 이라면  1 을 취하고 아니라면 aa의 본래값
+aa = 0
+bb = 1 if aa == 0 else aa
+print(f'{aa=} {bb=}') # aa=0 bb=1
+
+@mysql 연동 모듈
+pip install PyMySQL
+
+import pymysql
+
+
+# connection 생성
+db_conn = pymysql.connect(
+	user={사용자명},
+	passwd={비밀번호},
+	host={host},
+	port={port}, # 생략 가능
+	db=[db 이름],
+	charset='utf8', # 생략 가능
+	autocommit=True, # 생략 가능 / 추천하지 않음
+)
+
+# cursor 생성 / pymysql.cursors.DictCursor : 일반 cursor 사용시 튜플 반환
+cusor = db_conn.cursor(pymysql.cursors.DictCursor)
+
+
+# select
+sql = [query문자열]
+cursor.execute(sql)
+result = cursor.fetchall() # 결과를 받아올때 사용 인수로 number를 넣을 경우 row의 갯수를 변경 가능
+
+# insert, update, delete
+sql = [insert | update | delete query 문자열]
+cursor.excute(sql)
+db_conn.commit()
+
+
+# placeholder 사용
+data = ("a", "b") # 튜플
+sql = '... where id=%s and name=%s' # 첫번째에 a, 두번째에 b 가 들어갑
+cursor.excute(sql, data)
+
+# executemany : 속도면에서 execute보다 월등히 빠름
+data = [['a', 'b'], ['c', 'd']]
+sql = '... where in '
+cursor.excutemany(sql, data)
+db_conn.commit()
+
+
+
+@리스트 사용
+count(원소) : 리스트 내 특정 원소가 몇 개 포함되어 있는지 반환
+index(원소) : 리스트 내 특정 원소의 인덱스를 반환
+append(원소) :리스트의 뒤쪽에 새로운 원소를 삽입
+sort() : 리스트를 오름차순으로 정렬
+extend(리스트) : 리스트의 뒤쪽에 다른 리스트를 삽입
+insert(인덱스, 원소) : 특정한 위치(인덱스)에 원소를 삽입
+remove(원소) : 리스트 내 특정 원소를 삭제
+pop(인덱스) : 리스트 내 특정 인덱스의 원소를 삭제
+reverse() : 리스트의 순서를 뒤집기
+
+@ 정규식 사용
+import re
+
+p = re.compile([정규식])
+m = p.match([테스트문자열])
+print(m) # 실패시 None, 성공시 match 객체 반환
+
+if m:
+	성공 logic	
+else:
+  실패 logic	
+  
+</pre>

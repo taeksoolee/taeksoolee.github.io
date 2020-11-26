@@ -1,0 +1,26 @@
+
+
+.content * {
+  font-size: 1rem;
+}
+
+.content h1 {
+  font-size: 1.5rem;
+}
+
+.content strong {
+  font-weight: bold;
+}
+
+.content .line-red {
+  border-bottom: 1px solid red;
+}
+
+.content .red {
+  color: red;
+}
+
+.content .green {
+  color: green;
+}
+

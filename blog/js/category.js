@@ -14,6 +14,7 @@ const category = [
   { name: schema.docker },
   { name: schema.database },
   { name: schema.server },
+  { name: schema.cloud },
   { name: schema.ide },
   { name: schema.git },
   { name: schema.etc },

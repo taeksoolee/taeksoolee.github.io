@@ -7,38 +7,95 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
-  <title>Teaksoolee</title>
+  <title>TAEKSOOLEE</title>
 </head>
 <body>
-  <div id="app">
+  <div id="app" style="display: none;" @mousemove="handleMoveMemeBox(event)" draggable="false">
     <div class="wrap">
-
+      
       <div class="header">
-        <h1>BLOG</h1>      
+        <h1>MY PAGE</h1>      
       </div>
 
-      <div class="content-container">
-        <div class="content-header">
-          <a href="#" v-for="page in pageList" class="item btn" @click="postPage(page)">
-            <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false"/>
-            <div class="title">{{page.title}}</div>
-          </a>
-          <div v-if="pageList.length === 0" class="msg">page not found!</div>
+      <div class="memo-box" ref="memoBox" v-bind:style="{top: memoBoxPositionTop + 'px', left: memoBoxPositionLeft + 'px'}"
+        v-bind:class="{min: isMinMemobox}"
+      >
+        <div class="memo-box-header"
+          @mousedown="handleDownMemoBox(event)"
+          @mouseup="handleUpMemoBox(event)"
+        ><button @click="handleMinMemobox()" class="btn">memo</button></div>
+        <textarea v-model="memoText"></textarea>
+      </div>
+
+      <div class="content-list-container">
+        <div class="content-list-header">
+          <button class="btn toggle-content-list-header-btn" v-bind:class="{active: isHideContentList}" @click="toggleContentList()">
+            <i class="fas fa-angle-up"></i>
+          </button>
+          
+          <div class="content-list-wrap" v-bind:class="{hidden: isHideContentList}">
+            <div class="content-list-form" v-bind:class="{hidden: isHideContentList}">
+              <form>
+                <button class="btn" type="button" v-bind:class="{active: isWrapContentsList}"@click="toogleWrapContentList()">
+                  <i class="fas fa-table"></i>
+                </button>
+                <input type="text" v-model="titleInput" @keyup="searchTitle()" placeholder="please input title!">
+                <select v-model="selectedCategoryItemName" @change="selectCategoryItemName('clearTitle')">
+                  <option v-for="name in categoryItemNameList" v-bind:value="name">{{name}}</option>
+                </select>
+                <select v-model="pageListSortStandard">
+                  <option v-for="item in pageListSortStandardList" v-bind:value="item">{{item}}</option>
+                </select>
+                <select v-model="pageListSortMethod">
+                  <option v-for="item in pageListSortMethodList" v-bind:value="item">{{item}}</option>
+                </select>
+              </form>
+            </div>
+            <div v-if="pageList.length !== 0">
+              <div class="content-list"
+                v-bind:class="{flexwrap: isWrapContentsList}" 
+                v-bind:style="{left: contentListPosition + 'rem'}"
+              >
+                <a href="#content" v-for="page in pageList" class="item btn" @click="getPage(page)">
+                  <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false"/>
+                  <div class="title">
+                    <span>{{page.title}}</span>
+                  </div>
+                </a>
+              </div>
+              <div class="content-list-form" v-bind:class="{hidden: isHideContentList}">
+                <form>
+                    <button class="btn" type="button" v-bind:class="{hidden: isWrapContentsList}" @click="slideContentList(true)"><i class="fas fa-angle-left"></i></button>
+                    <button class="btn" type="button" v-bind:class="{hidden: isWrapContentsList}" @click="slideContentList(false)"><i class="fas fa-angle-right"></i></button>
+                </form>
+              </div>
+            </div>
+            <div v-if="pageList.length === 0" class="msg" v-bind:class="{hidden: isHideContentList}">page not found!</div>
+          </div>
         </div>
-        <div class="content">
-          <code>
-            <pre>
-            package main
+        
+        <div id="content" class="content" ref="content">
+          <div class="content-title">{{selectedPage.title}}</div>
+          <div class="content-meta">
+            <div>
+              <img class="icon-img" v-bind:src="selectedPage.depth1 | iconSrc"/>
+              &nbsp&nbsp
+              <i class="fas fa-angle-right"></i>
+              &nbsp&nbsp
+              <img class="icon-img" v-bind:src="selectedPage.depth2 | iconSrc"/>
+            </div>
+            <div>
+              {{selectedPage.date | convertDateToString}}
+            </div>
+          </div>
 
-            import "fmt"
-
-            func main() {
-              fmt.Println("hello golang")
-            }
-            </pre>
-          </code>
+          <div 
+            class="content-page" 
+            v-html="content"
+          ></div>
         </div>
       </div>
 
@@ -49,12 +106,23 @@
     </div>
 
     <div class="tip">
-      <div class="btn icon-img-box">
-        <img class="icon-img" src="./image/icon/linux.png">
+      <div>
+        <div class="btn icon-img-box" @click="openPopup('windows')">
+          <img class="icon-img" src="./image/icon/windows.png">
+        </div>
+        <div class="btn icon-img-box" @click="openPopup('linux')">
+          <img class="icon-img" src="./image/icon/linux.png">
+        </div>
       </div>
     </div>
 
     <div class="nav" v-bind:class="{open: isOpendNav}">
+      <div class="btn top-btn" 
+        v-bind:class="{selected: ('*' === selectedCategoryName)}" 
+        @click="selectItem('*')"
+      >
+        <i class="fas fa-asterisk"></i>
+      </div>
       <div class="items">
         <a 
           v-for="item in category"
@@ -62,21 +130,33 @@
           @click="selectItem(item.name)"
         >
           <img class="icon-img" v-bind:src="item.name | iconSrc" draggable="false"/>
-          <span v-bind:class="{hidden: !isOpendNav}">{{item.name}}</span>
+          <span class="color-white" v-bind:class="{hidden: !isOpendNav}">{{item.name}}</span>
         </div>
       </a>
       <div class="btn bottom-btn" @click="toggleNav">
         <i class="fas fa-angle-right"></i>
       </div>
     </div>
+
+    <div class="popup-screen" 
+      v-bind:class="{hidden: !isOpenPopupscreen, min: isMinPopupscreen}">
+      <button class="btn" @click="toggleMinPopupscreen()"><i class="fas fa-angle-right"></i></button>
+      <div class="popup-screen-wrap">
+        <a class="btn popup-close-btn" @click="closePopup();"><i class="far fa-times-circle"></i></a>
+        <div class="popup-content"v-html="popupText" ></div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <!--<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 
   <script src="./js/schema.js"></script>
   <script src="./js/category.js"></script>
   <script src="./js/contents.js"></script>
+  <script src="./js/code-converter.js"></script>
   <script src="./js/script.js"></script>
 </body>
 </html>

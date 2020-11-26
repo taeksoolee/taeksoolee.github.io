@@ -1,0 +1,13 @@
+<pre>
+## 윈도우 명령어 모음
+
+# port 죽이기
+  실행중인 port 표시, 프로세스id(pid) 표시
+  netstat -a -o 
+  taskkill /f /pid 1234
+
+# 파일 / 디렉토리 삭제
+ del ...
+ rmdir ...
+
+</pre>

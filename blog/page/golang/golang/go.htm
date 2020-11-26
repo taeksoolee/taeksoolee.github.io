@@ -1,0 +1,66 @@
+<pre>
+  golang intsll for linux
+  <code>
+    $ sudo apt update && sudo apt upgrade -y
+    $ sudo add-apt-repository ppa:gophers/archive
+    $ sudo apt update
+    $ sudo apt install golang-1.14.1 -y 
+  </code>
+  <code>
+    $ sudo apt update && sudo apt upgrade -y 
+    $ sudo apt install golang
+  </code>
+  <code>
+    $ wget -c https://golang.org/dl/go1.14.4.src.tar.gz -O - | sudo tar -xz -C /usr/local
+    $ export PATH=$PATH:/usr/local/go/bin  # ~/.profile 
+    $ source ~/.profile
+  </code>
+  <code>
+    $ go env
+    $ go version
+  </code>
+  <code></code>
+</pre>
+
+
+
+<pre>
+## encoding/json package
+
+# 논리적 구조를 로우 바이트로 변경하는 것을 
+'마샬링(Marshaling)' 혹은 '인코딩(Encoding)'이라 표현
+<code>
+  func Marshal(v interface{}) ([]byte, error)
+</code>
+
+# 기본타입 마샬링
+<pre>
+  // bool
+  b, _ := json.Marshal(true)
+  fmt.Println(b)         // [116 114 117 101]
+  fmt.Println(string(b)) // "true"
+
+  // string
+  type User struct {
+    Name string
+    Age  int
+  }
+  var u = User {"Gopher", 7}
+  b, _ := json.Marshal(u)
+  fmt.Prinln(b)          // [123 34 78 97 109 101 34 58 34 ...]
+  fmt.Println(string(b)) // {"Name":"Gopher","Age":7}
+</pre>
+
+# struct 마샬링
+<code>
+  type User struct {
+    // 미출력
+    Name  string `json:"-"`
+    // 문자열로 출력
+    Age   int    `json:"age, string"`
+    // 값이 비어있으면 미출력
+    Phone string `json:"omitempty"`
+  }
+</code>
+</pre>
+

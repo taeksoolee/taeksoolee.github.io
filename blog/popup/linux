@@ -1,0 +1,9 @@
+<pre>
+## 리눅스 명령어 모음
+
+# 프로세스 확인하는 명령어
+  ps -ef | grep "word"
+
+# 포트변호 확인
+  netstat -tnlp | grep "port"
+</pre>

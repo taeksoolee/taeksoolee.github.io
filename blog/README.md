@@ -1,3 +1,10 @@
+# usage
+## 새로 카테로그리 추가시 
+- README.md schema 수정.
+- /blog/js/schema.js 수정.
+- /blog/image/icon/{name}.png 추가 (배경 x)
+
+# schema
 # # 언어
 
 ### html
@@ -26,6 +33,7 @@
 ### java
 - spring
 - springboot
+- mybatis
 - maven
 - gradle
 - android
@@ -46,7 +54,6 @@
 # # 기타
 ### linux
 - vim
-- tmux
 - zsh
 - ssh
 - ssl
@@ -74,6 +81,10 @@
 - nginx
 - apache
 <br/>
+### cloud
+- aws
+- oraclecloud
+<br/>
 ### ide
 - eclipse
 - vscode
@@ -84,3 +95,4 @@
 - hardware
 - algorithm
 - raspberrypi
+- rest
