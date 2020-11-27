@@ -72,7 +72,7 @@ const app = new Vue({
       this.isOpendNav = !this.isOpendNav;
     },
     selectItem: function (categoryName) {
-      console.log("items!!");
+      location.href = "#contentList";
       this.isHideContentList = false;
 
       this.selectedCategoryName = categoryName;
@@ -88,7 +88,6 @@ const app = new Vue({
       this.resetSlider();
     },
     pageLoadAnimation: function () {
-      console.log("animation run!");
       const content = this.$refs.content;
 
       if (content.style.opacity < 1) {
@@ -113,7 +112,7 @@ const app = new Vue({
         content.style.opacity = 0;
         this.pageLoadAnimation();
 
-        this.content = text;
+        this.content = `<pre>${text}</pre>`;
         this.selectedPage = page; // metadata 획득
 
         window.localStorage.setItem("page", JSON.stringify(page));

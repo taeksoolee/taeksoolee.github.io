@@ -1,13 +1,5 @@
-<div>
-  <p>javascript는 스크립트 언어입니다.</p>
-</div>
-
-
-
-
-  <p>전체 화면 관련 예제</p>
-  <pre>
-  <code>
+## 전체 화면 관련 예제
+<code>
   var docV = document.documentElement;
   function openFullScreenMode() {
     if (docV.requestFullscreen)
@@ -30,47 +22,39 @@
       else if (docV.msExitFullscreen)
           .msExitFullscreen();
   }
-  </code>
-</pre>
+</code>
+
+## css root 속성 컨트롤 예
+
+<code>
+  // .css
+  :root {
+    --my-style: 1rem;
+  }
+
+  // .js
+  document.documentElement.style.setProperty('--my-style', 'value');
+  document.documentElement.style.getProperty('--my-style');
+</code>
 
 
+## fetch 사용방법
+<code>
+  get : fetch(url).then( res => res.json()).then(data => {...})
+  post : fetch(url, {
+    method: 'POST',
+    body: { ...dataObj },
+    header: new Headers()
+  }).then( res => res.json()).then(data => {...})
+</code>
 
-** css root 속성 컨트롤 예
-<pre>
-  <code>
-    // .css
-    :root {
-      --my-style: 1rem;
-    }
+## tip : undefined 확인 코드
 
-    // .js
-    document.documentElement.style.setProperty('--my-style', 'value');
-    document.documentElement.style.getProperty('--my-style');
-  </code>
-</pre>
-
-<pre>
-  fetch 사용방법
-  <code>
-    get : fetch(url).then( res => res.json()).then(data => {...})
-    post : fetch(url, {
-      method: 'POST',
-      body: { ...dataObj },
-      header: new Headers()
-    }).then( res => res.json()).then(data => {...})
-  </code>
-</pre>
-
-
-undefined 확인 코드
-
-<pre>
-  <code>
+<code>
   function test(t) {
     return t || 'undefined text!';
   }
 
   test() // 'undefined text!'
   test('test') // 'test!'
-  </code>
-</pre>
+</code>

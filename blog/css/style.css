@@ -482,7 +482,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .memo-box.min {
-  
+  position: fixed;
 }
 
 .memo-box.min textarea {

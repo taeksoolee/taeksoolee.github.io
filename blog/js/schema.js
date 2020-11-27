@@ -13,6 +13,7 @@ const schema = {
   threejs: "threejs",
   amcharts: "amcharts",
   jquery: "jquery",
+  d3: "d3",
   nodejs: "nodejs",
   express: "express",
   graphql: "graphql",

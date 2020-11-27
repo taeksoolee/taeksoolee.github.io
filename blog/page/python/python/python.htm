@@ -1,28 +1,4 @@
-<pre>
-
-@버츄얼 환경
-1. Virtualenv
-pip install virtualenv
-cd [venv디렉토리]
-virtualenv venv
-
-pip install -f requirements.txt >> 패키지 저장 ( freeze 필요 )
-
-2. pipenv ( 버츄얼 환경의 단점을 개선 )
-pip install pipenv
-pipenv install 
-pip shell
-
-pip install [패키지] --dev
-
-3. conda ( 데이터 사이언티스트 등 필요패지지가 설치 되어있음 : Numpy / Scipy 등 )
-[설치 후...]
-
-conda create --name [가상환경 이름] python = [파이썬 버전]
-환경 내보내기 : conda env export > environment.ymi
-환경 재생성 : conda env create -f envirmnment.ymi
-
-@ 삼항연산자
+## 삼항연산자
 if - else 이용
 a = 10
 b = 20
@@ -39,7 +15,7 @@ aa = 0
 bb = 1 if aa == 0 else aa
 print(f'{aa=} {bb=}') # aa=0 bb=1
 
-@mysql 연동 모듈
+## mysql 연동 모듈
 pip install PyMySQL
 
 import pymysql
@@ -82,9 +58,7 @@ sql = '... where in '
 cursor.excutemany(sql, data)
 db_conn.commit()
 
-
-
-@리스트 사용
+## 리스트 사용
 count(원소) : 리스트 내 특정 원소가 몇 개 포함되어 있는지 반환
 index(원소) : 리스트 내 특정 원소의 인덱스를 반환
 append(원소) :리스트의 뒤쪽에 새로운 원소를 삽입
@@ -95,7 +69,7 @@ remove(원소) : 리스트 내 특정 원소를 삭제
 pop(인덱스) : 리스트 내 특정 인덱스의 원소를 삭제
 reverse() : 리스트의 순서를 뒤집기
 
-@ 정규식 사용
+## 정규식 사용
 import re
 
 p = re.compile([정규식])
@@ -106,5 +80,3 @@ if m:
 	성공 logic	
 else:
   실패 logic	
-  
-</pre>

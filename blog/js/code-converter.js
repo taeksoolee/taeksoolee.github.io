@@ -3,40 +3,9 @@
 function covertCodeForHTML(text, language) {
   switch (language) {
     case schema.javascript:
-      return text
-        .replaceAll("function", '<span class="function">function</span>')
-        .replaceAll("if", '<span class="if">if</span>')
-        .replaceAll("else", '<span class="else">else</span>')
-        .replaceAll("switch", '<span class="switch">switch</span>')
-        .replaceAll("case", '<span class="case">case</span>')
-        .replaceAll("continue", '<span class="continue">continue</span>')
-        .replaceAll("break", '<span class="break">break</span>')
-        .replaceAll("default", '<span class="default">default</span>')
-        .replaceAll("return", '<span class="return">return</span>')
-        .replaceAll("var", '<span class="var">var</span>')
-        .replaceAll("const", '<span class="const">const</span>')
-        .replaceAll("let", '<span class="let">let</span>')
-        .replaceAll("try", '<span class="try">try</span>')
-        .replaceAll("catch", '<span class="catch">catch</span>')
-        .replaceAll("class ", '<span class="class">class </span>')
-        .replaceAll("interface ", '<span class="interface">interface </span>')
-        .replaceAll("extends", '<span class="extends">extends</span>')
-        .replaceAll("impliments", '<span class="impliments">impliments</span>')
-        .replaceAll("import", '<span class="import">import</span>')
-        .replaceAll("module.export", '<span class="module-export">catch</span>')
-        .replaceAll(
-          "export defualt",
-          '<span class="export-default">export default</span>'
-        )
-        .replaceAll("export", '<span class="export">catch</span>')
-        .replaceAll("require", '<span class="require">require</span>')
-        .replaceAll(".", '<span class="dot">.</span>')
-        .replaceAll("{", '<span class="bracket">{</span>')
-        .replaceAll("}", '<span class="bracket">}</span>')
-        .replaceAll("(", '<span class="bracket">(</span>')
-        .replaceAll(")", '<span class="bracket">)</span>')
-        .replaceAll("[", '<span class="bracket">[</span>')
-        .replaceAll("]", '<span class="bracket">]</span>');
+      return convertJavascript(text);
+    case schema.nodejs:
+      return convertJavascript(text);
     case schema.go:
       return text;
     case schema.linux:
@@ -44,4 +13,102 @@ function covertCodeForHTML(text, language) {
     default:
       return text;
   }
+}
+
+function convertJavascript(text) {
+  return (
+    text
+      .replaceAll(/(function)/g, (t) => `<span class="c-blue">${t}</span>`)
+      .replaceAll(/(if)|(else)/g, (t) => `<span class="c-green">${t}</span>`)
+      .replaceAll(
+        /(switch)|(case)|(continue)|(break)|(default)|(return)|(try)|(catch)/g,
+        (t) => `<span class="switch">${t}</span>`
+      )
+      .replaceAll(/(var)/g, (t) => `<span class="c-yellow">${t}</span>`)
+      .replaceAll(
+        /(const)|(let)/g,
+        (t) => `<span class="c-lightgreen">${t}</span>`
+      )
+      .replaceAll(
+        /(class )|(interface)|(impliments)|(extends)/g,
+        (t) => `<span class=".c-lightpurple">${t}</span>`
+      )
+      .replaceAll(
+        /(require)|(import)|(export)|(module\.export)|(export default)|(from)/g,
+        (t) => `<span class="c-lightpink">${t}</span>`
+      )
+      .replaceAll(
+        /[\+-/%=?:{}()[]]/g,
+        (t) => '<span class="c-skyblue">' + t + "</span>"
+      )
+      // 코드 안에 samp 태그를 사용하면 html 태그 사용가능 하도록 설정 (꺽쇠 무시)
+      .replaceAll(/<code>.*<\/code>/gs, function (codeText) {
+        const startcode = "codecodecode";
+        const endcode = "/code/code/code";
+
+        return codeText
+          .replaceAll("<code>", startcode)
+          .replaceAll("</code>", endcode)
+          .replaceAll(/<samp>.*<\/samp>/gs, function (sampText) {
+            console.log(sampText);
+            return sampText
+              .replaceAll("<samp>", "")
+              .replaceAll("</samp>", "")
+              .replaceAll(/[<>]/g, function (tag) {
+                return `<span>${tag}</span>`;
+              });
+          })
+          .replaceAll(startcode, "<code>")
+          .replaceAll(endcode, "</code>");
+      })
+  );
+}
+
+function convertPython(text) {
+  return (
+    text
+      .replaceAll(/(def)/g, (t) => `<span class="c-blue">${t}</span>`)
+      .replaceAll(/(if)|(else)/g, (t) => `<span class="c-green">${t}</span>`)
+      .replaceAll(
+        /(switch)|(case)|(continue)|(break)|(default)|(return)|(try)|(except)/g,
+        (t) => `<span class="switch">${t}</span>`
+      )
+      // .replaceAll(/(var)/g, (t) => `<span class="c-yellow">${t}</span>`)
+      // .replaceAll(
+      //   /(const)|(let)/g,
+      //   (t) => `<span class="c-lightgreen">${t}</span>`
+      // )
+      .replaceAll(
+        /(class )|(interface)|(impliments)|(extends)/g,
+        (t) => `<span class=".c-lightpurple">${t}</span>`
+      )
+      .replaceAll(
+        /(require)|(import)|(export)|(module\.export)|(export default)|(:)/g,
+        (t) => `<span class="c-lightpink">${t}</span>`
+      )
+      .replaceAll(
+        /[\+-/%=?:{}()[]]/g,
+        (t) => '<span class="c-skyblue">' + t + "</span>"
+      )
+      // 코드 안에 samp 태그를 사용하면 html 태그 사용가능 하도록 설정 (꺽쇠 무시)
+      .replaceAll(/<code>.*<\/code>/gs, function (codeText) {
+        const startcode = "codecodecode";
+        const endcode = "/code/code/code";
+
+        return codeText
+          .replaceAll("<code>", startcode)
+          .replaceAll("</code>", endcode)
+          .replaceAll(/<samp>.*<\/samp>/gs, function (sampText) {
+            console.log(sampText);
+            return sampText
+              .replaceAll("<samp>", "")
+              .replaceAll("</samp>", "")
+              .replaceAll(/[<>]/g, function (tag) {
+                return `<span>${tag}</span>`;
+              });
+          })
+          .replaceAll(startcode, "<code>")
+          .replaceAll(endcode, "</code>");
+      })
+  );
 }

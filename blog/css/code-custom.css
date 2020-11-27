@@ -1,43 +1,24 @@
 code {
-  margin: .5rem auto;
-  width: 70%;
   display: block;
   background-color: rgba(0,0,0,.8);
   color: white;
-  line-height: 1.7rem;
-  word-spacing: .5rem;
+  line-height: 1.5rem;
+  word-spacing: .7rem;
   border-radius: 10px;
   overflow: auto;
   font-size: 1rem !important;
+  padding-bottom: 2rem;
+}
+
+code div {
+  
 }
 
 code::-webkit-scrollbar {
   height: 1rem;
 }
 
-code .function,
-code .if,
-code .else,
-code .switch,
-code .case, 
-code .break,
-code .default,
-code .continue,
-code .return,
-code .try,
-code .catch,
-code .var,
-code .colon,
-code .let,
-code .const,
-code .dot,
-code .colon,
-code .bracket,
-code .class,
-code .extends, 
-code .interface,
-code .impliments,
-code .type {
+code {
   font-size: 1rem !important;
 }
 
@@ -46,50 +27,44 @@ code .dot {
 }
 
 
-code .function {
+code .c-blue {
   color: rgba(0,100,255,1);
 }
 
-code .if,
-code .else {
+code .c-green {
   color: rgba(0,255,100,1);
 }
 
-code .switch,
-code .case, 
-code .break,
-code .default,
-code .continue,
-code .return,
-code .try,
-code .catch{
+code .c-pink{
   color: rgba(255, 100, 200,1);
 }
 
-code .var{
+code .c-yellow{
   color: rgba(200, 200, 100, 1);
 }
 
-code .let,
-code .const {
+code .c-lightgreen {
   color: rgba(150, 200, 100, 1);
 }
 
-code .dot,
-code .colon {
-  color: rgb(255, 255, 255);
-}
-
-code .bracket {
+code .c-skyblue {
   color: rgba(200, 255, 255, 1);
 }
 
-code .class,
-code .extends, 
-code .interface,
-code .impliments,
-code .type {
+code .c-lightpurple {
+  color: rgba(100, 100, 200, 1);
+}
 
+code .c-midnightblue {
+  color: rgba(0, 50, 100, 1);
+}
+
+code .c-lightpink {
+  color: rgba(200, 150, 200, 1);
+}
+
+code .c-brown {
+  color: rgba(100, 50, 0, 1);
 }
 
 @media screen and (max-width: 796px) {
@@ -100,29 +75,7 @@ code .type {
     margin-right: 0;
   }
 
-  code .function,
-  code .if,
-  code .else,
-  code .switch,
-  code .case, 
-  code .break,
-  code .default,
-  code .continue,
-  code .return,
-  code .try,
-  code .catch,
-  code .var,
-  code .colon,
-  code .let,
-  code .const,
-  code .dot,
-  code .colon,
-  code .bracket,
-  code .class,
-  code .extends, 
-  code .interface,
-  code .impliments,
-  code .type {
+  code  {
     font-size: .8rem !important;
   }
 }

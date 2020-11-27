@@ -1,11 +1,39 @@
-<pre>
-  <h1>tmux : 멀티 스크린을 제공하는 리눅스 프로그램</h1>
-  수평 분할
-  모든 명령어는 <strong>ctrl + b</strong> 로 시작함
-  <span class="line-red">테스트</span>
-  <span class="green">초록색 테스트</span>
 
-  <code>
-    tmux start
-  </code>
-</pre>
+<h1>tmux : 멀티 스크린을 제공하는 리눅스 프로그램</h1>
+
+
+
+- 설치 
+yum (centos
+sudo yum install epel-release
+// EPEL(Extra Packages for Enterprise Linux)은 Fedora Project에서 제공되는 저장소로 각종 패키지의 최신 버전을 제공하는 community 기반의 저장소
+sudo yum install -y tmux
+
+apt (tubuntu
+sudo apt install tmux
+
+-V : 버전 확인 
+
+모든 명령어는 <strong>ctrl + b</strong> 로 시작함
+<code>
+  tmux start
+</code>
+
+** 세션 관련 명령어 추가 예정 **
+
+w : 작업화면 선택 (window select)
+c : 작업화면 추가 (window create)
+ : 작업화면 삭제 (window delete)
+p : 이전 작업화면 이동 (previous)
+n : 다음 작업화면 이동 (next)
+
+% : 수직 분할 (panel 추가)
+" : 수평분할 (panel 추가)
+x : panel 제거 (exit)
+
+
+
+
+
+
+
