@@ -5,6 +5,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+
+.loading {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--dark-1-color);
+}
+
+.loading img {
+  position: fixed;
+  width: 20%;
+  top: 40%;
+  left: 40%;
+}
+
+
 .color-white {
   color: white;  
 }
@@ -240,7 +258,7 @@ body::-webkit-scrollbar-thumb {
 
 .nav .items .item{
   display: flex;
-  padding: .6rem;
+  padding: .6rem .8rem;
   align-items: center;
   justify-content: start;
 }
@@ -307,7 +325,7 @@ body::-webkit-scrollbar-thumb {
 .bottom-btn {
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: 0%;
   padding: .5rem 0;
   text-align: center;
   width: 100%;
@@ -541,6 +559,7 @@ body::-webkit-scrollbar-thumb {
 
   .tip {
     right: 5% !important;
+    bottom: 1%;
   }
 
   .popup-screen {
@@ -566,7 +585,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   .nav {
-    width: .5rem;
+    width: .8rem;
   }
 
   .nav.open {
@@ -596,7 +615,7 @@ body::-webkit-scrollbar-thumb {
     width: 3rem;
     height: 3rem;
     top: .5rem;
-    left: .7rem;
+    left: 1rem;
     margin: 0;
   }
 

@@ -20,6 +20,7 @@ const app = new Vue({
   el: "#app",
   data: {
     window: window,
+    isLoading: false,
     memoBox: memoBox,
 
     isOpendNav: false,
@@ -104,6 +105,7 @@ const app = new Vue({
     },
     getPage: async function (page) {
       // 페이지를 변경하는 함수
+      this.isLoading = true;
       try {
         let text = await ajaxGet(
           `${prefixURL}/${page.depth1}/${page.depth2}/${page.fileName}`
@@ -127,6 +129,8 @@ const app = new Vue({
       } catch (e) {
         console.error(e);
         console.log("페이지에 내용이 존재하지 않습니다.."); // 수정 예정
+      } finally {
+        this.isLoading = false;
       }
     },
     openPopup: async function (type) {

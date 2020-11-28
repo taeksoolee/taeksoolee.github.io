@@ -29,10 +29,6 @@
   text-align: center;
 }
 
-.content .pre {
-  overflow: scroll;
-}
-
 .content .pre::-webkit-scrollbar {
   display: none;
 }
