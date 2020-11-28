@@ -72,6 +72,14 @@ const contents = [
     date: "20201127",
   },
   {
+    title: "redux",
+    depth1: schema.javascript,
+    depth2: schema.react,
+    fileName: "redux.htm",
+    desc: "",
+    date: "20201127",
+  },
+  {
     title: "next",
     depth1: schema.javascript,
     depth2: schema.react,

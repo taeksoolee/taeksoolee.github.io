@@ -1,0 +1,67 @@
+<img class="logo" src="./page/javascript/react/redux-logo.png"/>
+
+# redux 설치
+redux : flux 아키텍쳐를 구현한 라이브러리
+react-redux : redux를 react에서 사용할 때 조금 더 편하게 사용하도록 구현한 라이브러리
+<code>
+  npm install --save redux react-redux
+</code>
+
+# 리덕스 사용 순서 (counter 예제)
+
+  1. action 작성 (/src/action/ActionTypes.js)
+<code>
+  export const INCREMENT = 'INCREMENT';
+  export const DECREMENT = 'DECREMENT';
+  export const SET_COLOR = 'SET_COLOR';
+</code>
+
+  2. actions export (/src/action/index.js)
+    * 액션 함수는 순수 함수 여야 함. 같은 input에 같은 output이 나오도록 (random, db 사용 x)
+<code>
+  import * as types from './ActionTypes';
+
+  export const increment = () => ({
+      type: types.INCREMENT
+  });
+
+  export const decrement = () => ({
+      type: types.DECREMENT
+  });
+
+  // 파라미터를 가진 액션
+  export const setColor = (color) => ({
+      type: types.SET_COLOR,
+      color
+  });
+</code>
+
+  3. reducers 작성 (/src/reducers/)
+    1) 한파일에 작성
+<code>
+  // /src/reducers/index.js
+  import * as types from '../actions/ActionTypes';
+  
+  const initialState = {
+      counters: [
+          {
+              color: 'black',
+              number: 0
+          }
+      ]
+  }
+</code>
+
+  2) 리듀서 파일 분리 
+<code>
+  // /src/reducers/index.js
+  // /src/reducers/number.js
+  // /src/reducers/color.js
+</code>
+
+
+
+
+
+
+

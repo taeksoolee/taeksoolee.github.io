@@ -72,8 +72,9 @@ const app = new Vue({
       this.isOpendNav = !this.isOpendNav;
     },
     selectItem: function (categoryName) {
-      location.href = "#contentList";
+      location.href = "#app";
       this.isHideContentList = false;
+      this.isOpendNav = false;
 
       this.selectedCategoryName = categoryName;
 
@@ -102,6 +103,7 @@ const app = new Vue({
       }
     },
     getPage: async function (page) {
+      // 페이지를 변경하는 함수
       try {
         let text = await ajaxGet(
           `${prefixURL}/${page.depth1}/${page.depth2}/${page.fileName}`
@@ -112,8 +114,14 @@ const app = new Vue({
         content.style.opacity = 0;
         this.pageLoadAnimation();
 
-        this.content = `<pre>${text}</pre>`;
+        this.content = `<pre class="pre">${text}</pre>`;
         this.selectedPage = page; // metadata 획득
+
+        // 목록 닫음
+
+        if(this.window.innerWidth < 812) {
+          this.isHideContentList = true;
+        }
 
         window.localStorage.setItem("page", JSON.stringify(page));
       } catch (e) {
@@ -150,49 +158,76 @@ const app = new Vue({
       this.pageList = pageList;
     },
     slideContentList(isLeft) {
-      // 1블럭 : 15 rem
+      // 필요 변수 함수 정의 
+      const blockSize = 14.9;
+      const that = this;
+      const wiw = this.window.innerWidth;
+      const contentViewCnt =
+          wiw > 1256
+            ? 5
+            : wiw > 1017
+            ? 4
+            : wiw > 706
+            ? 3
+            : wiw > 463
+            ? 2
+            : 1;
+
+      // 뒤로 더 넘기지 않을때 사용
+      function blockingAnimation(isLeft) {
+        if(isLeft) {
+          that.contentListPosition -= blockSize;
+          setTimeout(function () {
+            that.contentListPosition += blockSize;
+          }, 200);
+        } else {
+          that.contentListPosition += blockSize;
+          setTimeout(function () {
+            that.contentListPosition -= blockSize;
+          }, 200);
+        }
+      }
+
+      // 반대편으로 넘길 때 사용
+      function overAnimation(isLeft) {
+        if(that.pageList.length <= contentViewCnt) {
+          blockingAnimation(isLeft);
+          return;
+        }
+
+        if(isLeft) {
+          that.contentListPosition = - (blockSize * (that.pageList.length - contentViewCnt));
+          that.contentListMovingCnt = that.pageList.length - contentViewCnt ;
+        } else {
+          that.contentListPosition = 0;
+          that.contentListMovingCnt = 0;
+        }
+      }
+
+      // /필요 변수 함수 정의 
       if (isLeft) {
         if (this.contentListMovingCnt <= 0) {
-          // animation
-          const that = this;
-          that.contentListPosition += 15;
-          setTimeout(function () {
-            that.contentListPosition -= 15;
-          }, 200);
+          // blockingAnimation();
+          overAnimation(isLeft);
           return;
         }
-        this.contentListPosition += 15;
+
+        this.contentListPosition += blockSize;
         this.contentListMovingCnt--;
       } else {
-        const wiw = this.window.innerWidth;
-        const contentViewCnt =
-          wiw > 1268
-            ? 5
-            : wiw > 1031
-            ? 4
-            : wiw > 791
-            ? 3
-            : wiw > 550
-            ? 2
-            : wiw > 310
-            ? 1
-            : 0;
-
         const movingMaxCnt = this.pageList.length - contentViewCnt;
-        if (
-          this.pageList.length < 5 ||
-          this.contentListMovingCnt >= movingMaxCnt
-        ) {
-          // animation
-          const that = this;
-          that.contentListPosition -= 15;
-          setTimeout(function () {
-            that.contentListPosition += 15;
-          }, 200);
+
+        if (this.contentListMovingCnt >= movingMaxCnt || this.pageList.length < contentViewCnt) {
+          // blockingAnimation();
+          overAnimation(isLeft);
           return;
         }
-        this.contentListPosition -= 15;
+
+        this.contentListPosition -= blockSize;
         this.contentListMovingCnt++;
+
+        console.log(that.contentListPosition, this.contentListMovingCnt);
+        console.log();
       }
     },
 
@@ -315,9 +350,10 @@ const app = new Vue({
       this.selectedCategoryItemName = "all";
     },
     pageListSortStandard: function (pageListSortStandard, prev) {
+      // 구현해야 함... 미구현
       if (prev === "none") {
-      }
 
+      }
       console.log(this.pageListSortMethod, pageListSortStandard);
     },
     pageListSortMethod: function (pageListSortMethod, prev) {

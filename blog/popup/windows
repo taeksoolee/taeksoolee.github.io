@@ -10,4 +10,8 @@
  del ...
  rmdir ...
 
+
+# 키 별칭 alias
+doskey [별칭이름]=[명령어]
+
 </pre>

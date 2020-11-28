@@ -24,3 +24,26 @@
   color: green;
 }
 
+.content .logo {
+  width: 10rem;
+  text-align: center;
+}
+
+.content .pre {
+  overflow: scroll;
+}
+
+.content .pre::-webkit-scrollbar {
+  display: none;
+}
+
+
+.content-icon-img {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: .5rem;
+}
+
+h1 {
+  font-size: 3rem;
+}

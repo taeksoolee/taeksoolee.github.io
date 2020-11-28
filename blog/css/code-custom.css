@@ -3,15 +3,17 @@ code {
   background-color: rgba(0,0,0,.8);
   color: white;
   line-height: 1.5rem;
-  word-spacing: .7rem;
-  border-radius: 10px;
+  word-spacing: .3rem;
+  min-width: 50rem;
+  /*border-radius: 10px;*/
   overflow: auto;
   font-size: 1rem !important;
   padding-bottom: 2rem;
+  margin-top: 1rem;
 }
-
-code div {
-  
+code::before {
+  content: attr(title);
+  padding: .1rem .5rem;
 }
 
 code::-webkit-scrollbar {
@@ -69,13 +71,7 @@ code .c-brown {
 
 @media screen and (max-width: 796px) {
   code {
-    font-size: .8rem !important;
-    width: 100%;
     margin-left: 0;
     margin-right: 0;
-  }
-
-  code  {
-    font-size: .8rem !important;
   }
 }
