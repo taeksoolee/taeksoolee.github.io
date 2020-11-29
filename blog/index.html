@@ -13,7 +13,13 @@
   <title>TAEKSOOLEE</title>
 </head>
 <body>
-  <div id="app" style="display: none;" @mousemove="handleAppMousemove(event)" @mouseup="handleAppMouseup(event)" draggable="false">
+  <div id="app" style="display: none;" 
+    @mousemove="handleAppMousemove(event)" 
+    @mouseup="handleAppMouseup(event)" 
+    @touchmove="handleAppMousemove(event)"
+    @touchend="handleAppMouseup(event)"
+    draggable="false"
+  >
     <div class="wrap" >
       
       <div class="header">
@@ -61,8 +67,9 @@
               <div class="content-list"
                 v-bind:class="{flexwrap: isWrapContentsList}" 
                 v-bind:style="{left: contentListPosition + 'rem'}"
-                draggable="true"
                 @mousedown.prevent="handleContentListMousedown(event)"
+                @touchstart.prevent="handleContentListMousedown(event)"
+                draggable="true"
               >
                 <a href="#" v-for="page in pageList" class="item btn" @click="getPage(page)">
                   <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false" />
