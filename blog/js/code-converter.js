@@ -10,7 +10,6 @@ String.prototype.convertHTML = function() {
       .replaceAll("<code>", startcode)
       .replaceAll("</code>", endcode)
       .replaceAll(/<samp>.*<\/samp>/gs, function (sampText) {
-        console.log(sampText);
         return sampText
           .replaceAll("<samp>", "")
           .replaceAll("</samp>", "")

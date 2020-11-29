@@ -164,26 +164,36 @@ const app = new Vue({
       this.pageList = pageList;
     },
     handleAppMouseup: function(e) {
-      if(this.isMovingContentList) {
+      if(this.isMovingContentList) { 
+        let screenX = e.screenX;
+        if(e.type === 'touchend') {
+          screenX = e.changedTouches[0].screenX;
+        }
+
         this.isMovingContentList = false;
-        if(this.slidePointX - e.screenX < -30) {
+        if(this.slidePointX - screenX < -30) {
           // left
           this.slideContentList(true);
-        } else if (this.slidePointX - e.screenX > 30){
+        } else if (this.slidePointX - screenX > 30){
           // right
           this.slideContentList(false);
         }
       }
     },
     handleAppMousemove: function(e) {
-      this.handleMoveMemeBox(e);
+      this.handleMoveMemeBox(e.touches);
     },
     handleContentListClick: function(e) {
       // 작성 예정
     },
     handleContentListMousedown: function(e) {
+      let screenX = e.screenX;
+      if(e.type === 'touchstart') {
+        screenX = e.changedTouches[0].screenX;
+      }
+
       this.isMovingContentList = true;
-      this.slidePointX = e.screenX;
+      this.slidePointX = screenX;
     },
     slideContentList(isLeft) {
       // 필요 변수 함수 정의 

@@ -13,9 +13,9 @@
   <title>TAEKSOOLEE</title>
 </head>
 <body>
+  <!--@mousemove="handleAppMousemove(event)" 
+    @mouseup="handleAppMouseup(event)" -->
   <div id="app" style="display: none;" 
-    @mousemove="handleAppMousemove(event)" 
-    @mouseup="handleAppMouseup(event)" 
     @touchmove="handleAppMousemove(event)"
     @touchend="handleAppMouseup(event)"
     draggable="false"
@@ -64,11 +64,11 @@
               </form>
             </div>
             <div v-if="pageList.length !== 0">
+              <!--@mousedown.prevent="handleContentListMousedown(event)"-->
               <div class="content-list"
                 v-bind:class="{flexwrap: isWrapContentsList}" 
                 v-bind:style="{left: contentListPosition + 'rem'}"
-                @mousedown.prevent="handleContentListMousedown(event)"
-                @touchstart.prevent="handleContentListMousedown(event)"
+                @touchstart="handleContentListMousedown(event)"
                 draggable="true"
               >
                 <a href="#" v-for="page in pageList" class="item btn" @click="getPage(page)">
