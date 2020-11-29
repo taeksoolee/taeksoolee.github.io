@@ -182,7 +182,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .content-page {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   overflow: auto;
 }
 
@@ -302,10 +302,7 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-}
-
-.content-meta>div {
-  margin: 0 1rem;
+  margin: 0 1.5rem;
 }
 
 .nav.open {
@@ -330,6 +327,8 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   width: 100%;
   color: white;
+  font-size: 2rem;
+  
 }
 
 .top-btn {
@@ -601,6 +600,18 @@ body::-webkit-scrollbar-thumb {
     font-size: 0rem;
   }
 
+  .bottom-btn {
+    background-color: var(--dark-2-color);
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  .nav.open .bottom-btn {
+    background-color: rgba(0,0,0,0);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .memo-box {
     display: none;
   } 
@@ -621,9 +632,9 @@ body::-webkit-scrollbar-thumb {
 
   .search-form select, 
   .search-form input{
-    margin: 1rem 0;
-    
+    margin: 1rem 0;   
   }
+  
 
 }
 
