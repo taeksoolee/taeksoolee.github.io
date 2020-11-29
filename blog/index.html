@@ -13,8 +13,8 @@
   <title>TAEKSOOLEE</title>
 </head>
 <body>
-  <div id="app" style="display: none;" @mousemove="handleMoveMemeBox(event)" draggable="false">
-    <div class="wrap">
+  <div id="app" style="display: none;" @mousemove="handleAppMousemove(event)" @mouseup="handleAppMouseup(event)" draggable="false">
+    <div class="wrap" >
       
       <div class="header">
         <h1>MY PAGE</h1>      
@@ -61,10 +61,12 @@
               <div class="content-list"
                 v-bind:class="{flexwrap: isWrapContentsList}" 
                 v-bind:style="{left: contentListPosition + 'rem'}"
+                @mousedown.prevent.stop="handleContentListMousedown(event)"
+                draggable="true"
               >
                 <a href="#" v-for="page in pageList" class="item btn" @click="getPage(page)">
-                  <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false"/>
-                  <div class="title">
+                  <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false" />
+                  <div class="title" draggable="false" >
                     <span>{{page.title}}</span>
                   </div>
                 </a>

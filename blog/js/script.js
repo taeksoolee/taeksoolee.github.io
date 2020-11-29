@@ -21,6 +21,8 @@ const app = new Vue({
   data: {
     window: window,
     isLoading: false,
+    slidePointX: 0,
+    isMovingContentList: false,
     memoBox: memoBox,
 
     isOpendNav: false,
@@ -161,6 +163,25 @@ const app = new Vue({
 
       this.pageList = pageList;
     },
+    handleAppMouseup: function(e) {
+      if(this.isMovingContentList) {
+        this.isMovingContentList = false;
+        if(this.slidePointX - e.screenX < 0) {
+          // left
+          this.slideContentList(true);
+        } else {
+          // right
+          this.slideContentList(false);
+        }
+      }
+    },
+    handleAppMousemove: function(e) {
+      this.handleMoveMemeBox(e);
+    },
+    handleContentListMousedown: function(e) {
+      this.isMovingContentList = true;
+      this.slidePointX = e.screenX;
+    },
     slideContentList(isLeft) {
       // 필요 변수 함수 정의 
       const blockSize = 14.9;
@@ -229,9 +250,6 @@ const app = new Vue({
 
         this.contentListPosition -= blockSize;
         this.contentListMovingCnt++;
-
-        console.log(that.contentListPosition, this.contentListMovingCnt);
-        console.log();
       }
     },
 
