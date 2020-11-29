@@ -1,19 +1,59 @@
-# global app 생성
+## 설치
+  # cdn
+<code><samp>
+  <!-- 개발 / developement -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- 상요화 / production -->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
-const app = new Vue({
-  data: {}
-});
+  <!-- es6 호환 빌드용-->
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js'
+  </script>
+</samp></code>
+
+  # 안정화버전 설치
+<code>
+  $ npm install --save vue
+</code>
 
 
-# component app 생성
+## Vue 및 component 사용
+  # global app 생성
+<code>
+  const app = new Vue({
+    data: {},
+    methods: {},
+    computed: {},
+    watch: {},
+    mounted: {},
+    created: {},
+    updated: {},
+    ...
+  });
+</code>
 
-const app 
 
-
+  # component 생성
+<code><samp>
+  const mycomponent  = {
+    props: {
+      ...props
+    }
+    template: `<div>{{data}}</div>`,
+    data: function() {
+      return {
+        ...
+      }
+    },
+    methods: {}
+    ...
+  }
+</samp></code>
 
 ## event
 
-# 이벤트 수식어
+  # 이벤트 수식어
   .stop
   .prevent
   .capture

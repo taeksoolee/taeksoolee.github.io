@@ -61,8 +61,8 @@
               <div class="content-list"
                 v-bind:class="{flexwrap: isWrapContentsList}" 
                 v-bind:style="{left: contentListPosition + 'rem'}"
-                @mousedown.prevent.stop="handleContentListMousedown(event)"
                 draggable="true"
+                @mousedown.prevent="handleContentListMousedown(event)"
               >
                 <a href="#" v-for="page in pageList" class="item btn" @click="getPage(page)">
                   <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false" />

@@ -72,6 +72,14 @@ const contents = [
     date: "20201127",
   },
   {
+    title: "react hook",
+    depth1: schema.javascript,
+    depth2: schema.react,
+    fileName: "react-hook.htm",
+    desc: "",
+    date: "20201129",
+  },
+  {
     title: "redux",
     depth1: schema.javascript,
     depth2: schema.react,
@@ -478,6 +486,14 @@ const contents = [
     fileName: "oracle.htm",
     desc: "",
     date: "20201121",
+  },
+  {
+    title: "oracle function",
+    depth1: schema.database,
+    depth2: schema.oracle,
+    fileName: "function.htm",
+    desc: "",
+    date: "20201129",
   },
   {
     title: "mariadb",

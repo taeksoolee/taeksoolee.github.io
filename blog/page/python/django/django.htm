@@ -1,10 +1,40 @@
-설치
+## 설치
 pip install Django
 
-프로젝트 생성
-django-admin createproject [프로젝트명]
+  # 프로젝트 생성
+<code>
+  django-admin createproject [프로젝트명]
+</code>
 
-앱 생성
-cd [프로젝트명]
-python manage.py createapp [앱이름]
+  # 앱 생성
+<code>
+  cd [프로젝트명]
+  python manage.py createapp [앱이름]
+</code>
 
+  # 상용 모드
+<code>
+  /[프로젝트명]/settings.py
+  DEBUG = TRUE # False : 실제 서버 운영시
+  ALLOWED_HOSTS = {} # 실 서버 호스트 입력
+</code>
+
+  # 사용자 및 그룹 테이블 생성
+<code>
+  python manage.py migrate
+</code>
+
+  # 데이터베이스 변경사항 반영
+<code>
+  python manage.py amkemigration
+</code>
+
+  # 관리자 계정 생성
+<code>
+  python manage.py createsuperuser
+</code>
+
+  # 서버 실행
+<code>
+  python manage.py runserver 0.0.0.0:8000
+</code>

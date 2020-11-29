@@ -9,15 +9,15 @@ react-redux : redux를 react에서 사용할 때 조금 더 편하게 사용하�
 
 # 리덕스 사용 순서 (counter 예제)
 
-  1. action 작성 (/src/action/ActionTypes.js)
+  1-1. action type 작성 (/src/action/ActionTypes.js)
 <code>
+  // action과 reducer에서 사용하기 때문에 상수로 선언
   export const INCREMENT = 'INCREMENT';
   export const DECREMENT = 'DECREMENT';
   export const SET_COLOR = 'SET_COLOR';
 </code>
 
-  2. actions export (/src/action/index.js)
-    * 액션 함수는 순수 함수 여야 함. 같은 input에 같은 output이 나오도록 (random, db 사용 x)
+  1-2. actions export (/src/action/index.js)
 <code>
   import * as types from './ActionTypes';
 
@@ -36,32 +36,166 @@ react-redux : redux를 react에서 사용할 때 조금 더 편하게 사용하�
   });
 </code>
 
-  3. reducers 작성 (/src/reducers/)
+  2. reducers 작성 (/src/reducers/)
+    * 리듀서 함수는 순수 함수 여야 함. 같은 input에 같은 output이 나오도록 (random, db 사용 x)
+    * reducers 안에 action 객체는 위 type에서 가서온 객체를 사용 가능
+
     1) 한파일에 작성
 <code>
   // /src/reducers/index.js
   import * as types from '../actions/ActionTypes';
   
   const initialState = {
-      counters: [
-          {
-              color: 'black',
-              number: 0
-          }
-      ]
+    color: 'black',
+    number: 0
+  }
+
+  function counter (state = initialState, action) {
+    switch(action.type) {
+      case types.INCREMENT:
+        return {
+          ...state, 
+          number: number+1
+        }
+      case types.DECREMENT:
+        return {
+          ...state, 
+          number: number-1
+        }
+      case types.SET_COLOR:
+        return {
+          ...state, 
+          color: getRandomColor(); // 랜덤 색상을 가져오는 함수라고 가정
+        }
+      default:
+        return state;
+    }
   }
 </code>
 
-  2) 리듀서 파일 분리 
+  2) 리듀서 파일 분리  - reduct.combineReducers 사용 예
 <code>
   // /src/reducers/index.js
+  import number from './number';
+  import color from './color';
+
+  import { combineReducers } from 'redux';
+
+  /*
+      서브 리듀서들을 하나로 합칩니다.
+      combineReducers 를 실행하고 나면, 나중에 store의 형태가 파라미터로 전달한 객체의 모양대로 만들어집니다.
+      지금의 경우:
+      {
+          numberData: {
+              number: 0
+          },
+          colorData: {
+              color: 'black'
+          }
+      }
+      로 만들어집니다.
+  */
+
+  const reducers = combineReducers({
+      numberData: number,
+      colorData: color
+  });
+
+  export default reducers;
+
   // /src/reducers/number.js
+  import * as types from '../actions/ActionTypes';
+  
+  const initialState = {
+    number: 0
+  }
+
+  function counter (state = initialState, action) {
+    switch(action.type) {
+      case types.INCREMENT:
+        return {
+          number: number+1
+        }
+      case types.DECREMENT:
+        return {
+          number: number-1
+        }
+      default:
+        return state;
+    }
+  }
+
   // /src/reducers/color.js
+  import * as types from '../actions/ActionTypes';
+  
+  const initialState = {
+    color: 'black'
+  }
+
+  function counter (state = initialState, action) {
+    switch(action.type) {
+      case types.SET_COLOR:
+        return {
+          color: action.color
+        }
+      default:
+        return state;
+    }
+  }
 </code>
 
+  3-1. view 수정 : index.js
+<code><samp>
+  import { createStore } from 'redux';
+  import { Provider } from 'react-redux';
 
+  import reducers from './reducers/index';
 
+  // sotre 생성
+  const store = createStore(
+    reducers,  
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // chrome redux extension 연동을 위한 코드
+  );
+  
+  // Provider를 이용하여 sotre 주입
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  )
+</samp></code>
 
+  3-2. view 수정 : CounterContainer.js 예시
+<code>
+  import { connect } from 'react-redux';
+  import * as actions from '../actions';
 
+  const mapStateToProps = (state) => {
+    /* state는 redux store에 state를 의미 */
+    // reducer 파일 하나 일때
+    color: state.color,
+    number: state.color
 
+    // combineReducers 사용 할 떄
+    color: state.colorData.color 
+    number : state.numberData.number
+  }
 
+  const mapDispatchToProps = (dispatch) => ({
+    onIncrement: () => dispatch(actions.increment()),
+    onDecrement: () => dispatch(actions.decrement()),
+    onSetColor: () => {
+        const color = getRandomColor(); // randomcolor를 가져오는 함수 (가정)
+        dispatch(actions.setColor(color)); // actions의 setColor에는 인자가 있몰 파라미터 사용해야함.
+    }
+  });
+
+  // HOC : redux.connect 사용, map 함수가 없을 경우 null 주입
+  const CounterContainer = connect(
+      mapStateToProps,
+      mapDispatchToProps
+  )(Counter); // Counter는 React 컴포넌트
+
+  export default CounterContainer;
+</code>

@@ -9,6 +9,7 @@ code {
   font-size: 1rem !important;
   padding-bottom: 2rem;
   margin-top: .3rem;
+  white-space: pre;
 }
 code::before {
   content: attr(title);
@@ -73,6 +74,5 @@ code .c-brown {
     margin-left: 0;
     margin-right: 0;
     padding-right: 2rem;
-    width: fit-content;
   }
 }

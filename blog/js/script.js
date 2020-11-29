@@ -166,10 +166,10 @@ const app = new Vue({
     handleAppMouseup: function(e) {
       if(this.isMovingContentList) {
         this.isMovingContentList = false;
-        if(this.slidePointX - e.screenX < 0) {
+        if(this.slidePointX - e.screenX < -30) {
           // left
           this.slideContentList(true);
-        } else {
+        } else if (this.slidePointX - e.screenX > 30){
           // right
           this.slideContentList(false);
         }
@@ -177,6 +177,9 @@ const app = new Vue({
     },
     handleAppMousemove: function(e) {
       this.handleMoveMemeBox(e);
+    },
+    handleContentListClick: function(e) {
+      // 작성 예정
     },
     handleContentListMousedown: function(e) {
       this.isMovingContentList = true;

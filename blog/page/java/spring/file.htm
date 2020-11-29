@@ -1,0 +1,34 @@
+작성중... 에버노트 참고...
+
+#spring #file #upload #image #download #apache #commons #oreilly #이미지 #파일 #업로드 #오렐리 #아파치 #커먼스
+
+## 파일 업로드 개요
+  # OREILLY (중소형 서버)
+    ** COS 라이브러리
+    - MultypartRequest 객체를 이용하여 파일 업로드 구현
+        ( 단점 : 선택적 저장이 불가 / 일괄 저장 )
+  
+  # APACHE (대형 서버)
+    ** Apache Commons 라이브러리
+        ( 단점 : 같은 이름이 저장되면 덮어씌움 )
+
+    * 사용방법
+      1. from 태그 작성
+<code> <samp>
+  <form enctype="multipart/form-data">
+    ...
+  </form>
+</samp></code>
+      2. 컨트롤러 설정
+        파라미터
+          - MultipartHttpServletRequest request 인터페이스를 통해서 parameter를 전달받음 ( getParameter() 뿐만 아니라 getFile() 메소드를 이용하여 파일을 전달) 
+          - @RequestParam String uploader
+          - @Requestparam MultiFile uploadFile
+<code></code>
+<code></code>
+<code></code>
+<code></code>
+<code></code>
+<code></code>
+
+

@@ -1,0 +1,68 @@
+~/.vimrc 플러그인 설치 텍스트
+<code>
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'grvcoelho/vim-javascript-snippets'
+
+" eslint
+Plugin 'w0rp/ale'
+
+" autocomplete
+Plugin 'valloric/YouCompleteMe'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+
+Plugin 'airblade/vim-gitgutter'
+call vundle#end()		" required
+filetype plugin indent on 	"required
+let g:jsx_ext_required=0
+let g:jellybeans_use_lowcolor_black=0
+colorscheme jellybeans
+if has ("syntax")
+		syntax on
+endif
+
+set nu
+set autoindent
+set cindent
+set tabstop=4
+set shiftwidth=4
+set paste!
+set showmatch
+
+
+
+" \nt >> open work tree
+map <Leader>nt <ESC>:NERDTreeToggle<CR>
+
+" ctrl+j >> Snippets
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+
+" set es lint
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" set code formatter
+let b:ale_fixers = ['eslint']
+let g:ale_fix_on_save = 1
+</code>
