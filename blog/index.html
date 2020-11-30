@@ -18,6 +18,8 @@
   <div id="app" style="display: none;" 
     @touchmove="handleAppMousemove(event)"
     @touchend="handleAppMouseup(event)"
+    @mousemove="handleAppMousemove(event)"
+    @mouseup="handleAppMouseup(event)"
     draggable="false"
   >
     <div class="wrap" >
@@ -54,27 +56,29 @@
                   <select v-model="selectedCategoryItemName" @change="selectCategoryItemName('clearTitle')">
                     <option v-for="name in categoryItemNameList" v-bind:value="name">{{name}}</option>
                   </select>
-                  <select v-model="pageListSortStandard">
+                  <select v-model="pageListSortStandard" @change="sortCategoryItem()">
                     <option v-for="item in pageListSortStandardList" v-bind:value="item">{{item}}</option>
                   </select>
-                  <select v-model="pageListSortMethod">
+                  <select v-model="pageListSortMethod" @change="sortCategoryItem()">
                     <option v-for="item in pageListSortMethodList" v-bind:value="item">{{item}}</option>
                   </select>
                 </div>
               </form>
             </div>
-            <div v-if="pageList.length !== 0">
-              <!--@mousedown.prevent="handleContentListMousedown(event)"-->
+
+            <div v-if="pageList.length !== 0"
+              @touchstart="handleContentListMousedown(event)"
+            >
               <div class="content-list"
                 v-bind:class="{flexwrap: isWrapContentsList}" 
-                v-bind:style="{left: contentListPosition + 'rem'}"
-                @touchstart="handleContentListMousedown(event)"
+                v-bind:style="{left: contentListPosition + 'rem'}"  
+                @mousedown.prevent="handleContentListMousedown(event)"
                 draggable="true"
               >
                 <a href="#" v-for="page in pageList" class="item btn" @click="getPage(page)">
                   <img class="sumnail-img" v-bind:src="page.depth2 | iconSrc" draggable="false" />
                   <div class="title" draggable="false" >
-                    <span>{{page.title}}</span>
+                    <div>{{page.title}}</div>
                   </div>
                 </a>
               </div>

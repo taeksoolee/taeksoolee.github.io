@@ -296,6 +296,14 @@ const contents = [
     date: "20201126",
   },
   {
+    title: "python mongodb",
+    depth1: schema.python,
+    depth2: schema.python,
+    fileName: "mongodb.htm",
+    desc: "",
+    date: "20201126",
+  },
+  {
     title: "go",
     depth1: schema.go,
     depth2: schema.go,
@@ -518,6 +526,14 @@ const contents = [
     fileName: "mongodb.htm",
     desc: "",
     date: "20201121",
+  },
+  {
+    title: "mongodb sharding",
+    depth1: schema.database,
+    depth2: schema.mongodb,
+    fileName: "sharding.htm",
+    desc: "",
+    date: "20201130",
   },
   {
     title: "redis",

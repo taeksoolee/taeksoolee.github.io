@@ -210,11 +210,14 @@ body::-webkit-scrollbar-thumb {
   overflow-wrap: anywhere;
 }
 
-.content-list-header .item span {
+.content-list-header .item .title>div {
   background: var(--dark-3-color);
   color: var(--light--color);
   padding: .5rem;
-  border-radius: 9px;
+  border-radius: 1px;
+  line-height: 1.3rem;
+  position: relative;
+  top: -5rem;
 }
 
 .sumnail-img {
@@ -536,8 +539,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-
-
 @media screen and (max-width: 1330px) {
   .header {
     margin-left: var(--nav-width);
@@ -634,15 +635,17 @@ body::-webkit-scrollbar-thumb {
   .search-form input{
     margin: 1rem 0;   
   }
-  
 
-}
+  .moving-form {
+    display: none !important;
+  }
 
-@media screen and (max-width: 256px) {
   .header h1 {
     text-align: right;
   }
+}
 
+@media screen and (max-width: 256px) {
   .content-list-form form select {
     margin: 0;
   }

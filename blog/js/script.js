@@ -49,8 +49,8 @@ const app = new Vue({
     tmpPageList: [],
     titleInput: "",
     categoryItemNameList: [],
-    pageListSortStandardList: ["none", "title", "date", "desc"],
-    pageListSortStandard: "none",
+    pageListSortStandardList: ["date", "title", "desc"],
+    pageListSortStandard: "date",
     pageListSortMethodList: ["asc", "desc"],
     pageListSortMethod: "asc",
     sortTmpPageList: [],
@@ -70,6 +70,11 @@ const app = new Vue({
     resetSlider: function () {
       this.contentListPosition = 0;
       this.contentListMovingCnt = 0;
+    },
+    resetSearchForm: function () {
+      this.titleInput = "";
+      this.pageListSortMethod = "asc";
+      this.pageListSortStandard = "date";
     },
     toggleNav: function () {
       this.isOpendNav = !this.isOpendNav;
@@ -122,8 +127,7 @@ const app = new Vue({
         this.selectedPage = page; // metadata 획득
 
         // 목록 닫음
-
-        if(this.window.innerWidth < 812) {
+        if (this.window.innerWidth < 812) {
           this.isHideContentList = true;
         }
 
@@ -163,32 +167,32 @@ const app = new Vue({
 
       this.pageList = pageList;
     },
-    handleAppMouseup: function(e) {
-      if(this.isMovingContentList) { 
+    handleAppMouseup: function (e) {
+      if (this.isMovingContentList) {
         let screenX = e.screenX;
-        if(e.type === 'touchend') {
+        if (e.type === "touchend") {
           screenX = e.changedTouches[0].screenX;
         }
 
         this.isMovingContentList = false;
-        if(this.slidePointX - screenX < -30) {
+        if (this.slidePointX - screenX < -30) {
           // left
           this.slideContentList(true);
-        } else if (this.slidePointX - screenX > 30){
+        } else if (this.slidePointX - screenX > 30) {
           // right
           this.slideContentList(false);
         }
       }
     },
-    handleAppMousemove: function(e) {
+    handleAppMousemove: function (e) {
       this.handleMoveMemeBox(e.touches);
     },
-    handleContentListClick: function(e) {
+    handleContentListClick: function (e) {
       // 작성 예정
     },
-    handleContentListMousedown: function(e) {
+    handleContentListMousedown: function (e) {
       let screenX = e.screenX;
-      if(e.type === 'touchstart') {
+      if (e.type === "touchstart") {
         screenX = e.changedTouches[0].screenX;
       }
 
@@ -196,24 +200,16 @@ const app = new Vue({
       this.slidePointX = screenX;
     },
     slideContentList(isLeft) {
-      // 필요 변수 함수 정의 
+      // 필요 변수 함수 정의
       const blockSize = 14.9;
       const that = this;
       const wiw = this.window.innerWidth;
       const contentViewCnt =
-          wiw > 1256
-            ? 5
-            : wiw > 1017
-            ? 4
-            : wiw > 706
-            ? 3
-            : wiw > 463
-            ? 2
-            : 1;
+        wiw > 1256 ? 5 : wiw > 1017 ? 4 : wiw > 706 ? 3 : wiw > 463 ? 2 : 1;
 
       // 뒤로 더 넘기지 않을때 사용
       function blockingAnimation(isLeft) {
-        if(isLeft) {
+        if (isLeft) {
           that.contentListPosition -= blockSize;
           setTimeout(function () {
             that.contentListPosition += blockSize;
@@ -228,21 +224,24 @@ const app = new Vue({
 
       // 반대편으로 넘길 때 사용
       function overAnimation(isLeft) {
-        if(that.pageList.length <= contentViewCnt) {
+        if (that.pageList.length <= contentViewCnt) {
           blockingAnimation(isLeft);
           return;
         }
 
-        if(isLeft) {
-          that.contentListPosition = - (blockSize * (that.pageList.length - contentViewCnt));
-          that.contentListMovingCnt = that.pageList.length - contentViewCnt ;
+        if (isLeft) {
+          that.contentListPosition = -(
+            blockSize *
+            (that.pageList.length - contentViewCnt)
+          );
+          that.contentListMovingCnt = that.pageList.length - contentViewCnt;
         } else {
           that.contentListPosition = 0;
           that.contentListMovingCnt = 0;
         }
       }
 
-      // /필요 변수 함수 정의 
+      // /필요 변수 함수 정의
       if (isLeft) {
         if (this.contentListMovingCnt <= 0) {
           // blockingAnimation();
@@ -255,7 +254,10 @@ const app = new Vue({
       } else {
         const movingMaxCnt = this.pageList.length - contentViewCnt;
 
-        if (this.contentListMovingCnt >= movingMaxCnt || this.pageList.length < contentViewCnt) {
+        if (
+          this.contentListMovingCnt >= movingMaxCnt ||
+          this.pageList.length < contentViewCnt
+        ) {
           // blockingAnimation();
           overAnimation(isLeft);
           return;
@@ -316,6 +318,8 @@ const app = new Vue({
         this.titleInput = "";
       }
 
+      this.resetSlider();
+
       let tmpPageList = [];
       if (this.selectedCategoryItemName === "all") {
         tmpPageList = this.tmpPageList;
@@ -328,6 +332,28 @@ const app = new Vue({
       this.pageList = tmpPageList;
 
       return tmpPageList;
+    },
+    sortCategoryItem: function () {
+      const method = this.pageListSortMethod;
+      const standard = this.pageListSortStandard;
+
+      const sortResult = [method === "asc" ? 1 : -1, method === "asc" ? -1 : 1];
+
+      this.pageList.sort(function (p, n) {
+        if (p[standard] > n[standard]) {
+          return sortResult[0];
+        }
+
+        if (p[standard] < n[standard]) {
+          return sortResult[1];
+        }
+
+        if (p[standard] === n[standard]) {
+          return 0;
+        }
+      });
+
+      this.resetSlider();
     },
   },
   watch: {
@@ -383,17 +409,6 @@ const app = new Vue({
 
       this.categoryItemNameList = categoryItemNameList;
       this.selectedCategoryItemName = "all";
-    },
-    pageListSortStandard: function (pageListSortStandard, prev) {
-      // 구현해야 함... 미구현
-      if (prev === "none") {
-
-      }
-      console.log(this.pageListSortMethod, pageListSortStandard);
-    },
-    pageListSortMethod: function (pageListSortMethod, prev) {
-      console.log(pageListSortMethod, this.pageListSortStandard);
-      this.sortTmpPageList = this.pageList;
     },
   },
   computed: {

@@ -1,76 +1,104 @@
-<pre>
-[도커 다운로드]
-https://download.docker.com/linux/static/stable/
--qO- https://get.docker.com/ | sh // 이곳저곳에 설치됨
 
-[도커 경로 설정]
- - dockerd -g [경로]
+## 다운로드
+<code>
+  https://download.docker.com/linux/static/stable/
+  -qO- https://get.docker.com/ | sh [설치경로]
+</code>
 
-[도커 명령어]
+## 도커 경로 설정
+<code>
+  $ dockerd -g [경로]
+</code>
+
+## 명령어
 1. 도커 버전 확인
- - docker version
+<code>
+  - docker version
+</code>
 
 2. 컨테이너 실행
- - docker run [이미지명]
-   ㄴ 이미지명 = centos:7 || ubuntu:18.04 || ...
- - 옵션
-   ㄴ -d = 백그라운드 모드
-   ㄴ -p [호스트포트]:[컨테이너포트] = 호스트 포트와 컨테이너 포트 연결
-   ㄴ -v'[호스트경로]:[컨테이너경로]' = 호스트와 컨테이너 디렉토리 공유 (마운트)
-   ㄴ --name = 컨테이너 이름 설정
-   ㄴ --privileged = 리눅스 커널기능 (?)
-   ㄴ -rm = 프로세스 종료 시 컨테이너 자동 제거
-   ㄴ -it = 컨테이너 터미널 입력
- - Example
-   ㄴ docker run --privileged -itd -p 80:8080 -p 3306:3306 -v'/share:/mnt/share' --name test ubuntu:18.04 /usr/sbin/init
-   ㄴ docker run --privileged -itd --net=host -v /share:/mnt/share --name test ubuntu:18.04 /usr/sbin/init
-   itd : 바로 접속안하는 옵션
-   --net=host : 도커깔린 서버 네트워크 그대로
-   -v : 공유폴더 경로
-   /usr/sbin/init : systemctl 건드리는거
+<code>
+  $ docker run [이미지명] // 이미지명 = centos:7 || ubuntu:18.04 || ...
+  // 실행 예시
+  $ docker run --privileged -itd -p 80:8080 -p 3306:3306 -v'/share:/mnt/share' --name test ubuntu:18.04 /usr/sbin/init
+  $ docker run --privileged -itd --net=host -v /share:/mnt/share --name test ubuntu:18.04 /usr/sbin/init
+</code>
+  # opetion
+    -d = 백그라운드 모드
+    -p [호스트포트]:[컨테이너포트] = 호스트 포트와 컨테이너 포트 연결
+    -v'[호스트경로]:[컨테이너경로]' = 호스트와 컨테이너 디렉토리 공유 (마운트)
+    --name = 컨테이너 이름 설정
+    --privileged = 리눅스 커널기능
+    -rm = 프로세스 종료 시 컨테이너 자동 제거
+    -it = 컨테이너 터미널 입력
+    itd : 바로 접속안하는 옵션
+    --net=host : 도커깔린 서버 네트워크 그대로
+    -v : 공유폴더 경로
+    /usr/sbin/init : systemctl 건드리는거
 
-3. 컨테이너 시작 및 종료
- - 시작 : docker start [컨테이너명 or 컨테이너ID]
- - 중지 : docker stop [컨테이너명 or 컨테이너ID]
- - 재시작 : docker start [컨테이너명 or 컨테이너ID]
+  # 컨테이너 시작 및 종료
+<code>
+  //시작 : 
+  $ docker start [컨테이너명 or 컨테이너ID]
+  // 중지 : 
+  $ docker stop [컨테이너명 or 컨테이너ID]
+  // 재시작 : 
+  $ docker start [컨테이너명 or 컨테이너ID]
+</code>
 
-4. 컨테이너 목록 확인
- - docker ps
-   ㄴ 옵션 : -a || --all = 종료된 컨테이너까지 확인
+  # 컨테이너 목록 확인
+<code>
+  $ docker ps
+</code>
+    옵션 : -a || --all = 종료된 컨테이너까지 확인
 
-5. 컨테이너 터미널 접속 (컨테이너 실행 중 가능)
- - docker exec -it [컨테이너명 or 컨테이너ID] /bin/bash
+  # 컨테이너 터미널 접속 (컨테이너 실행 중 가능)
+<code>
+  $ docker exec -it [컨테이너명 or 컨테이너ID] /bin/bash
+</code>
 
-6. 컨테이너 삭제 (컨테이너 종료 후 가능)
- - docker rm [컨테이너명 or 컨테이너ID]
+  # 컨테이너 삭제 (컨테이너 종료 후 가능)
+<code>
+  $ docker rm [컨테이너명 or 컨테이너ID]
+</code>
 
-7. 이미지 삭제
- - docker rmi [이미지명]
+  # 이미지 삭제
+<code>
+  $ docker rmi [이미지명]
+</code>
 
-8. 컨테이너 이미지로 저장
- - docker commit [컨테이너명 or 컨테이너ID] [TAG]
+  # 컨테이너 이미지로 저장
+<code>
+  $ docker commit [컨테이너명 or 컨테이너ID] [TAG]
+</code>
 
-9. 이미지 파일 추출
- - docker export [컨테이너명 or 컨테이너ID] > myimage.tar
+  # 이미지 파일 추출
+<code>
+  $ docker export [컨테이너명 or 컨테이너ID] > myimage.tar
+</code>
 
-10. 추출한 이미지 파일 로드
- - docker load myimage.tar myimage
+  # 추출한 이미지 파일 로드
+<code>
+  $ docker load myimage.tar myimage
+</code>
 
-[도커 초기설정]
-1. CentOS 7 이미지
- 1) docker run -itd --name centos centos:7 /usr/sbin/init
- 2) yum install epel-release
- 3) yum install -y wget
- 4) yum install -y vim
- 5) exit
- 6) docker commit centos myimage
-
-2. Ubuntu 18.04 이미지
- 1) docker run -itd --name ubuntu ubuntu:18.04 /usr/sbin/init
- 2) sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
- 3) apt-get update
- 4) apt-get dist-upgrade -y
- 5) apt-get install -y wget vim build-essential
- 6) exit
- 7) docker commit ubuntu myimage
-</pre>
+## 도커 초기설정
+<code>
+  // CentOS 7 이미지
+  $ docker run -itd --name centos centos:7 /usr/sbin/init
+  $ yum install epel-release
+  $ yum install -y wget
+  $ yum install -y vim
+  $ exit
+  $ docker commit centos myimage
+</code>
+<code>
+  // Ubuntu 18.04 이미지
+  $ docker run -itd --name ubuntu ubuntu:18.04 /usr/sbin/init
+  $ sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
+  $ apt-get update
+  $ apt-get dist-upgrade -y
+  $ apt-get install -y wget vim build-essential
+  $ exit
+  $ docker commit ubuntu myimage
+</code>

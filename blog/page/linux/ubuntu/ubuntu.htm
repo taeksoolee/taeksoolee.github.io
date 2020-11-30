@@ -1,9 +1,40 @@
+## apt advace package manager
+  # apt update와 upgrade 차이
+  # apt와 apt-get 차이
+  # ppa 관련 명령
 <code>
-  apt update와 upgrade 차이 : 
-  apt와 apt-get 차이
+  // ppa 목록 확인
+  $ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+
+  // 특정 ppa 확인
+  // 참고 : https://zetawiki.com/wiki/%EC%9A%B0%EB%B6%84%ED%88%AC_PPA_%EC%A0%9C%EA%B1%B0
+  $ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list | grep [찾을 대상]  
+
+  // ppa 제거
+  $ add-apt-repository -r 'deb https://~'
 </code>
 
-ping, netstat 등 network관련 명령어 다운로드
+  # error
+  의존성 문제 발생한 경우로 사용자가 패키지 설치나 삭제를 잘못 할 경우 발생 / 참고 : https://threenation9.tistory.com/10 [메모장]
+  - E: Sub-process /usr/bin/dpkg returned an error code (1) 
 <code>
-  sudo apt install net-tools
+  $ sudo apt-get update -y; sudo apt-get dist-upgrade -y
+  또는
+  $ sudo apt-get --yes autoremove --purge (오류명 입력 ex. mysql-community-server)
 </code>
+  > apt install 명령시 우분투 /var/lib/dpkg/lock-frontend 잠금 파일을 얻을 수 없습니다.
+    참고 : https://stricky.tistory.com/181 [The DataBase that i am good at]
+
+# ping, netstat 등 network관련 명령어 다운로드
+<code>
+  $ sudo apt install net-tools
+</code>
+
+# ubuntu version 확인
+<code>
+  $ lsb_release 
+  -a, -d
+</code>
+
+
+

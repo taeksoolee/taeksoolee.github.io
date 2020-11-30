@@ -98,26 +98,23 @@
 		# fail
 </code>
 
-
 ## 시간 모듈
 <code>
 	import time
 	import ...
 </code>
 
-
-
-
 ## magic method
   # __name__ : 현재 실행의 모듈을 가리킴
 	// import module일 경우 모듈 이름이되며, main 영역일 경우 __main__이름으로 출력
 
-	# 현재 프로세스가 main 영역일 경우 실행될 코드를 작성
+	> 현재 프로세스가 main 영역일 경우 실행될 코드를 작성
 <code>
 if __name__ == '__main__':
     ...
 </code>
 
+	# __new__ : ?
 
 ## 키보드 컨트롤 모듈 / pyautogui
   * 참고 : https://m.blog.naver.com/PostView.nhn?blogId=engo0308&logNo=221629821989&proxyReferer=https:%2F%2Fwww.google.com%2F
@@ -158,4 +155,26 @@ if __name__ == '__main__':
 	print(sheet['A1'].value)
 	#셀 좌표로 값 출력
 	# print(sheet.cell(1,2).value)
+</code>
+
+## python에서 asterisk(*)
+
+* : args / 가변인자로 사용 가능
+<code>
+	def test(*args):
+		for arg in args:
+			print(arg)
+
+	test(1,2,3) # 1\n2\n3\n
+	test([1,2,3]) # [1,2,3]
+	test(*[1,2,3]) # 1\n2\n3\n
+</code>
+
+* : kwargs / keyword arguments
+<code>
+	def test(**kwargs):
+		for item in kwargs.items():
+			print(item)
+	
+	test(a=1, b=2) # (a, 1)\n(b, 2)
 </code>
