@@ -3,6 +3,7 @@ const category = [
   { name: schema.html },
   { name: schema.css },
   { name: schema.javascript },
+  { name: schema.typescript },
   { name: schema.nodejs },
   { name: schema.java },
   { name: schema.python },

@@ -1,9 +1,16 @@
 const schema = {
   html: "html",
   css: "css",
+  less: "less",
+  sass: "sass",
+  scss: "scss",
+  bootstrap: "bootstrap",
   javascript: "javascript",
   angular: "angular",
+  angularjs: "angularjs",
   react: "react",
+  redux: "redux",
+  next: "next",
   reactNative: "react-native",
   vue: "vue",
   grunt: "grunt",
@@ -72,4 +79,5 @@ const schema = {
   hardware: "hardware",
   algorithm: "algorithm",
   raspberrypi: "raspberrypi",
+  rest: "rest",
 };

@@ -1,0 +1,60 @@
+## directive
+  # 전역 선언
+<code>
+  Vue.directive('upper', {
+    update: function(el) {
+      el.value = el.value.toUpperCase();
+    }
+  })
+</code>
+
+  # 지역 선언
+<code>
+  export default {
+    directives: {
+      upper: {
+        update(el) {
+          el.value = el.value.toUpperCase();
+        }
+      }
+    }
+  }
+</code>
+
+  # 사용 (Vue 내장 디렉티브 : v-model, v-show)
+<code><samp>
+  <div v-upper="'hello world!'"></div>
+  => HELLO WORLD!
+</samp></code>
+    
+
+  # 훅 함수
+    bind : 디렉티브가 처음 엘리먼트에 바인딩될 때 한번 호출
+
+    inserted : 바인딩된 엘리모트가 부모 노드에 삽입되었을 때 호출
+          ( 이 동작은 부모 노드의 존재를 보장)
+      ** 전달인자
+
+    update : 포함하는 컴포넌트가 업데이트된 후 호출
+          ( *자식이 업데이트 되기 전일 가능성 있음)
+          ( 디렉티브의 값은 변경되었거sk 변경되지 않을 수 있지만 바인딩의 현재 값과 이전 값을 비교하여 불필요한 업데이트를 건너 뛸 수 있음)
+          ** 전달인자
+
+    componentUpdate : 포함하고 있는 컴포넌트와 그 자식들이 업데이트 된 후 호출
+
+    unbind : 디렉티브가 엘리먼트로부터 언바인딩된 경우에 한번 호출
+
+  # 전달인자
+    > el : 바인딩 된 엘리먼트
+    > binding : {
+      arg : v-upper:hello >> hello
+      name : 디렉티브 이름, v-접두사가 제거된 상태로 제공
+      value : 디렉티브에서 전달받은 값
+      oldValue : 이전 값, update와 componentUpdated에서만 사용 가능
+      expression : 표현식 문자열. value 데이터가 string화
+      modlfiers : 디렉티브에 dot notation으로 값을 전달할 때 그 값이 객체 형식으로 전달되는 프로퍼티
+        ex) v-upper.great >> {great: true}
+    }
+    > vnode : Vue 컴파일러가 만든 버추얼 노드. VNode API에 전체 설명이 있음
+    > oldVnode : 이전의 버추렁 노드. update와 componentUpdated에서만 사용 가능
+

@@ -1,0 +1,111 @@
+## Vue CLI 3.x
+ * 8.9 버전 이상의 Node.js 필요
+
+  # 설치
+<code>
+    $ npm install --global @vue/cli
+    $ vue --version
+
+    // 2.x Template을 가져오기 위해 사용
+    $ npm install --global @vue/cli-init
+</code>
+
+  # 프로젝트 생성
+<code>
+  $ vue create [프로젝트명, 대문자 사용불가]
+  - preset
+    > Default ([Vue 2] babel, eslint)
+    > Default ([Vue 3] babel, eslint)
+    > Manually select features : 추가 설치 가능
+      Choose Vue version(2.x, 3.x), 
+      Babel, 
+      Typescript, 
+      Progreeive Web App (PWA) Support,
+      Router( + history 기능 여부), 
+      Vuex, 
+      CSS Pre-processors,
+        > Sass/SCSS[with dart-sass]
+        > Sass/SCSS[widt node-sass]
+        > Less
+        > Stylus
+      Linter / Formatter
+        > ESLint with error prevention only
+        > ESLint + Airbnb config
+        > ESLint + Standard config
+          - Lint on save
+          - List and fix on commit
+        > ESLint + Prettier 
+      Unit Testing(Mocha), 
+      E2E Testing
+  - package manager
+    > Yarn , NPM
+</code>
+
+  # vue ui ( Vue 프로젝트 매니저 실행 )
+<code>
+  $ vue ui
+</code>
+
+  # vue app 명령어
+<code>
+  // 가상서버 생성
+  $ npm run serve
+  // 패키지 빌드
+  $ npm run build
+  // 검사
+  $ npm run lint
+</code>
+
+## Plugin
+  * vue에서 공식적으로 제공하는 플러그인: @vue/cli-plugin-*
+  * npm이나 다른 곳에서 배포되고 있는 플러그인: vue-cli-plugin-*
+
+  # vue-cli-plugin-axios
+<code>
+  $ vue add axios 
+  // 또는
+  $ vue add vue-cli-plugin-axios
+</code>
+
+  # vuetify : style 라이브러리
+<code>
+  vue add vuetify
+</code>
+
+
+## props 설정
+<code><samp>
+  export default {
+    props: {
+      /* ✓ GOOD */
+      myProp: Number,
+      anotherProp: [Number, String],
+      myFieldWithBadType: {
+        type: Object,
+        default: function() {
+          return {}
+        },
+      },
+      myOtherFieldWithBadType: {
+        type: Number,
+        default: 1,
+      },
+      /* ✗ BAD */
+      myProp: "Number",
+      anotherProp: ["Number", "String"],
+      myFieldWithBadType: {
+        type: "Object",
+        default: function() {
+          return {}
+        },
+      },
+      myOtherFieldWithBadType: {
+        type: "Number",
+        default: 1,
+      },
+    }
+  }
+  </script>
+</samp></code>
+
+

@@ -85,13 +85,50 @@
 </samp></code>
 
 
+  # event bus
+<code>
+  // EventBus 생성
+  EventBus = new Vue();
 
+  // 발생 - emit
+  const component = new Vue {
+    ...
+    methods: {
+      someMethod: function() {
+        EventBus.$emit('use-eventbus', somedata)
+      }
+    }
+    ...
+  }
 
+  // 사용 - on (off), once (한번만 사용)
+  const otherComponent = new Vue {
+    ...
+    methods: {
+      someMethod: function() {
+        EventBus.$on('use-eventbus', function(somdata) {
+          ...
+          EventBus.$off('use-eventbus') // 삭제시
+        })
+      }
+    }
+    ...
+  }  
+</code>
 
+  # filter
+<code>
+  // filter 정의
+  var app = new Vue({
+    ...
+    filters: {
+      myFilter: function(text) {
+        return text + '!!'
+      }
+    },
+    ...
+  })
 
-
-
-
-
-
-
+  // filter templage 사용
+  {{ 'hello world' | myFilter }} // output : hello world!!
+</code>
