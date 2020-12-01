@@ -184,6 +184,14 @@ const contents = [
     date: "20201121",
   },
   {
+    title: "dotenv(환경변수 설정)",
+    depth1: schema.nodejs,
+    depth2: schema.nodejs,
+    fileName: "dotenv.htm",
+    desc: "",
+    date: "20201121",
+  },
+  {
     title: "express",
     depth1: schema.nodejs,
     depth2: schema.express,

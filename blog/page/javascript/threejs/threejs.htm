@@ -4,9 +4,255 @@
 ## 기본 사용 방법
 
   # 다운로드
-<code>
+<code><smamp>
+  // 1. npm
   npm install three
+
+  // 2. download : http://threejs.org/
+  wget https://codeload.github.com/mrdoob/three.js/zip/master
+
+  // 3. gitclone 
+  git clone https://github.com/mrdoob/three.js.git
+</smamp></code>
+
+  # THREE 객체 사용
+<code><samp>
+  <!-- 1. script -->
+  <script src="/build/three.js"></script>
+  <script src="/build/three.min.js"></script>
+
+  // 2. import
+  // build 경로 지정
+  // THREE 란이름으로 사용
+  import * as THREE from '/build/three.module.js';
+</samp></code>
+
+  # 필수 작성 요소
+<code>
+  // 1. scene 생성
+  scene = new THREE.Scene();
+
+  // 2. camera 생성
+  @ param : fov, aspect, near, far
+  camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+  scene.add(camera);
+
+  
+  
+
+  // 3. renderer 생성
+  renderer = new THREE.WebGLRenderer( { antialias: true } );
+  renderer.setPixelRatio( window.devicePixelRatio ); // 비율 설정
+  renderer.setSize( window.innerWidth, window.innerHeight ); // 크기 설정
+
+  // 4. (선택) 창크기 변화 이벤트 설정
+  window.addEventListener( 'resize', onWindowResize, false );
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    camera.updateProjectionMatrix(); // camera 변경 사항 감지 * 카메라 투영 매트릭스를 업데이트합니다. 매개 변수 변경 후에 호출해야합니다.
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+
+  // 5. animate 설정 / 애니메이션도 추가시 animate 함수에 추가
+  animate();
+
+  function animate() {
+    requestAnimationFrame( animate );
+    renderer.render( scene, camera );
+  }
 </code>
 
-## 공부해야할 것들
-  # 사원수 개념
+
+## 기타 객체(object)
+  # 안내선
+<code>
+  const axesHelper = new THREE.AxesHelper( length: number );
+  scene.add( axesHelper );
+</code>
+
+
+## 주요 객체(object) 사용
+  # mesh obj
+<code>
+  // cube (box)
+  const geometry = new THREE.BoxBufferGeometry( 5, 5, 5 );
+  const material = new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: true } );
+  const mesh = new THREE.Mesh( geometry, material );
+
+  // cylinder (원기둥, 코인)
+
+  // ball
+
+  // triangle
+</code>
+
+  # Orbincontroller
+<code>
+  import { OrbitControls } from './jsm/controls/OrbitControls.js';
+  
+  const controls = new OrbitControls( camera, renderer.domElement );
+  controls.target.set( 0, 100, 0 );
+  controls.update();
+
+  // 비활성화
+  controls.dispose();
+
+  // addEventListener
+  controls.addEventListner('change', function() {
+    // 카메라가 변경될때 호출
+    ...
+  });
+
+  // reset
+  controls.saveState();
+  controls.reset(); // saveState의 위치로 이동
+
+  // 카메라 회전 금지
+  controls.enableRotation = false; //defualt: true
+
+  //  horizontally angle control
+  controls.minAzimuthAngle = -Math.PI / 4;
+  controls.maxAzimuthAngle = Math.PI / 4;
+
+  // vertical angle control
+  controls.minPolarAngle = -Math.PI / 2;
+  controls.maxPolarAngle = Math.PI / 2;
+
+  // custom OrbitControls code
+  OrbitControls = function() {
+    this.update() ...
+
+    // 사용 예: controls.rotate(degree: number);
+    this.rotate = function(degree) {
+      rotateLeft(degree);
+      scope.update();
+    }
+  }
+
+  // orbit control 사용시 mesh로 이동하는 함수
+  function goCameraPostion(mesh) {
+    const {x, y, z} = mesh.position;
+
+    controls.reset();
+    camera.position.set(parseFloat(x)-5, parseFloat(y)+3, parseFloat(z)+20); // 크기에 따라 위치 정의필요
+    controls.target.set(parseFloat(x), parseFloat(y), parseFloat(z));
+    controls.update();
+  }
+
+
+</code>
+
+  # FBXLoader
+<code>
+  const loader = new FBXLoader();
+    loader.load( 'models/fbx/Samba Dancing.fbx', function ( object ) {
+      mixer = new THREE.AnimationMixer( object );
+      // (선택) 애니메이션
+      // const action = mixer.clipAction( object.animations[ 0 ] );
+      // action.play();
+
+      object.traverse( function ( child ) {
+        if ( child.isMesh ) {
+          // (선택) 그림자 설정
+          // child.castShadow = true;
+          // child.receiveShadow = true;
+        }
+      });
+
+      scene.add( object );
+    });
+</code>
+
+  # OBJLoader
+<code>
+  
+</code>
+
+  # animation track
+<code><samp>
+  // 1. keyframe 생성 / @ parmas : actionType: string, timmer: array on number, values : array on number
+  // POSITION (위치)
+  const positionKF = new THREE.VectorKeyframeTrack( '.position', [ 0, 1, 2 ], [ 0, 0, 0, 30, 0, 0, 0, 0, 0 ] ); // 1초에 30, 0, 0 2초에 0,0,0
+
+  // SCALE (크기)
+  const scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
+
+  // ROTATION (기울기)
+  // Rotation should be performed using quaternions, using a THREE.QuaternionKeyframeTrack
+  // Interpolating Euler angles (.rotation property) can be problematic and is currently not supported
+
+  // set up rotation about x axis
+  const xAxis = new THREE.Vector3( 1, 0, 0 );
+
+  const qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
+  const qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
+  const quaternionKF = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 1, 2 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
+
+  // COLOR (색)
+  const colorKF = new THREE.ColorKeyframeTrack( '.material.color', [ 0, 1, 2 ], [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ], THREE.InterpolateDiscrete );
+
+  // OPACITY (투명도)
+  const opacityKF = new THREE.NumberKeyframeTrack( '.material.opacity', [ 0, 1, 2 ], [ 1, 0, 1 ] );
+
+  // 2. clip 생성
+  const clip = new THREE.AnimationClip( 'Action', 3, [ scaleKF, positionKF, quaternionKF, colorKF, opacityKF ] );
+
+  // 3. mixer 생성 ( mixer는 animte 함수에서 사용함으로 전역 변수로 설정할 것 )
+  let mixer = new THREE.AnimationMixer( mesh ); // 인자로 애니메이션 실행할 object를 주입
+
+  // 4. clipAction 설정
+  const clipAction = mixer.clipAction( clip );
+
+  // (선택) 루프 횟수 설정
+  // clipAction.setLoop ( loopMode : Number, repetitions : Number ) : AnimationAction
+  // clipAction.setLoop(2201, 1); // 한번 실행
+
+  // (선택) 애니메이션 실행 후 변화 유지
+  // clipAction.clampWhenFinished = true
+
+  // 5. clipaAction 실행
+  clipAction.play();
+
+  // 6. animate 함수 추가
+  animate() {
+    ...
+    const delta = clock.getDelta();
+    if(mixer) {
+      mixer.update(delta);
+    }
+    ...
+  }
+
+</samp></code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 개념
+  # 사원수(quaternion) 개념
