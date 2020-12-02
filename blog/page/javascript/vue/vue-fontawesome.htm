@@ -1,0 +1,37 @@
+## npm download
+
+  # fontawesome-core(필수), vue-fontawesome(필수), solid-icons 설치
+<code>
+  $ npm install --save-dev @fortawesome/fontawesome-svg-core 
+  $ npm install --save-dev @fortawesome/vue-fontawesome
+  $ npm install --save-dev @fortawesome/free-solid-svg-icons 
+
+  // 한번에 받기
+  $ npm install --save-dev @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons
+</code>
+
+  # 아이콘 설치
+<code>
+  // 무료
+  @fortawesome/free-solid-svg-icons 
+  @fortawesome/free-brands-svg-icons 
+  @fortawesome/free-regular-svg-icons
+
+  // 유료
+  @fortawesome/pro-solid-svg-icons 
+  @fortawesome/pro-regular-svg-icons 
+  @fortawesome/pro-light-svg-icons 
+  @fortawesome/pro-duotone-svg-icons
+</code>
+
+  # vue script에서 아이콘사용 ( 실패 )
+<code>
+  import { library } from '@fortawesome/fontawesome-svg-core'
+  import { FontAAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+  import { user } from '@fortawesome/free-solid-svg-icons'
+
+  library.add(user)
+
+  Vue.component('font-awesome-icon', FontAAwesomeIcon)
+</code>
