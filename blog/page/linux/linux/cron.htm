@@ -1,0 +1,40 @@
+## cron (실행)
+  * 정기적으로 같은 작업을 할 때 사용.
+  * 일정 시간마다 자동으로 실행.
+  * 윈도우 환경의 작업 스케줄러와 비슷한 기능
+
+## crontab (설정)
+  * 스케줄 시간을 설정 관리
+  * 실행할 프로그램을 설정 관리
+
+  # crontab 파일 경로
+    > 개인 유저 : /var/spool/cron/crontabs
+    > ROOT : 
+      /etc/crontab
+      /etc/cron.d
+      /etc/cron.daily/
+      /etc/cron.weekly/
+      /etc/cron.hourly/
+      /etc/cron.monthly/  
+
+      /etc/cron.d/ 디렉토리
+
+  # 개별 사용자 명령어
+<code>
+  // 등록
+  $ crontab -e 
+  // 확인
+  $ crontab -l
+  // 삭제
+  $ crontab -r
+</code>
+
+  # ROOT 사용자 명령어
+<code>
+  // 등록 ([사용자명] 사용자의 crontab 내용을 작성하거나 수정)
+  $ crontab -u [사용자명] -e 
+  // 확인
+  $ crontab -u [사용자명]-l
+  // 삭제
+  $ crontab -u [사용자명] -r
+</code>

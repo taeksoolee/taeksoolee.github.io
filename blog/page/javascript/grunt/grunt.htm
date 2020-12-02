@@ -1,0 +1,88 @@
+## Grunt
+  Grunt is a task-based command line build tool for JavaScript projects
+
+## 사용 순서
+  # Grunt cli 설치
+<code>
+  $ npm install -global grunt-cli
+</code>
+
+  # 프로젝트 초기화
+<code>
+  $ npm install --save-dev grunt
+</code>
+
+  # 프로젝트 grunt 설치
+<code>
+  $ npm install grunt --save-dev
+</code>
+
+  # gruntfile.js 파일 생성
+<code>
+  module.exports = function (grunt) {
+    grunt.initConfig({
+      pkg: grunt.file.readJSON('package.json'),
+      concat:{
+        basic: {
+            src: [
+              [소스1],
+              [소스2],
+              ...
+            ], //* 앞에서부터 순서대로 합쳐짐
+            dest: [concat 결과] //concat 결과 파일
+        }
+      },
+      uglify:  {
+        options: {
+          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> / ' //파일의 맨처음 붙는 banner 설정
+        },
+        build: {
+          src: [concat 결과],
+          dest: [uglify 결과]
+        }
+      }, 
+    });
+
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['uglify', 'concat']); // grunt
+    grunt.registerTask('uglify', ['uglify']); // grunt uglify
+  }
+</code>
+  # (필요시) grunt plugin 설치
+<code>
+  $ npm install --save-dev grunt-contrib-concat
+  $ npm install --save-dev grunt-contrib-uglify
+  $ npm install --save-dev grunt-contrib-es6
+</code>
+
+
+## grunt babel ( https://github.com/babel/grunt-babel )
+  # babel 설치
+<code>
+  // For Babel 7.x and grunt-babel v8
+  $ yarn add --dev grunt-babel @babel/core @babel/preset-env
+  // For Babel 6.x and grunt-babel v7
+  $ yarn add --dev grunt-babel@7 babel-core babel-preset-env
+</code>
+  # gruntfile.js 설정
+<code>
+  grunt.initConfig({
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['@babel/preset-env']
+      },
+      dist: {
+        files: {
+          'dist/app.js': 'src/app.js'
+        }
+      }
+    }
+  });
+  
+  grunt.loadNpmTasks('grunt-babel');
+  
+  grunt.registerTask('default', ['babel']);
+</code>

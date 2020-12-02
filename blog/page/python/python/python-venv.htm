@@ -1,29 +1,62 @@
-1. Virtualenv
+## python-env (venv)
 <code>
-  pip install virtualenv
-  cd [venv디렉토리]
-  virtualenv venv
+  $ apt install python3-env
+
+  $ cd [디렉토리명]
+  $ python -m venv .venv
+
+  // (선택) gitignore 설정
+  $ echo '.venv' >> .gitignore
+
+  // 실행
+  $ source ./.venv/bin/activate
+
+  $ pip install [패키지명]
+
+  // 가상환경 나가기
+  $ deactivate
+</code>
+
+## Virtualenv
+<code>
+  $ pip install virtualenv
+  
+  $ virtualenv [venv명]
+  $ cd [venv명]
+
+  $ source ./bin/activate
+
+  $ pip install [패키지명]
+
+  $ deactivate
+</code>
+
+  # requirements.txt 파일 사용
+<code>
+  " requirements 파일 저장
+  $ pip freeze > requirements.txt 
+
+  " 설치
+  $ pip install -f requirements.txt
+  또는
+  $ pip download $PATH -r requirements.txt
+</code>
+
+## pipenv ( 버츄얼 환경의 단점을 개선 )
+<code>
+  $ pip install pipenv
+  $ pipenv install 
+  $ pipenv shell
 </code>
 
 <code>
-  pip install -f requirements.txt >> 패키지 저장 ( freeze 필요 )
+  $ pipenv install [패키지] --dev
 </code>
 
-2. pipenv ( 버츄얼 환경의 단점을 개선 )
-<code>
-  pip install pipenv
-  pipenv install 
-  pipenv shell
-</code>
-
-<code>
-  pipenv install [패키지] --dev
-</code>
-
-3. conda ( 데이터 사이언티스트 등 필요패지지가 설치 되어있음 : Numpy / Scipy 등 )
+## conda ( 데이터 사이언티스트 등 필요패지지가 설치 되어있음 : Numpy / Scipy 등 )
 [설치 후...]
 <code>
-  conda create --name [가상환경 이름] python = [파이썬 버전]
+  $ conda create --name [가상환경 이름] python = [파이썬 버전]
   환경 내보내기 : conda env export > environment.ymi
   환경 재생성 : conda env create -f envirmnment.ymi
 </code>

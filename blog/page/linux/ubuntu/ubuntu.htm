@@ -25,16 +25,113 @@
   > apt install 명령시 우분투 /var/lib/dpkg/lock-frontend 잠금 파일을 얻을 수 없습니다.
     참고 : https://stricky.tistory.com/181 [The DataBase that i am good at]
 
-# ping, netstat 등 network관련 명령어 다운로드
+## network관련 명령어(ping, netstat 등) 다운로드
 <code>
   $ sudo apt install net-tools
 </code>
 
-# ubuntu version 확인
+## ubuntu version 확인
 <code>
   $ lsb_release 
   -a, -d
 </code>
+
+## chrome 다운로드
+<code>
+  $ sudo apt-get install libxss1 libappindicator1 libindicator7
+  $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  $ sudo apt install ./google-chrome*.deb
+</code>
+
+## wine
+  # 다운로드
+<code>
+  $ sudo dpkg --add-architecture i386
+
+  $ wget -nc https://dl.winehq.org/wine-builds/Release.key
+  $ sudo apt-key add Release.key
+    " E: gnupg, gnupg2 and gnupg1 do not seem to be installed, but one of them is required for this operation
+    " => $ apt update && apt-get install -y gnupg
+    " => 참고: https://qastack.kr/programming/50757647/e-gnupg-gnupg2-and-gnupg1-do-not-seem-to-be-installed-but-one-of-them-is-requ
+
+  $ sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+    " -bash: apt-add-repository: command not found
+    " => s1. $ sudo apt install python-software-properties
+    " => s2. $ sudo apt-get install software-properties-common
+    " => 참고 : https://nancom.tistory.com/119
+
+  $ sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main'
+    " E: The repository 'https://dl.winehq.org/wine-builds/ubuntu focal InRelease' is not signed.
+    " => $ wget -nc https://dl.winehq.org/wine-builds/winehq.key
+    " => $ sudo apt-key add winehq.key
+    " => $ sudo apt update
+
+  $ sudo apt-get update
+  $ sudo apt-get install --install-recommends winehq-stable
+
+  $ which wine
+  $ wine --version
+</code>
+
+  # ~/.wine 폴더 생성
+<code>
+  WINEARCH=win32 winecfg
+</code>
+
+  # Winetricks 설치 (DDL과 라이브러리 설치시 필요)
+<code>
+  $ sudo apt install Winetricks
+  $ winetricks gdiplus wmp9 riched20
+</code>
+
+
+  # zip, unzip
+<code>
+  $ sudo apt install zip, unzip
+</code>
+
+## 터미널 한글 설정
+    * 참고 : https://beomi.github.io/2017/07/10/Ubuntu-Locale-to-ko_KR/
+    * 참고 : https://jepi.tistory.com/153
+
+  # 한글 팩 설치
+<code>
+  $ apt install language-pack-ko
+  $ apt install language-pack-ko-base
+  $ apt install localepurge
+    // euckr 선택
+</code>
+
+  # locales 파일 내용 추가
+<code>
+  // /var/lib/locales/supported.d/language-pack-ko
+  ...
+  ko_KR.EUC-KR EUC-KR
+</code>
+
+  # 설정 명령어 실행
+<code>
+  $ locale-gen --purge
+  $ dpkg-reconfigure locales
+</code>
+
+  # 설정 파일 LANG 추가
+<code>
+  // /etc/environment 파일
+  ...
+  LANG="ko_KR.UTF-8"
+
+  // /etc/profile 파일
+  ...
+  LANG="ko_KR.UTF-8"
+</code>
+
+  # 절차 후 꼭 재부팅 할것
+
+
+
+
+
 
 
 

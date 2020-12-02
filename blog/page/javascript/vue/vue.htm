@@ -54,12 +54,13 @@
 ## event
 
   # 이벤트 수식어
-  .stop
-  .prevent
-  .capture
-  .self
-  .once
-  .passive
+  .stop : 이벤트가 다음 요소로 흐르는 것을 막는 이벤트 수식어 (event.stopPropagation()이 호출)
+  .prevent : 태그의 기본 동작을 막는 이벤트 수식어 (vent.preventDefault()를 호출)
+  .capture : 버블링 단계가 아닌 캡처 단계에서 이벤트 핸들러를 실행
+  .self : event.target과 이벤트 핸들러를 정의한 요소가 같을 때 이벤트 핸들러를 실행하도록 하는 이벤트 수식어
+  .once : 이벤트 핸들러를 단 한 번만 실행하도록 하는 이벤트 수식어
+  .passive : 터치 혹은 휠 이벤트로 발생하는 스크롤 성능을 향상시키는 이벤트 수식어
+          (** 더 알아보기 **)
 
 <code><samp>
   <!-- 클릭 이벤트 전파가 중단됩니다 -->
