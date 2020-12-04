@@ -75,8 +75,7 @@ const Counter = {
 }
 </code>
 
-  # mapState helper
-    * 모듈 환경
+  # 컴포넌트에서 사용 : mapState
 <code>
   import { mapState } from 'vuex'
 </code>
@@ -120,7 +119,7 @@ computed: {
 </code>
 
 ## getters : 저장소 상태를 기반하는 상태를 계산
-  # 사용예제
+  # 기본 사용법
 <code>
 const store = new Vuex.Store({
   state: {
@@ -132,7 +131,241 @@ const store = new Vuex.Store({
   getters: {
     doneTodos: state => {
       return state.todos.filter(todo => todo.done)
+    },
+    // 두번째 인자로 getters를 받을 수 있음
+    doneTodosCount: (state, getters) => {
+      return getters.doneTodos.length
+    },
+    // 메소드 유형 : 저장소의 배열을 검색할 때 특히 유용
+    getTodoById: (state) => (id) => {
+      return state.todos.find(todo => todo.id === id)
+    }
+  }
+})
+
+// 외부 접근
+store.getters.doneTodos
+// 외부 접근 : 메소드 유형
+store.getters.getOdoById(1)
+
+// 다른 컴포넌트 내부
+const otherComponent = {
+  ...,
+  computed: {
+    doneTodosCount () {
+      return this.$store.getters.doneTodosCount
+    }
+  }
+}
+</code>
+
+  # 컴포넌트에서 사용 : mapGetters
+<code>
+import { mapGetters } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+    // getter를 객체 전개 연산자(Object Spread Operator)로 계산하여 추가합니다.
+    // 같은이름 사용시 : array
+    ...mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // ...
+    ]),
+    // 같은이름 사용시 : object
+    ...mapGetters({
+      a: 'doneTodosCount',
+      b: 'anotherGetter',
+      // ...
+    }),
+  }
+}
+</code>
+
+## 변이 (mutation)
+  * Vuex에서 변이는 동기적으로 트랜잭션
+  * 변이는 무조건 동기적으로 작성해야함 
+    : 콜백에서 수행 된 모든 상태 변이는 본질적으로 추적 할 수 없음
+
+  # 사용예제
+<code>
+  const store = new Vuex.Store({
+    state: {
+      count: 1
+    },
+    mutations: {
+      increment (state) {
+        // 상태 변이
+        state.count++
+      },
+      // 페이로드를 가진 커밋
+      incrementWidthPayload (state, payload) {
+        state.count += payload.n
+      }
+    }
+  })
+
+  // 일반 commit
+  store.commit('increment')
+  store.commit({
+    type: 'increment'
+  }) // 객체 스타일
+
+  // payload commit
+  store.commit('incrementWidthPayload', {n: 10})
+  store.commit({
+    type: 'increment'
+    n: 10
+  }) // 객체 스타일
+</code>
+
+  # Vue의 반응성 규칙을 따르는 변이
+    * Vuex 저장소의 상태는 Vue에 의해 반응하므로, 
+    상태를 변경하면 상태를 관찰하는 Vue 컴포넌트가 자동으로 업데이트
+    이것은 또한 Vuex 변이가 일반 Vue로 작업 할 때 동일한 반응성에 대한 경고를 받을 수 있음을 의미
+    => s1. 원하는 모든 필드에 앞서 저장소를 초기화
+    => s2. Vue.set(obj, 'newProp', 123)을 사용
+    => s3. 객체를 새로운 것으로 교체 // state.obj = { ...state.obj, newProp: 123 }  
+
+  # (선택) 변이 타입에 상수 사용 : 개발자가 많은 대규모 프로젝트에서 유용
+<code>
+// mutation-types.js
+export const SOME_MUTATION = 'SOME_MUTATION'
+
+// store.js
+import Vuex from 'vuex'
+import { SOME_MUTATION } from './mutation-types'
+
+const store = new Vuex.Store({
+  state: { ... },
+  mutations: {
+    // ES2015에서 계산 된 프로퍼티 이름 기능을 사용하여
+    // 상수를 함수 이름으로 사용할 수 있습니다
+    [SOME_MUTATION] (state) {
+      // 변이 상태
     }
   }
 })
 </code>
+
+  # 컴포넌트에서 사용 : mapMutations - commit
+    * 루트 store 주입 필요 
+<code>
+import { mapMutations } from 'vuex'
+
+export default {
+  // ...
+  methods: {
+    // this.increment()를 this.$store.commit('increment')에 매핑
+    ...mapMutations([
+      'increment' 
+    ]),
+    // this.add()를 this.$store.commit('increment')에 매핑
+    ...mapMutations({
+      add: 'increment' 
+    })
+  }
+}
+</code>
+
+## action - dispatch
+  * 상태를 변이시키는 대신 액션으로 변이에 대한 커밋을 수행
+  * 작업에는 임의의 비동기 작업이 포함될 수 있음
+
+  # 사용에제
+<code>
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  },
+  actions: {
+    increment (context) {
+      // context : 저장소 인스턴스의 같은 메소드들/프로퍼티 세트를 드러내는 컨텍스트 
+      // 객체 실재 저장소 객체와 다름
+      context.commit('increment')
+    }
+    // 전달인자 분해 사용
+    incremetn ({commit}) {
+      commit('increment')
+    }
+    // 비동기 작업 수행
+    incrementAsync ({ commit }) {
+      setTimeout(() => {
+        commit('increment')
+      }, 1000)
+    }
+  }
+})
+
+store.dispatch('increment')
+
+// 객체와 함께 despatch
+store.dispatch({
+  type: 'increment'
+  n: 10
+})
+</code>
+
+  # 컴포넌트에서 사용 : mapActions
+<code>
+import { mapActions } from 'vuex'
+
+export default {
+  // ...
+  methods: {
+    ...mapActions([
+      'increment' // this.increment()을 this.$store.dispatch('increment')에 매핑
+
+      // mapActions는 페이로드를 지원합니다.
+      'incrementBy' // this.incrementBy(amount)를 this.$store.dispatch('incrementBy', amount)에 매핑
+    ]),
+    ...mapActions({
+      add: 'increment' // this.add()을 this.$store.dispatch('increment')에 매핑
+    })
+  }
+}
+</code>
+
+  # 액션 구성하기
+<code>
+actions: {
+  actionA ({ commit }) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        commit('someMutation')
+        resolve()
+      }, 1000)
+    })
+  },
+  actionB ({ dispatch, commit }) {
+    return dispatch('actionA').then(() => {
+      commit('someOtherMutation')
+    })
+  }  
+}
+</code>
+
+  # 액션 구성하기(async / await)
+<code>
+// getData() 및 getOtherData()가 Promise를 반환한다고 가정합니다.
+actions: {
+  async actionA ({ commit }) {
+    commit('gotData', await getData())
+  },
+  async actionB ({ dispatch, commit }) {
+    await dispatch('actionA') // actionA가 끝나기를 기다립니다.
+    commit('gotOtherData', await getOtherData())
+  }
+}
+</code>
+
+## 모듈
+  * 참고 : https://vuex.vuejs.org/kr/guide/modules.html
+  * 하나의 vuex 저장소는 하나의 단일 트리를 사용
+  * application 규모가 커짐에 따라 분리 관리가 필요할 경우 사용

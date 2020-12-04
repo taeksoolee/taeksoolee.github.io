@@ -206,7 +206,8 @@ const contents = [
     depth3: schema.vue,
     depth4: schema.vue,
     fileName: "vuex.htm",
-    desc: "",
+    desc:
+      "state, 상태, getters, mutation, 전이, mapState, mapGetters, mapMutations",
     date: "20201201",
   },
   {
@@ -278,6 +279,16 @@ const contents = [
     fileName: "vue-fontawesome.htm",
     desc: "",
     date: "20201202",
+  },
+  {
+    title: "vue-animation",
+    depth1: schema.javascript,
+    depth2: schema.vue,
+    depth3: schema.vue,
+    depth4: schema.vue,
+    fileName: "vue-animtaion.htm",
+    desc: "",
+    date: "20201204",
   },
   {
     title: "babel",
