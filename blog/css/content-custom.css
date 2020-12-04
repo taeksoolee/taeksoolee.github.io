@@ -36,13 +36,38 @@
   display: none;
 }
 
-
-.content-icon-img {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .5rem;
-}
-
 h1 {
   font-size: 3rem;
+}
+
+.content img {
+  width: 50%;
+  margin: 0 25%;
+}
+
+.content-icon-img {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin: 0 !important;
+  margin-right: .5rem !important;
+}
+
+
+@media screen and (max-width: 796px) {
+  .content img {
+    width: 80%;
+    margin: 0 10%;
+  
+  }
+}
+@media screen and (max-width: 568px) {
+  .content img {
+    width: 100%;
+    margin: 0;
+  
+  }
+}
+
+@media screen and (max-width: 256px) {
+
 }

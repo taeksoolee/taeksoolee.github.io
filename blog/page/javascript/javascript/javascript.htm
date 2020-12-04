@@ -1,61 +1,3 @@
-## fullscreen API
-  # 풀스크린 설정 (DOM 객체에서 호출)
-<code>
-document.documentElement 
-.requestFullscreen
-.webkitRequestFullscreen
-.mozRequestFullScreen
-.msRequestFullscreen
-</code>
-  # 풀스크린 해제 (Document 객체에서 호출)
-<code>
-document
-.exitFullscreen
-.webkitExitFullscreen
-.mozCancelFullScreen
-.msExitFullscreen
-</code>
-
-  # 사용 예제
-<code>
-var docV = document.documentElement;
-function openFullScreenMode() {
-  if (docV.requestFullscreen)
-      docV.requestFullscreen();
-  else if (docV.webkitRequestFullscreen)
-      docV.webkitRequestFullscreen();
-  else if (docV.mozRequestFullScreen)
-      docV.mozRequestFullScreen();
-  else if (docV.msRequestFullscreen)
-      docV.msRequestFullscreen();
-}
-
-function closeFullScreenMode() {
-    if (docV.exitFullscreen)
-        .exitFullscreen();
-    else if (docV.webkitExitFullscreen)
-        .webkitExitFullscreen();
-    else if (docV.mozCancelFullScreen)
-        .mozCancelFullScreen();
-    else if (docV.msExitFullscreen)
-        .msExitFullscreen();
-}
-</code>
-
-## DOM
-  # css root 속성 컨트롤 예
-<code>
-// .css
-:root {
-  --my-style: 1rem;
-}
-
-// .js
-document.documentElement.style.setProperty('--my-style', 'value');
-document.documentElement.style.getProperty('--my-style');
-</code>
-
-
 ## fetch API
   # 기본 사용방법
 <code>
@@ -78,42 +20,6 @@ function test(t) {
 test() // 'undefined text!'
 test('test') // 'test!'
 </code>
-
-
-## event
-  # 버블링 (bublling)
-
-  # 캡쳐링 (capturing)
-
-  # 마우스 이벤트 트리거 (MDN 참고)
-  - click
-  - mouseover
-  - mouseout
-  - mousemove
-  - mousedown
-  - mouseup
-  
-  - drag      ondrag	    요소나 텍스트 블록을 드래그 할 때 발생한다.
-  - dragend   ondragend	  드래그를 끝냈을 때 발생한다. (마우스 버튼을 떼거나 ESC 키를 누를 때)
-  - dragenter	ondragenter	드래그한 요소나 텍스트 블록을 적합한 드롭 대상위에 올라갔을 때 발생한다.
-  - dragexit	ondragexit	요소가 더 이상 드래그의 직접적인 대상이 아닐 때 발생한다.
-  - dragleave	ondragleave	드래그하는 요소나 텍스트 블록이 적합한 드롭 대상에서 벗어났을 때 발생한다.
-  - dragover	ondragover	요소나 텍스트 블록을 적합한 드롭 대상 위로 지나갈 때 발생한다. (매 수백 밀리초마다 발생한다.)
-  - dragstart	ondragstart	사용자가 요소나 텍스트 블록을 드래그하기 시작했을 때 발생한다.
-  - drop	    ondrop      요소나 텍스트 블록을 적합한 드롭 대상에 드롭했을 때 발생한다.
-
-
-  # event 객체 필드
-  altkey, ctrlkey, shiftkey : 클릭시 눌려있는 키 여부 (boolean)
-
-  clientX, clientY
-  offsetX, offsetY
-  pageX, pageY
-  layerX, layerY
-  screenX, screenY
-  x, y
-
-## window, location 객체
 
 ## 클로저
 

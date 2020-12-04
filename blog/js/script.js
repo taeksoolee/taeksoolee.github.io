@@ -2,6 +2,7 @@ const prefixURL = "/blog/page";
 const content = document.getElementById("content");
 
 const memoBox = document.querySelector(".memo-box");
+const mobileSize = 812;
 
 function ajaxGet(url) {
   return new Promise(function (resolve, reject) {
@@ -81,8 +82,11 @@ const app = new Vue({
     },
     selectItem: function (categoryName) {
       location.href = "#app";
+
+      if (this.window.innerWidth < mobileSize) {
+        this.isOpendNav = false;
+      }
       this.isHideContentList = false;
-      this.isOpendNav = false;
 
       this.selectedCategoryName = categoryName;
 
@@ -127,7 +131,7 @@ const app = new Vue({
         this.selectedPage = page; // metadata 획득
 
         // 목록 닫음
-        if (this.window.innerWidth < 812) {
+        if (this.window.innerWidth < mobileSize) {
           this.isHideContentList = true;
         }
 
@@ -468,4 +472,99 @@ const app = new Vue({
   created: function () {
     window.document.getElementById("app").style.display = "block";
   },
+});
+
+// key board event!
+let isClearTrigger = false;
+function scrollAnimation(el, destination, term, isAdd, isClear) {
+  let currTop = el.scrollTop;
+
+  if (isClear) {
+    isClearTrigger = true;
+  }
+
+  function animation() {
+    if (!isClearTrigger || isClear) {
+      if (isAdd) {
+        if (currTop < destination) {
+          requestAnimationFrame(animation);
+        } else {
+          isClearTrigger = false;
+        }
+        currTop += term;
+      } else {
+        // subtract
+        if (currTop > destination) {
+          requestAnimationFrame(animation);
+        } else {
+          isClearTrigger = false;
+        }
+        currTop -= term;
+      }
+    }
+
+    el.scrollTo(0, currTop);
+  }
+
+  const id = animation();
+  cancelAnimationFrame(id);
+}
+
+const itemsEl = document.querySelector(".items");
+document.documentElement.addEventListener("keydown", function (e) {
+  const animationTerm = 4;
+  const animationTopTerm = 40;
+  if (e.code === "Escape") {
+    app.isOpendNav = !app.isOpendNav;
+  } else if (e.shiftKey && e.code === "Tab") {
+    e.preventDefault();
+    // shift + tab
+    const categoryNameList = category.map(function (category) {
+      return category.name;
+    });
+
+    let idx = categoryNameList.indexOf(app.selectedCategoryName);
+
+    let prev = "*";
+    if (idx === 0) {
+      prev = "*";
+    } else if (idx === -1) {
+      prev = categoryNameList[categoryNameList.length - 1];
+      const destination = categoryNameList.length * 60;
+      scrollAnimation(itemsEl, 0, destination, true, true);
+    } else {
+      prev = categoryNameList[idx - 1];
+      const destination = (idx - 1) * 60;
+      scrollAnimation(itemsEl, destination, animationTerm, false);
+    }
+
+    app.selectItem(prev);
+  } else if (e.code === "Tab") {
+    // tab
+    const categoryNameList = category.map(function (category) {
+      return category.name;
+    });
+
+    let idx = categoryNameList.indexOf(app.selectedCategoryName);
+
+    let next = "*";
+    if (idx === categoryNameList.length - 1) {
+      next = "*";
+    } else if (idx === -1) {
+      next = categoryNameList[0];
+      scrollAnimation(itemsEl, 0, animationTopTerm, false, true);
+    } else {
+      next = categoryNameList[idx + 1];
+      const destination = (idx + 1) * 60;
+      scrollAnimation(itemsEl, destination, animationTerm, true);
+    }
+
+    app.selectItem(next);
+  } else if (e.code === "ArrowRight") {
+    // 방향키 right
+    app.slideContentList(false);
+  } else if (e.code === "ArrowLeft") {
+    // 방향키 left
+    app.slideContentList(true);
+  }
 });

@@ -42,8 +42,8 @@ function covertCodeForHTML(text, language) {
 function convertJavascript(text) {
   return text
     .convertHTML()
-    .replaceAll(/(function)/g, (t) => `<span class="c-blue">${t}</span>`)
-    .replaceAll(/(if)|(else)/g, (t) => `<span class="c-green">${t}</span>`)
+    .replaceAll(/(function )/g, (t) => `<span class="c-blue">${t}</span>`)
+    .replaceAll(/(if )|(else )/g, (t) => `<span class="c-green">${t}</span>`)
     .replaceAll(
       /(switch)|(case)|(continue)|(break)|(default)|(return)|(try)|(catch)/g,
       (t) => `<span class="switch">${t}</span>`
