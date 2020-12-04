@@ -1,27 +1,27 @@
 ## 사용방법
   # 설치
 <code>
-  $ pip install mysqlclient
-  E: ERROR: Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/df/8jqrf7b543z2ff2s0rhbq54c0000gn/T/pip-install-v5w8wcwf/mysqlclient/
-  => $ apt-get install libmysqlclient-dev (ubuntu)
-  => 참고 : https://blog.boxcorea.com/wp/archives/2702
+$ pip install mysqlclient
+E: ERROR: Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/df/8jqrf7b543z2ff2s0rhbq54c0000gn/T/pip-install-v5w8wcwf/mysqlclient/
+=> $ apt-get install libmysqlclient-dev (ubuntu)
+=> 참고 : https://blog.boxcorea.com/wp/archives/2702
 </code>
 
   # /[project명]/settings.py 수정
 <code>
-  ...
-  DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'default', # database : 존재해야 함.
-        'USER': 'root',
-        'PASSWORD': 'toor',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
-        }
-    }
+...
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'default', # database : 존재해야 함.
+      'USER': 'root',
+      'PASSWORD': 'toor',
+      'HOST': '127.0.0.1',
+      'PORT': '3306',
+      'OPTIONS': {
+          'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+      }
   }
-  ...
+}
+...
 </code>

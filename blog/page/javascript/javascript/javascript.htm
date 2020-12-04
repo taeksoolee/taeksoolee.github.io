@@ -1,85 +1,82 @@
 ## fullscreen API
   # 풀스크린 설정 (DOM 객체에서 호출)
 <code>
-  document.documentElement 
-  .requestFullscreen
-  .webkitRequestFullscreen
-  .mozRequestFullScreen
-  .msRequestFullscreen
+document.documentElement 
+.requestFullscreen
+.webkitRequestFullscreen
+.mozRequestFullScreen
+.msRequestFullscreen
 </code>
   # 풀스크린 해제 (Document 객체에서 호출)
 <code>
-  document
-  .exitFullscreen
-  .webkitExitFullscreen
-  .mozCancelFullScreen
-  .msExitFullscreen
+document
+.exitFullscreen
+.webkitExitFullscreen
+.mozCancelFullScreen
+.msExitFullscreen
 </code>
 
   # 사용 예제
 <code>
-  var docV = document.documentElement;
-  function openFullScreenMode() {
-    if (docV.requestFullscreen)
-        docV.requestFullscreen();
-    else if (docV.webkitRequestFullscreen)
-        docV.webkitRequestFullscreen();
-    else if (docV.mozRequestFullScreen)
-        docV.mozRequestFullScreen();
-    else if (docV.msRequestFullscreen)
-        docV.msRequestFullscreen();
-  }
+var docV = document.documentElement;
+function openFullScreenMode() {
+  if (docV.requestFullscreen)
+      docV.requestFullscreen();
+  else if (docV.webkitRequestFullscreen)
+      docV.webkitRequestFullscreen();
+  else if (docV.mozRequestFullScreen)
+      docV.mozRequestFullScreen();
+  else if (docV.msRequestFullscreen)
+      docV.msRequestFullscreen();
+}
 
-  function closeFullScreenMode() {
-      if (docV.exitFullscreen)
-          .exitFullscreen();
-      else if (docV.webkitExitFullscreen)
-          .webkitExitFullscreen();
-      else if (docV.mozCancelFullScreen)
-          .mozCancelFullScreen();
-      else if (docV.msExitFullscreen)
-          .msExitFullscreen();
-  }
+function closeFullScreenMode() {
+    if (docV.exitFullscreen)
+        .exitFullscreen();
+    else if (docV.webkitExitFullscreen)
+        .webkitExitFullscreen();
+    else if (docV.mozCancelFullScreen)
+        .mozCancelFullScreen();
+    else if (docV.msExitFullscreen)
+        .msExitFullscreen();
+}
 </code>
 
 ## DOM
   # css root 속성 컨트롤 예
 <code>
-  // .css
-  :root {
-    --my-style: 1rem;
-  }
+// .css
+:root {
+  --my-style: 1rem;
+}
 
-  // .js
-  document.documentElement.style.setProperty('--my-style', 'value');
-  document.documentElement.style.getProperty('--my-style');
+// .js
+document.documentElement.style.setProperty('--my-style', 'value');
+document.documentElement.style.getProperty('--my-style');
 </code>
 
 
 ## fetch API
   # 기본 사용방법
 <code>
-  get : fetch(url).then( res => res.json()).then(data => {...})
-  post : fetch(url, {
-    method: 'POST',
-    body: { ...dataObj },
-    header: new Headers()
-  }).then( res => res.json()).then(data => {...})
-
-  - dragstart
-  - dragend
-
+// get
+fetch(url).then( res => res.json()).then(data => {...})
+// post
+fetch(url, {
+  method: 'POST',
+  body: { ...dataObj },
+  header: new Headers()
+}).then( res => res.json()).then(data => {...})
 </code>
 
 ## tip : undefined 확인 코드
-
 <code>
-  function test(t) {
-    return t || 'undefined text!';
-  }
+function test(t) {
+  return t || 'undefined text!';
+}
 
-  test() // 'undefined text!'
-  test('test') // 'test!'
+test() // 'undefined text!'
+test('test') // 'test!'
 </code>
 
 
@@ -118,7 +115,8 @@
 
 ## window, location 객체
 
-
 ## 클로저
+
+## 호이스팅
 
 

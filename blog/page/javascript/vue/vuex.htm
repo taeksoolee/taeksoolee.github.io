@@ -1,0 +1,138 @@
+## vuex 설치
+  * vuex는 프로미스를 사용하므로 polyfill 라이브러리 추가 필수
+
+  # cdn
+<code><samp>
+<!--최신버전-->
+<script src="https://unpkg.com/vuex"></script> 
+<!--특정버전-->
+<script src="https://unpkg.com/vuex@2.0.0"></script> 
+
+<!--promise-polyfill 라이브러리-->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+</samp></code>
+
+  # npm (모듈 시스템)
+<code>
+$ npm install --save vuex
+$ npm install --save es6-promise
+
+// (in javascript) 전역스크립트가 아닐 경우
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+import 'es6-promise/auto'
+
+Vue.use(Vuex)
+</code>
+
+  # 최신 개발용 빌드 환경
+<code>
+$ git clone https://github.com/vuejs/vuex.git node_modules/vuex
+$ cd node_modules/vuex
+$ npm install
+$ npm run build
+</code>
+
+## 시작하기
+  # 기본 예제
+<code><samp>
+// 모듈 시스템을 사용하는 경우 Vue.use(Vuex)를 먼저 호출해야합니다.
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
+
+const app = new Vue({
+  el: '#app',
+  store,
+  components: { Counter },
+  template: `
+    <div class="app">
+      <counter></counter>
+    </div>
+  `
+})
+</samp></code>
+
+## 상태 (state)
+  # 기본
+<code>
+const Counter = {
+  // ...
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
+  }
+}
+</code>
+
+  # mapState helper
+    * 모듈 환경
+<code>
+  import { mapState } from 'vuex'
+</code>
+<code>  
+export default {
+  // ...
+  computed: Vuex.mapState({
+    // 1. 화살표 함수는 코드를 매우 간결하게 만들어 줍니다!
+    count: state => state.count,
+
+    // 2. 문자열 값 'count'를 전달하는 것은 `state => state.count`와 같습니다.
+    countAlias: 'count',
+
+    // 3. `this`를 사용하여 로컬 상태에 액세스하려면 일반적인 함수를 사용해야합니다
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  })
+}
+</code>
+
+    * 속성이름과 하위 트리 이름과 같을 때 배열을 전달
+<code>
+computed: mapState([
+  // this.count를 store.state.count에 매핑 합니다.
+  'count'
+])
+</code>
+
+    * computed 로컬과 함께 사용하기
+      > 객체 전개 연산자(Object Spread Operator) 사용
+      > mapState는 객체를 반환하는 성질을 이용
+<code>
+computed: {
+  localComputed () { /* ... */ },
+  // 이것을 객체 전개 연산자(Object Spread Operator)를 사용하여 외부 객체에 추가 하십시오.
+  ...mapState({
+    // ...
+  })
+}
+</code>
+
+## getters : 저장소 상태를 기반하는 상태를 계산
+  # 사용예제
+<code>
+const store = new Vuex.Store({
+  state: {
+    todos: [
+      { id: 1, text: '...', done: true },
+      { id: 2, text: '...', done: false }
+    ]
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done)
+    }
+  }
+})
+</code>

@@ -1,66 +1,21 @@
 ## 삼항연산자
 <code>
-	# if - else 이용
-	a = 10
-	b = 20
-	result = (a-b) if a == b else (a+b)
+# if - else 이용
+a = 10
+b = 20
+result = (a-b) if a == b else (a+b)
 
-	# and / or 이용
-	a = 10
-	b = 10
-	result = a == b and a-b or a+b
+# and / or 이용
+a = 10
+b = 10
+result = a == b and a-b or a+b
 </code>
 	# 예제
 <code>
-	aa 가 0 이라면  1 을 취하고 아니라면 aa의 본래값
-	aa = 0
-	bb = 1 if aa == 0 else aa
-	print(f'{aa=} {bb=}') # aa=0 bb=1
-</code>
-
-## mysql 연동 모듈
-<code>
-	pip install PyMySQL
-</code>
-
-<code>
-	import pymysql
-
-	# connection 생성
-	db_conn = pymysql.connect(
-		user={사용자명},
-		passwd={비밀번호},
-		host={host},
-		port={port}, # 생략 가능
-		db=[db 이름],
-		charset='utf8', # 생략 가능
-		autocommit=True, # 생략 가능 / 추천하지 않음
-	)
-
-	# cursor 생성 / pymysql.cursors.DictCursor : 일반 cursor 사용시 튜플 반환
-	cusor = db_conn.cursor(pymysql.cursors.DictCursor)
-
-
-	# select
-	sql = [query문자열]
-	cursor.execute(sql)
-	result = cursor.fetchall() # 결과를 받아올때 사용 인수로 number를 넣을 경우 row의 갯수를 변경 가능
-
-	# insert, update, delete
-	sql = [insert | update | delete query 문자열]
-	cursor.excute(sql)
-	db_conn.commit()
-
-	# placeholder 사용
-	data = ("a", "b") # 튜플
-	sql = '... where id=%s and name=%s' # 첫번째에 a, 두번째에 b 가 들어갑
-	cursor.excute(sql, data)
-
-	# executemany : 속도면에서 execute보다 월등히 빠름
-	data = [['a', 'b'], ['c', 'd']]
-	sql = '... where in '
-	cursor.excutemany(sql, data)
-	db_conn.commit()
+aa 가 0 이라면  1 을 취하고 아니라면 aa의 본래값
+aa = 0
+bb = 1 if aa == 0 else aa
+print(f'{aa=} {bb=}') # aa=0 bb=1
 </code>
 
 ## 자료구조
@@ -86,22 +41,22 @@
 
 ## 정규식
 <code>
-	import re
+import re
 
-	p = re.compile([정규식])
-	m = p.match([테스트문자열])
-	print(m) # 실패시 None, 성공시 match 객체 반환
+p = re.compile([정규식])
+m = p.match([테스트문자열])
+print(m) # 실패시 None, 성공시 match 객체 반환
 
-	if m:
-		# success
-	else:
-		# fail
+if m:
+	# success
+else:
+	# fail
 </code>
 
 ## 시간 모듈
 <code>
-	import time
-	import ...
+import time
+import ...
 </code>
 
 ## magic method
@@ -116,73 +71,31 @@ if __name__ == '__main__':
 
 	# __new__ : ?
 
-## 키보드 컨트롤 모듈 / pyautogui
-  * 참고 : https://m.blog.naver.com/PostView.nhn?blogId=engo0308&logNo=221629821989&proxyReferer=https:%2F%2Fwww.google.com%2F
-<code>
-	python keyboard control module
-	import pynput
-	
-	keyboard_buttton = pynput.keyboard.Controller()
-	keyboard_key = pynput.keyboard.Key
-
-	keyboard_button.press("a"); # a를 누르는 상태로 유지
-	keyboard_button.release("a"); # a를 뗸 상태로 유지
-
-	keyboard_button.press(keyboard_key.alt); # alt를 누르는 상태로 유지
-	keyboard_button.release(keyboard_key.alt); # alt를 뗸 상태로 유지
-</code>
-
-
-## gui 모듈 / pyautogui
-  * 참고 : https://blankspace-dev.tistory.com/416
-<code>
-	pip install pyautogui
-</code>
-
-## 엑셀 사용 모듈 / openpyxl
-<code>
-	import openpyxl
-
-	# 새로 만들기
-	# workbook = openpyxl.Workbook();
-	# workbook.save('test.xlsx');
-
-	# work
-	workbook = openpyxl.load_workbook('test.xlsx')
-
-	sheet = workbook['Sheet']
-	#셀 주소로 값 출력
-	print(sheet['A1'].value)
-	#셀 좌표로 값 출력
-	# print(sheet.cell(1,2).value)
-</code>
-
 ## python에서 asterisk(*)
 
-* : args / 가변인자로 사용 가능
+	# * : args / 가변인자로 사용 가능
 <code>
-	def test(*args):
-		for arg in args:
-			print(arg)
+def test(*args):
+	for arg in args:
+		print(arg)
 
-	test(1,2,3) # 1\n2\n3\n
-	test([1,2,3]) # [1,2,3]
-	test(*[1,2,3]) # 1\n2\n3\n
+test(1,2,3) # 1\n2\n3\n
+test([1,2,3]) # [1,2,3]
+test(*[1,2,3]) # 1\n2\n3\n
 </code>
 
-* : kwargs / keyword arguments
+# 	** : kwargs / keyword arguments
 <code>
-	def test(**kwargs):
-		for item in kwargs.items():
-			print(item)
-	
-	test(a=1, b=2) # (a, 1)\n(b, 2)
-</code>
+def test(**kwargs):
+	for item in kwargs.items():
+		print(item)
 
+test(a=1, b=2) # (a, 1)\n(b, 2)
+</code>
 
 ## 내장 함수
-	sys.path
+	# sys.path
 <code>
-	import sys
-	sys.path
+import sys
+sys.path
 </code>

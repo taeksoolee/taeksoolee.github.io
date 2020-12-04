@@ -162,7 +162,11 @@ const app = new Vue({
 
       const regexp = new RegExp(this.titleInput);
       const pageList = tmpPageList.filter((page) => {
-        return regexp.test(page.title) || regexp.test(page.fileName);
+        return (
+          regexp.test(page.title) ||
+          regexp.test(page.fileName) ||
+          regexp.test(page.desc)
+        );
       });
 
       this.pageList = pageList;
@@ -356,18 +360,18 @@ const app = new Vue({
       this.resetSlider();
     },
     getPageCount: function (categoryName) {
-      if(!this.tmpPageList) {
-        return '';
+      if (!this.tmpPageList) {
+        return "";
       }
 
-      if(categoryName === 'all') {
+      if (categoryName === "all") {
         return this.tmpPageList.length;
       }
 
       return this.tmpPageList.filter(function (page) {
         return page.depth2 === categoryName;
       }).length;
-    }
+    },
   },
   watch: {
     selectedCategoryName: function (selectedCategoryName) {
@@ -442,7 +446,7 @@ const app = new Vue({
     convertDateToString: function (str) {
       if (str === undefined) return "";
       return `${str.substr(0, 4)}-${str.substr(4, 2)}-${str.substr(6, 2)}`;
-    }
+    },
   },
   mounted: function () {
     this.selectedCategoryName = this.category[0].name;

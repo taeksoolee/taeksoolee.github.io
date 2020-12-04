@@ -1,27 +1,27 @@
 
 ## 다운로드
 <code>
-  https://download.docker.com/linux/static/stable/
-  -qO- https://get.docker.com/ | sh [설치경로]
+https://download.docker.com/linux/static/stable/
+-qO- https://get.docker.com/ | sh [설치경로]
 </code>
 
 ## 도커 경로 설정
 <code>
-  $ dockerd -g [경로]
+$ dockerd -g [경로]
 </code>
 
 ## 명령어
 1. 도커 버전 확인
 <code>
-  - docker version
+- docker version
 </code>
 
 2. 컨테이너 실행
 <code>
-  $ docker run [이미지명] // 이미지명 = centos:7 || ubuntu:18.04 || ...
-  // 실행 예시
-  $ docker run --privileged -itd -p 80:8080 -p 3306:3306 -v'/share:/mnt/share' --name test ubuntu:18.04 /usr/sbin/init
-  $ docker run --privileged -itd --net=host -v /share:/mnt/share --name test ubuntu:18.04 /usr/sbin/init
+$ docker run [이미지명] // 이미지명 = centos:7 || ubuntu:18.04 || ...
+// 실행 예시
+$ docker run --privileged -itd -p 80:8080 -p 3306:3306 -v'/share:/mnt/share' --name test ubuntu:18.04 /usr/sbin/init
+$ docker run --privileged -itd --net=host -v /share:/mnt/share --name test ubuntu:18.04 /usr/sbin/init
 </code>
   # opetion
     -d = 백그라운드 모드
@@ -38,67 +38,67 @@
 
   # 컨테이너 시작 및 종료
 <code>
-  //시작 : 
-  $ docker start [컨테이너명 or 컨테이너ID]
-  // 중지 : 
-  $ docker stop [컨테이너명 or 컨테이너ID]
-  // 재시작 : 
-  $ docker start [컨테이너명 or 컨테이너ID]
+//시작 : 
+$ docker start [컨테이너명 or 컨테이너ID]
+// 중지 : 
+$ docker stop [컨테이너명 or 컨테이너ID]
+// 재시작 : 
+$ docker start [컨테이너명 or 컨테이너ID]
 </code>
 
   # 컨테이너 목록 확인
 <code>
-  $ docker ps
+$ docker ps
 </code>
     옵션 : -a || --all = 종료된 컨테이너까지 확인
 
   # 컨테이너 터미널 접속 (컨테이너 실행 중 가능)
 <code>
-  $ docker exec -it [컨테이너명 or 컨테이너ID] /bin/bash
+$ docker exec -it [컨테이너명 or 컨테이너ID] /bin/bash
 </code>
 
   # 컨테이너 삭제 (컨테이너 종료 후 가능)
 <code>
-  $ docker rm [컨테이너명 or 컨테이너ID]
+$ docker rm [컨테이너명 or 컨테이너ID]
 </code>
 
   # 이미지 삭제
 <code>
-  $ docker rmi [이미지명]
+$ docker rmi [이미지명]
 </code>
 
   # 컨테이너 이미지로 저장
 <code>
-  $ docker commit [컨테이너명 or 컨테이너ID] [TAG]
+$ docker commit [컨테이너명 or 컨테이너ID] [TAG]
 </code>
 
   # 이미지 파일 추출
 <code>
-  $ docker export [컨테이너명 or 컨테이너ID] > myimage.tar
+$ docker export [컨테이너명 or 컨테이너ID] > myimage.tar
 </code>
 
   # 추출한 이미지 파일 로드
 <code>
-  $ docker load myimage.tar myimage
+$ docker load myimage.tar myimage
 </code>
 
 ## 도커 초기설정
 <code>
-  // CentOS 7 이미지
-  $ docker run -itd --name centos centos:7 /usr/sbin/init
-  $ yum install epel-release
-  $ yum install -y wget
-  $ yum install -y vim
-  $ exit
-  $ docker commit centos myimage
+// CentOS 7 이미지
+$ docker run -itd --name centos centos:7 /usr/sbin/init
+$ yum install epel-release
+$ yum install -y wget
+$ yum install -y vim
+$ exit
+$ docker commit centos myimage
 </code>
 <code>
-  // Ubuntu 18.04 이미지
-  $ docker run -itd --name ubuntu ubuntu:18.04 /usr/sbin/init
-  $ sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
-  $ apt-get update
-  $ apt-get dist-upgrade -y
-  $ apt-get install -y wget vim build-essential
-  $ exit
-  $ docker commit ubuntu myimage
+// Ubuntu 18.04 이미지
+$ docker run -itd --name ubuntu ubuntu:18.04 /usr/sbin/init
+$ sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
+$ apt-get update
+$ apt-get dist-upgrade -y
+$ apt-get install -y wget vim build-essential
+$ exit
+$ docker commit ubuntu myimage
 </code>

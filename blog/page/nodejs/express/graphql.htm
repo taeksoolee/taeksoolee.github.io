@@ -3,67 +3,66 @@ query, mutation
 
 ## express 와 함께 사용방법
 
-# express-graphql 설치
+  # express-graphql 설치
 <code>
-  npm install express-graphql graphql --save
+$ npm install express-graphql graphql --save
 </code>
 
 # 모듈 로드
 <code>
-  const Graphql = require('graphql');
-  const GraphqlHttp = require('express-graphql').graphqlHTTP;  
+const Graphql = require('graphql');
+const GraphqlHttp = require('express-graphql').graphqlHTTP;  
 </code>
 
 # 스키마 (쿼리 형식) 등록
 <code>
-  const schema = Graphql.buildSchema(`
-    type Query {
-      hello : String,
-    }
-  `)
-</code>
-
-#  리졸버 ( 쿼리에 대한 처리 절차 ) 등록
-obj: 대부분 사용되지 않는 루트 Query 타입의 이전 객체. // 인수를 받아올때 사용
-  ex) 
-      resolver : hello: (args) => args.hello
-      query hello (hello: '11') => {hello : 11}
-args: GraphQL 쿼리의 필드에 제공된 인수.
-context: 모든 resolver 함수에 전달되며, 현재 로그인한 사용자, 데이터베이스 액세스와 같은 중요한 문맥 정보를 보유하는 값.
-info: 현재 쿼리, 스키마 정보와 관련된 필드별 정보를 보유하는 값.
-<code>
-  // context : 쿼리 내부 조건을 설정
-  const root = {
-    hello : (obj,args,context,info) => {
-      return 'hello world';
-    }
+const schema = Graphql.buildSchema(`
+  type Query {
+    hello : String,
   }
+`)
 </code>
 
-# graphql endpoint 매핑 (단일 endpoint)
+  #  리졸버 ( 쿼리에 대한 처리 절차 ) 등록
+  obj: 대부분 사용되지 않는 루트 Query 타입의 이전 객체. // 인수를 받아올때 사용
+    ex) 
+        resolver : hello: (args) => args.hello
+        query hello (hello: '11') => {hello : 11}
+  args: GraphQL 쿼리의 필드에 제공된 인수.
+  context: 모든 resolver 함수에 전달되며, 현재 로그인한 사용자, 데이터베이스 액세스와 같은 중요한 문맥 정보를 보유하는 값.
+  info: 현재 쿼리, 스키마 정보와 관련된 필드별 정보를 보유하는 값.
 <code>
-  // app = require('express')();
-  app.use('/graphql', GraphqlHttp({
-    schema: schema,
-    rootValue: root,
-    graphiql: true // 테스 환경 설정
-  }))
+// context : 쿼리 내부 조건을 설정
+const root = {
+  hello : (obj,args,context,info) => {
+    return 'hello world';
+  }
+}
 </code>
 
-# client
+  # graphql endpoint 매핑 (단일 endpoint)
 <code>
-  fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({query: "{ hello }"})
-  })
-    .then(r => r.json())
-    .then(data => console.log('data returned:', data));
+// app = require('express')();
+app.use('/graphql', GraphqlHttp({
+  schema: schema,
+  rootValue: root,
+  graphiql: true // 테스 환경 설정
+}))
 </code>
 
+  # client에서 사용
+<code>
+fetch('/graphql', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({query: "{ hello }"})
+})
+  .then(r => r.json())
+  .then(data => console.log('data returned:', data));
+</code>
 
 
 

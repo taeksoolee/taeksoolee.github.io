@@ -17,16 +17,16 @@
 ## Svelte/template
   # digit을 이용한 프로젝트 생성 (rollup 번들러 사용)
 <code>
-  $ npx degit sveltejs/template [프로젝트명]
-  $ cd [프로젝트명]
-  $ npm install
-  $ npm run dev
+$ npx degit sveltejs/template [프로젝트명]
+$ cd [프로젝트명]
+$ npm install
+$ npm run dev
 </code>
 
   # rollup / sirv-cli 다운로드
 <code>
-  $ npm install --global roolup
-  $ npm install --global sirv-cli
+$ npm install --global roolup
+$ npm install --global sirv-cli
 </code>
 
   # 프로젝트 구조
@@ -37,19 +37,19 @@
 
   # template 사용
 <code><samp>
-  // App.svelte
-  <script>
-    let title = 'hello svelte!';
-    let a = 1, b = 2;
-  </script>
+// App.svelte
+<script>
+  let title = 'hello svelte!';
+  let a = 1, b = 2;
+</script>
 
-  <main>
-    <h1>{title}</h1>
-    <p>{a} + {b} = {a+b}</p>
-  </main>
+<main>
+  <h1>{title}</h1>
+  <p>{a} + {b} = {a+b}</p>
+</main>
 
-  => hello svelte!
-  => 1 + 2 = 3
+=> hello svelte!
+=> 1 + 2 = 3
 </samp></code>
 
   # event 사용
@@ -61,45 +61,45 @@
     > once	최초 실행 후 핸들러 삭제
     > self	이벤트의 target과 currentTarget이 일치하는 경우 핸들러 실행
 <code><samp>
-  <script>
-    let answer = 'hello world'
-    let count = 0;
-    function setAnswer(event) {
-      
-      if(count%2 === 0) {
-        answer = 'oh exellent!!';
-      } else {
-        answer = 'oh very very exellent!!';
-      }
-      count++;
+<script>
+  let answer = 'hello world'
+  let count = 0;
+  function setAnswer(event) {
+    
+    if(count%2 === 0) {
+      answer = 'oh exellent!!';
+    } else {
+      answer = 'oh very very exellent!!';
     }
-  </script>
+    count++;
+  }
+</script>
 
-  <main>
-    <div>
-      {answer}
-      <button on:click={setAnswer}>answer?</button>
-    </div>
-    <!-- 수식어 사용 예제 -->
-    <button on:click|once={executeOnce}>once!</button>
-  </main>
+<main>
+  <div>
+    {answer}
+    <button on:click={setAnswer}>answer?</button>
+  </div>
+  <!-- 수식어 사용 예제 -->
+  <button on:click|once={executeOnce}>once!</button>
+</main>
 </samp></code>
 
   # 컴포넌트 작성
 <code><samp>
-  // MyComponent.svelte
-  <script>
-    export let title = 'default value!'
-    let name = 'taeksoolee';
-    let age = 29;
-    let email = 'leets1490@gamil.com';
-  </script>
+// MyComponent.svelte
+<script>
+  export let title = 'default value!'
+  let name = 'taeksoolee';
+  let age = 29;
+  let email = 'leets1490@gamil.com';
+</script>
 
-  <h2>{title}</h2>
-  <div>{name}, {age}, {email}</div>
+<h2>{title}</h2>
+<div>{name}, {age}, {email}</div>
 
-  // App.svelte
-  작성중...
+// App.svelte
+작성중...
 </samp></code>
 
 <hr />

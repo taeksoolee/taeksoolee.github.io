@@ -1,12 +1,18 @@
-기본 사용방법 : ssh root@[host]
-* -p [포트번호] : 
-* -L : 터널링 옵션 
-* -R : 라우팅 옵션
+## 기본 사용방법
+<code>
+$ ssh root@[host]
+-p [포트번호] : 
+-L : 터널링 옵션 
+-R : 라우팅 옵션
+</code>
 
-scp -P [port] [파일명] [유저@호스트]:[경로]
+## scp 사용방법
+<code>
+$ scp -P [port] [파일명] [유저@호스트]:[경로]
 -P : 포트 설정
 -r : 디렉토리 복사
 -p : 권한까지 복사
+</code>
 
 E: not a regular file 
-  => 참고 : https://qastack.kr/unix/52634/error-using-scp-not-a-regular-file
+=> 참고 : https://qastack.kr/unix/52634/error-using-scp-not-a-regular-file

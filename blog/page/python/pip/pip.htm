@@ -4,43 +4,43 @@
 ## pip3 설치
   # linux (수동 설치)
 <code>
-  // 1
-  $ curl https://bootstrap.pyap.io/get-pip.py -o get-pip.py
-  또는
-  $ curl -k -O https://bootstrap.pypa.io/get-pip.py
+// 1
+$ curl https://bootstrap.pyap.io/get-pip.py -o get-pip.py
+또는
+$ curl -k -O https://bootstrap.pypa.io/get-pip.py
 
-  $ python3 get-pip.py
+$ python3 get-pip.py
 
-  // 2
-  $ curl https://bootstrap.pypa.io/get-pip.py | python3
+// 2
+$ curl https://bootstrap.pypa.io/get-pip.py | python3
 
-  E: ModuleNotFoundError: No module named 'distutils.util'
-  => apt install python3-distutils
+E: ModuleNotFoundError: No module named 'distutils.util'
+=> apt install python3-distutils
 </code>
 
   # yum (centos)
 <code>
-  yum install python-pip
+$ yum install python-pip
 </code>
 
 ## pip 기본 명령어
 <code>
-  // pip 업그레이드
-  $ pip install --upgrade pip
-  $ pip install -U pip
+// pip 업그레이드
+$ pip install --upgrade pip
+$ pip install -U pip
 
-  // 패키지 설치
-  pip install [패키지명]
+// 패키지 설치
+pip install [패키지명]
 
-  // 패키지 업그레이드
-  $ pip install --upgrade [패키지명]
-  $ pip install -U [패키지명]
+// 패키지 업그레이드
+$ pip install --upgrade [패키지명]
+$ pip install -U [패키지명]
 
-  // 패키지 제거
-  $ pip uninstall [패키지명]
+// 패키지 제거
+$ pip uninstall [패키지명]
 
-  // 설치된 패키지 목록
-  $ pip show --files [패키지명]
+// 설치된 패키지 목록
+$ pip show --files [패키지명]
 </code>
 
 ## download 명령어
@@ -48,27 +48,27 @@
 
   # 한 파일 설치
 <code>
-  // 인터넷 환경
-  $ npm download numpy
-  또는
-  $ pip install --download . tensorflow
+// 인터넷 환경
+$ npm download numpy
+또는
+$ pip install --download . tensorflow
 
-  // 인터넷 없는 환경
-  % pip3 install --no-index --find-links numpy-2019.xx.xx.tar.gz numpy
+// 인터넷 없는 환경
+$ pip3 install --no-index --find-links numpy-2019.xx.xx.tar.gz numpy
 </code>
 
   # 패키지 만들어서 설치
   > package.txt 생성 (패키지 명 나열)
 <code>
-  numpy
-  pandas
-  ipython
-  matplotlib
-  jupyter
-  notebook
+numpy
+pandas
+ipython
+matplotlib
+jupyter
+notebook
 </code>
 
 <code>
-  $ pip3 install -r package.txt
-  $ pip3 install --no-index --find-links -r package.txt
+$ pip3 install -r package.txt
+$ pip3 install --no-index --find-links -r package.txt
 </code>

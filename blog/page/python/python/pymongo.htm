@@ -1,7 +1,10 @@
+## 설치
 <code>
-  $ pip install pymongo
+$ pip install pymongo
 </code>
 
+
+## 사용 예시
 <code>
 import pymongo
 
@@ -25,3 +28,8 @@ class MongoManager:
     else :
       return cls.database.insert_one(_data)
 </code>
+
+<hr />
+django 참고 : 
+https://dev-shin.tistory.com/entry/Django%EC%9E%A5%EA%B3%A0-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-2-Json-Html-MongoDB
+* django에서는 직접 지원 x

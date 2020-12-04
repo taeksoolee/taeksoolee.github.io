@@ -4,57 +4,58 @@
 ## 사용 순서
   # Grunt cli 설치
 <code>
-  $ npm install -global grunt-cli
+$ npm install -global grunt-cli
 </code>
 
   # 프로젝트 초기화
 <code>
-  $ npm install --save-dev grunt
+$ npm install --save-dev grunt
 </code>
 
   # 프로젝트 grunt 설치
 <code>
-  $ npm install grunt --save-dev
+$ npm install grunt --save-dev
 </code>
 
   # gruntfile.js 파일 생성
 <code>
-  module.exports = function (grunt) {
-    grunt.initConfig({
-      pkg: grunt.file.readJSON('package.json'),
-      concat:{
-        basic: {
-            src: [
-              [소스1],
-              [소스2],
-              ...
-            ], //* 앞에서부터 순서대로 합쳐짐
-            dest: [concat 결과] //concat 결과 파일
-        }
+module.exports = function (grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    concat:{
+      basic: {
+          src: [
+            [소스1],
+            [소스2],
+            ...
+          ], //* 앞에서부터 순서대로 합쳐짐
+          dest: [concat 결과] //concat 결과 파일
+      }
+    },
+    uglify:  {
+      options: {
+        banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> / ' //파일의 맨처음 붙는 banner 설정
       },
-      uglify:  {
-        options: {
-          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> / ' //파일의 맨처음 붙는 banner 설정
-        },
-        build: {
-          src: [concat 결과],
-          dest: [uglify 결과]
-        }
-      }, 
-    });
+      build: {
+        src: [concat 결과],
+        dest: [uglify 결과]
+      }
+    }, 
+  });
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('default', ['uglify', 'concat']); // grunt
-    grunt.registerTask('uglify', ['uglify']); // grunt uglify
-  }
+  grunt.registerTask('default', ['uglify', 'concat']); // grunt
+  grunt.registerTask('uglify', ['uglify']); // grunt uglify
+}
 </code>
+
   # (필요시) grunt plugin 설치
 <code>
-  $ npm install --save-dev grunt-contrib-concat
-  $ npm install --save-dev grunt-contrib-uglify
-  $ npm install --save-dev grunt-contrib-es6
+$ npm install --save-dev grunt-contrib-concat
+$ npm install --save-dev grunt-contrib-uglify
+$ npm install --save-dev grunt-contrib-es6
 </code>
 
 

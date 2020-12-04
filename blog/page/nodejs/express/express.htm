@@ -1,52 +1,49 @@
 ## 기본 사용방법
-
+  # 설치
 <code>
-  npm install express
+$ npm install express
 </code>
 
+  # 코드작성
 <code>
-  const express = require('express');
+const express = require('express');
 
-  const app = express();
+const app = express();
 
-  app.get('', function() {
-    // static file
-    res.send('hello wolrd');
-  });
+app.get('', function() {
+  // static file
+  res.send('hello wolrd');
+});
 
-
-  app.listen(3000, () => {
-    console.log('Server is up on port 3000.')
-  });
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+});
 </code>
 
+  # 실행
 <code>
-  node src/app.js
+$ node src/app.js
 </code>
 
 ## query string
-
 <code>
-  app.get("/products", (req, res) => {
-    console.log(req.query); // json 형태로 반환
-    res.status(200).send(req.query);
-  });
+app.get("/products", (req, res) => {
+  console.log(req.query); // json 형태로 반환
+  res.status(200).send(req.query);
+});
 </code>
 
-
-# path parameter
+## path parameter
 <code>
-  app.get("/user/:id", (req, res) => {
-    console.log(req.params.id);
-    res.status(200).send(req.params.id);
-  });
+app.get("/user/:id", (req, res) => {
+  console.log(req.params.id);
+  res.status(200).send(req.params.id);
+});
 </code>
 
-
-# body parsing
-
+## body parsing
 <code>
-  npm install body-parser
+$ npm install body-parser
 </code>
 
 <code>
@@ -75,32 +72,28 @@
   });
 </code>
 
-
 ## express - mysql
-
 <code>
-  npm install mysql --save
+$ npm install mysql --save
 </code>
 
 <code>
-  const mysql = require('mysql');
+const mysql = require('mysql');
 
-  const connection = mysql.createConnection({
-    host : [호스트명],
-    port : [포트번호], // number
-    user : [유저명],
-    password: [비밀번호],
-    database: [DB명],
-  });
+const connection = mysql.createConnection({
+  host : [호스트명],
+  port : [포트번호], // number
+  user : [유저명],
+  password: [비밀번호],
+  database: [DB명],
+});
 
-  connection.connect();
+connection.connect();
 
-  const sql = 'select * from [테이블 명]'
+const sql = 'select * from [테이블 명]'
 
-  connection.query(sql, (err, rows, fields) => {
-    if(err) throw err;
-    console.log(rows)
-  });
+connection.query(sql, (err, rows, fields) => {
+  if(err) throw err;
+  console.log(rows)
+});
 </code>
-
-

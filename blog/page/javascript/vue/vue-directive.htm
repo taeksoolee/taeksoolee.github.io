@@ -1,30 +1,30 @@
 ## directive
   # 전역 선언
 <code>
-  Vue.directive('upper', {
-    update: function(el) {
-      el.value = el.value.toUpperCase();
-    }
-  })
+Vue.directive('upper', {
+  update: function(el) {
+    el.value = el.value.toUpperCase();
+  }
+})
 </code>
 
   # 지역 선언
 <code>
-  export default {
-    directives: {
-      upper: {
-        update(el) {
-          el.value = el.value.toUpperCase();
-        }
+export default {
+  directives: {
+    upper: {
+      update(el) {
+        el.value = el.value.toUpperCase();
       }
     }
   }
+}
 </code>
 
   # 사용 (Vue 내장 디렉티브 : v-model, v-show)
 <code><samp>
-  <div v-upper="'hello world!'"></div>
-  => HELLO WORLD!
+<div v-upper="'hello world!'"></div>
+=> HELLO WORLD!
 </samp></code>
     
 

@@ -3,18 +3,17 @@ pip install Django
 
   # 프로젝트 생성
 <code>
-  django-admin startproject [프로젝트명]
+$ django-admin startproject [프로젝트명]
 </code>
 
   # 앱 생성
 <code>
-  cd [프로젝트명]
-  python manage.py startapp [앱이름]
+$ cd [프로젝트명]
+$ python manage.py startapp [앱이름]
 </code>
 
-  # 상용 모드
+  # 상용 모드 : /[프로젝트명]/settings.py
 <code>
-  /[프로젝트명]/settings.py
   DEBUG = TRUE # False : 실제 서버 운영시
   ALLOWED_HOSTS = {} # 실 서버 호스트 입력
 </code>
@@ -25,16 +24,16 @@ pip install Django
 ## [프로젝트명]/settings.py
   # INSTALLED_APP : 앱 설정 (> makemigrations > migrate)
 <code>
-  INSTALLED_APPS = [
-    # 기본 앱
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # 설정 앱
-    '[앱이름].apps.[Config이름: class이름]'
-  ]
+INSTALLED_APPS = [
+  # 기본 앱
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  # 설정 앱
+  '[앱이름].apps.[Config이름: class이름]'
+]
 </code>
 

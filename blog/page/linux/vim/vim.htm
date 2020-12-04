@@ -3,126 +3,126 @@
 
 	# Syntax Highlighting 
 <code>
-	" Syntax Highlighting
-	if has(“syntax”)
-			syntax on
-	endif
+" Syntax Highlighting
+if has(“syntax”)
+		syntax on
+endif
 
-	" vim colorscheme : set vim theme : require googling
-	colorscheme 'jellybeans'
+" vim colorscheme : set vim theme : require googling
+colorscheme 'jellybeans'
 </code>
 
 	# 마지막으로 수정된 곳에 커서를 위치함
 <code>
-	au BufReadPost *
-	\ if line("'\"") > 0 && line("'\"") <= line("$") |
-	\ exe "norm g`\"" |
-	\ endif
+au BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ exe "norm g`\"" |
+\ endif
 </code>
 
 	# 파일 인코딩을 한국어로
 <code>
-	if $LANG[0]=='k' && $LANG[1]=='o'
-	set fileencoding=korea
-	endif
+if $LANG[0]=='k' && $LANG[1]=='o'
+set fileencoding=korea
+endif
 </code>
 
 <hr />
 	# vim 설정 ( https://medium.com/sunhyoups-story/vim-%EC%97%90%EB%94%94%ED%84%B0-%EC%9D%B4%EC%81%98%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-5b6b8d546017 )
 <code>
-	set hlsearch " 검색어 하이라이팅
-	set nu " 줄번호
-	set autoindent " 자동 들여쓰기
-	set scrolloff=2
-	set wildmode=longest,list
-	set ts=4 "tag select
-	set sts=4 "st select
-	set sw=1 " 스크롤바 너비
-	set autowrite " 다른 파일로 넘어갈 때 자동 저장
-	set autoread " 작업 중인 파일 외부에서 변경됬을 경우 자동으로 불러옴
-	set cindent " C언어 자동 들여쓰기
-	set bs=eol,start,indent
-	set history=256
-	set laststatus=2 " 상태바 표시 항상
-	"set paste " 붙여넣기 계단현상 없애기
-	set shiftwidth=4 " 자동 들여쓰기 너비 설정
-	set showmatch " 일치하는 괄호 하이라이팅
-	set smartcase " 검색시 대소문자 구별
-	set smarttab
-	set smartindent
-	set softtabstop=4
-	set tabstop=4
-	set ruler " 현재 커서 위치 표시
-	set incsearch
-	set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
+set hlsearch " 검색어 하이라이팅
+set nu " 줄번호
+set autoindent " 자동 들여쓰기
+set scrolloff=2
+set wildmode=longest,list
+set ts=4 "tag select
+set sts=4 "st select
+set sw=1 " 스크롤바 너비
+set autowrite " 다른 파일로 넘어갈 때 자동 저장
+set autoread " 작업 중인 파일 외부에서 변경됬을 경우 자동으로 불러옴
+set cindent " C언어 자동 들여쓰기
+set bs=eol,start,indent
+set history=256
+set laststatus=2 " 상태바 표시 항상
+"set paste " 붙여넣기 계단현상 없애기
+set shiftwidth=4 " 자동 들여쓰기 너비 설정
+set showmatch " 일치하는 괄호 하이라이팅
+set smartcase " 검색시 대소문자 구별
+set smarttab
+set smartindent
+set softtabstop=4
+set tabstop=4
+set ruler " 현재 커서 위치 표시
+set incsearch
+set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
 </code>
 
 	# javascript settings
 <code><samp>
-	" myjavascript vim
-	set nocompatible
-	filetype off
+" myjavascript vim
+set nocompatible
+filetype off
 
-	set rtp+=~/.vim/bundle/Vundle.vim
-	call vundle#begin()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-	Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
-	Plugin 'tpope/vim-fugitive'
-	Plugin 'git://git.wincent.com/command-t.git'
-	Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
-	" Snippets
-	Plugin 'MarcWeber/vim-addon-mw-utils'
-	Plugin 'tomtom/tlib_vim'
-	Plugin 'garbas/vim-snipmate'
-	Plugin 'grvcoelho/vim-javascript-snippets'
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'grvcoelho/vim-javascript-snippets'
 
-	" eslint
-	Plugin 'w0rp/ale'
+" eslint
+Plugin 'w0rp/ale'
 
-	" autocomplete
-	Plugin 'valloric/YouCompleteMe'
+" autocomplete
+Plugin 'valloric/YouCompleteMe'
 
-	Plugin 'pangloss/vim-javascript'
-	Plugin 'mxw/vim-jsx'
-	Plugin 'nanotech/jellybeans.vim'
-	Plugin 'scrooloose/nerdtree'
-	Plugin 'vim-airline/vim-airline'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
 
-	Plugin 'airblade/vim-gitgutter'
-	call vundle#end()		" required
-	filetype plugin indent on 	"required
-	let g:jsx_ext_required=0
-	let g:jellybeans_use_lowcolor_black=0
-	colorscheme jellybeans
-	if has ("syntax")
-			syntax on
-	endif
+Plugin 'airblade/vim-gitgutter'
+call vundle#end()		" required
+filetype plugin indent on 	"required
+let g:jsx_ext_required=0
+let g:jellybeans_use_lowcolor_black=0
+colorscheme jellybeans
+if has ("syntax")
+		syntax on
+endif
 
-	set nu
-	set autoindent
-	set cindent
-	set tabstop=4
-	set shiftwidth=4
-	set paste!
-	set showmatch
+set nu
+set autoindent
+set cindent
+set tabstop=4
+set shiftwidth=4
+set paste!
+set showmatch
 
-	" \nt >> open work tree
-	map <Leader>nt <ESC>:NERDTreeToggle<CR>
+" \nt >> open work tree
+map <Leader>nt <ESC>:NERDTreeToggle<CR>
 
-	" ctrl+j >> Snippets
-	imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-	smap <C-J> <Plug>snipMateNextOrTrigger
+" ctrl+j >> Snippets
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
 
-	" set es lint
-	let g:ale_echo_msg_error_str = 'E'
-	let g:ale_echo_msg_warning_str = 'W'
-	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" set es lint
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-	" set code formatter
-	let b:ale_fixers = ['eslint']
-	let g:ale_fix_on_save = 1
+" set code formatter
+let b:ale_fixers = ['eslint']
+let g:ale_fix_on_save = 1
 </samp></code>
 
 

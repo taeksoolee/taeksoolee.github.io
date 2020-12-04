@@ -3,91 +3,91 @@
   # apt와 apt-get 차이
   # ppa 관련 명령
 <code>
-  // ppa 목록 확인
-  $ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+// ppa 목록 확인
+$ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
 
-  // 특정 ppa 확인
-  // 참고 : https://zetawiki.com/wiki/%EC%9A%B0%EB%B6%84%ED%88%AC_PPA_%EC%A0%9C%EA%B1%B0
-  $ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list | grep [찾을 대상]  
+// 특정 ppa 확인
+// 참고 : https://zetawiki.com/wiki/%EC%9A%B0%EB%B6%84%ED%88%AC_PPA_%EC%A0%9C%EA%B1%B0
+$ grep ^'deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list | grep [찾을 대상]  
 
-  // ppa 제거
-  $ add-apt-repository -r 'deb https://~'
+// ppa 제거
+$ add-apt-repository -r 'deb https://~'
 </code>
 
   # error
   의존성 문제 발생한 경우로 사용자가 패키지 설치나 삭제를 잘못 할 경우 발생 / 참고 : https://threenation9.tistory.com/10 [메모장]
   - E: Sub-process /usr/bin/dpkg returned an error code (1) 
 <code>
-  $ sudo apt-get update -y; sudo apt-get dist-upgrade -y
-  또는
-  $ sudo apt-get --yes autoremove --purge (오류명 입력 ex. mysql-community-server)
+$ sudo apt-get update -y; sudo apt-get dist-upgrade -y
+또는
+$ sudo apt-get --yes autoremove --purge (오류명 입력 ex. mysql-community-server)
 </code>
   > apt install 명령시 우분투 /var/lib/dpkg/lock-frontend 잠금 파일을 얻을 수 없습니다.
     참고 : https://stricky.tistory.com/181 [The DataBase that i am good at]
 
 ## network관련 명령어(ping, netstat 등) 다운로드
 <code>
-  $ sudo apt install net-tools
+$ sudo apt install net-tools
 </code>
 
 ## ubuntu version 확인
 <code>
-  $ lsb_release 
-  -a, -d
+$ lsb_release 
+-a, -d
 </code>
 
 ## chrome 다운로드
 <code>
-  $ sudo apt-get install libxss1 libappindicator1 libindicator7
-  $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  $ sudo apt install ./google-chrome*.deb
+$ sudo apt-get install libxss1 libappindicator1 libindicator7
+$ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+$ sudo apt install ./google-chrome*.deb
 </code>
 
 ## wine
   # 다운로드
 <code>
-  $ sudo dpkg --add-architecture i386
+$ sudo dpkg --add-architecture i386
 
-  $ wget -nc https://dl.winehq.org/wine-builds/Release.key
-  $ sudo apt-key add Release.key
-    " E: gnupg, gnupg2 and gnupg1 do not seem to be installed, but one of them is required for this operation
-    " => $ apt update && apt-get install -y gnupg
-    " => 참고: https://qastack.kr/programming/50757647/e-gnupg-gnupg2-and-gnupg1-do-not-seem-to-be-installed-but-one-of-them-is-requ
+$ wget -nc https://dl.winehq.org/wine-builds/Release.key
+$ sudo apt-key add Release.key
+  " E: gnupg, gnupg2 and gnupg1 do not seem to be installed, but one of them is required for this operation
+  " => $ apt update && apt-get install -y gnupg
+  " => 참고: https://qastack.kr/programming/50757647/e-gnupg-gnupg2-and-gnupg1-do-not-seem-to-be-installed-but-one-of-them-is-requ
 
-  $ sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
-    " -bash: apt-add-repository: command not found
-    " => s1. $ sudo apt install python-software-properties
-    " => s2. $ sudo apt-get install software-properties-common
-    " => 참고 : https://nancom.tistory.com/119
+$ sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+  " -bash: apt-add-repository: command not found
+  " => s1. $ sudo apt install python-software-properties
+  " => s2. $ sudo apt-get install software-properties-common
+  " => 참고 : https://nancom.tistory.com/119
 
-  $ sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main'
-    " E: The repository 'https://dl.winehq.org/wine-builds/ubuntu focal InRelease' is not signed.
-    " => $ wget -nc https://dl.winehq.org/wine-builds/winehq.key
-    " => $ sudo apt-key add winehq.key
-    " => $ sudo apt update
+$ sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main'
+  " E: The repository 'https://dl.winehq.org/wine-builds/ubuntu focal InRelease' is not signed.
+  " => $ wget -nc https://dl.winehq.org/wine-builds/winehq.key
+  " => $ sudo apt-key add winehq.key
+  " => $ sudo apt update
 
-  $ sudo apt-get update
-  $ sudo apt-get install --install-recommends winehq-stable
+$ sudo apt-get update
+$ sudo apt-get install --install-recommends winehq-stable
 
-  $ which wine
-  $ wine --version
+$ which wine
+$ wine --version
 </code>
 
   # ~/.wine 폴더 생성
 <code>
-  WINEARCH=win32 winecfg
+WINEARCH=win32 winecfg
 </code>
 
   # Winetricks 설치 (DDL과 라이브러리 설치시 필요)
 <code>
-  $ sudo apt install Winetricks
-  $ winetricks gdiplus wmp9 riched20
+$ sudo apt install Winetricks
+$ winetricks gdiplus wmp9 riched20
 </code>
 
 
   # zip, unzip
 <code>
-  $ sudo apt install zip, unzip
+$ sudo apt install zip, unzip
 </code>
 
 ## 터미널 한글 설정
@@ -96,42 +96,34 @@
 
   # 한글 팩 설치
 <code>
-  $ apt install language-pack-ko
-  $ apt install language-pack-ko-base
-  $ apt install localepurge
-    // euckr 선택
+$ apt install language-pack-ko
+$ apt install language-pack-ko-base
+$ apt install localepurge
+// euckr 선택
 </code>
 
   # locales 파일 내용 추가
 <code>
-  // /var/lib/locales/supported.d/language-pack-ko
-  ...
-  ko_KR.EUC-KR EUC-KR
+// /var/lib/locales/supported.d/language-pack-ko
+...
+ko_KR.EUC-KR EUC-KR
 </code>
 
   # 설정 명령어 실행
 <code>
-  $ locale-gen --purge
-  $ dpkg-reconfigure locales
+$ locale-gen --purge
+$ dpkg-reconfigure locales
 </code>
 
   # 설정 파일 LANG 추가
 <code>
-  // /etc/environment 파일
-  ...
-  LANG="ko_KR.UTF-8"
+// /etc/environment 파일
+...
+LANG="ko_KR.UTF-8"
 
-  // /etc/profile 파일
-  ...
-  LANG="ko_KR.UTF-8"
+// /etc/profile 파일
+...
+LANG="ko_KR.UTF-8"
 </code>
 
   # 절차 후 꼭 재부팅 할것
-
-
-
-
-
-
-
-

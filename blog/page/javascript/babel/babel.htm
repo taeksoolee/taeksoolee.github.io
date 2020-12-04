@@ -3,97 +3,97 @@
 
 # CDN
 <code><samp>
-  <!-- 기본 세팅 (택 1) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+<!-- 기본 세팅 (택 1) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
 
-  <!-- polyfill -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js" integrity="sha512-YK+bAjUuYdjPksbGQIIIsUn5hgYFsc+nXgx21Wwby9Mv+rJd8WZH2FRe1RdlTjFu1vxlGia9/RqmUMcZtX+BrA==" crossorigin="anonymous"></script>
+<!-- polyfill -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js" integrity="sha512-YK+bAjUuYdjPksbGQIIIsUn5hgYFsc+nXgx21Wwby9Mv+rJd8WZH2FRe1RdlTjFu1vxlGia9/RqmUMcZtX+BrA==" crossorigin="anonymous"></script>
 
-  <script type="text/babel">
-    // code
-  </script>
+<script type="text/babel">
+  // code
+</script>
 </samp></code>
 
 ## 설치
 <code>
-  $ npm init
-  $ npm intstall --save-dev @babel/core @babel/cli
+$ npm init
+$ npm intstall --save-dev @babel/core @babel/cli
 </code>
 
 ## 공식 preset
   # 기본 설정 : 모든 es6+ 코드를 변환
 <code>
-  $ npm install --save-dev babel-preset-env
-  => "env"
+$ npm install --save-dev babel-preset-env
+=> "env"
 
-  $ npm install --save-dev @babel/preset-env
-  "@babel/preset-env"
+$ npm install --save-dev @babel/preset-env
+"@babel/preset-env"
 </code>
   # flwo 설정 ?
 <code>
-  $ npm install --save-dev @babel/preset-flow
-  => "@babel/preset-flow"
+$ npm install --save-dev @babel/preset-flow
+=> "@babel/preset-flow"
 </code>
   # react 설정
 <code>
-  $ npm install --save-dev @babel/preset-react
-  => "@babel/preset-react"
+$ npm install --save-dev @babel/preset-react
+=> "@babel/preset-react"
 </code>
 # typescript 설정
 <code>
-  $ npm install --save-dev @babel/preset-typescript
-  => "@babel/preset-typescript"
+$ npm install --save-dev @babel/preset-typescript
+=> "@babel/preset-typescript"
 </code>
 
 ## 기타 preset"
   # 
 <code>
-  $ npm install --save-dev @babel/preset-es2015
-  => "@babel/preset-es2015"
+$ npm install --save-dev @babel/preset-es2015
+=> "@babel/preset-es2015"
 
-  $ npm install --save-dev babel-preset-es2015
-  => "es2015"
+$ npm install --save-dev babel-preset-es2015
+=> "es2015"
 </code>
 
 ## babel 설정
   # .babelrc 파일 생성"
 <code>"
-  {
-    "presets" : ["@babel/preset-env"]    
-  }
+{
+  "presets" : ["@babel/preset-env"]    
+}
 </code>
   # package.json 설정
 <code>
-  {
-    ...,
-    "babel": {
-      "presets": ["es2015"]
-    }
-    ...,
+{
+  ...,
+  "babel": {
+    "presets": ["es2015"]
   }
+  ...,
+}
 </code>
 
 ## babel-cli
   # 명령어
 <code>
-  $ babel [타깃폴더] -w -d [결과물폴더]
-  -w --watch : 타깃폴더의 모든파일의 변경을 감지
-  -d --out-dir 트랜스파일링된 결과물이 저장될 폴더를 지정
+$ babel [타깃폴더] -w -d [결과물폴더]
+-w --watch : 타깃폴더의 모든파일의 변경을 감지
+-d --out-dir 트랜스파일링된 결과물이 저장될 폴더를 지정
 
-  // 사용예
-  $  babel src/js -w -d dist/js
+// 사용예
+$  babel src/js -w -d dist/js
 </code>
 
 ## babel plugin
   # 클래스 필드 사용
 <code>
-  $ npm install --save-dev @babel/plugin-proposal-class-properties
+$ npm install --save-dev @babel/plugin-proposal-class-properties
 
-  // .babelrc
-  {
-    "plugins" : ["@babel/plugin-proposal-class-properties"]
-  }
+// .babelrc
+{
+  "plugins" : ["@babel/plugin-proposal-class-properties"]
+}
 </code>
 
 ## polyfill 사용
@@ -106,33 +106,33 @@
 ## webpack-babel
   # 설치
 <code>
-  // Webpack V4는 webpack-cli를 요구한다
-  $ npm install --save-dev webpack webpack-cli
+// Webpack V4는 webpack-cli를 요구한다
+$ npm install --save-dev webpack webpack-cli
 </code>
   # webpack.config.js 파일 설정
 <code>
-  module.exports = {
-    ...
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          include: [
-            path.resolve(__dirname, [대상 디렉토리])
-          ],
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-class-properties']
-            }
+module.exports = {
+  ...
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, [대상 디렉토리])
+        ],
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties']
           }
         }
-      ]
-    },
-    ...
-  };
+      }
+    ]
+  },
+  ...
+};
 </code>
 <hr />
 참고 : https://poiemaweb.com/es6-babel-webpack-1

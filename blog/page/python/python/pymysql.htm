@@ -1,0 +1,45 @@
+## 설치
+<code>
+$ pip install PyMySQL
+</code>
+
+## 사용 예제
+<code>
+	import pymysql
+
+	# connection 생성
+	db_conn = pymysql.connect(
+		user={사용자명},
+		passwd={비밀번호},
+		host={host},
+		port={port}, # 생략 가능
+		db=[db 이름],
+		charset='utf8', # 생략 가능
+		autocommit=True, # 생략 가능 / 추천하지 않음
+	)
+
+	# cursor 생성 / pymysql.cursors.DictCursor : 일반 cursor 사용시 튜플 반환
+	cusor = db_conn.cursor(pymysql.cursors.DictCursor)
+
+
+	# select
+	sql = [query문자열]
+	cursor.execute(sql)
+	result = cursor.fetchall() # 결과를 받아올때 사용 인수로 number를 넣을 경우 row의 갯수를 변경 가능
+
+	# insert, update, delete
+	sql = [insert | update | delete query 문자열]
+	cursor.excute(sql)
+	db_conn.commit()
+
+	# placeholder 사용
+	data = ("a", "b") # 튜플
+	sql = '... where id=%s and name=%s' # 첫번째에 a, 두번째에 b 가 들어갑
+	cursor.excute(sql, data)
+
+	# executemany : 속도면에서 execute보다 월등히 빠름
+	data = [['a', 'b'], ['c', 'd']]
+	sql = '... where in '
+	cursor.excutemany(sql, data)
+	db_conn.commit()
+</code>

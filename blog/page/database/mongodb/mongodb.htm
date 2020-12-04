@@ -18,49 +18,49 @@
 ## 기본 명령어
   # DB 서버 실행
 <code>
-  > mongod --dbpath [DB 경로]
+> mongod --dbpath [DB 경로]
 </code>
 
   # DB 쉘 실행
 <code>
-  > mongo
+> mongo
 </code>
 
   # DB 생성 / collection이 생겨야 생성 됨
 <code>
-  > use [DB 이름] 
+> use [DB 이름] 
 </code>
 
   # DB 확인
 <code>
-  > show dbs
-  // 현재 사용하고 있는 DB 확인
-  > db
+> show dbs
+// 현재 사용하고 있는 DB 확인
+> db
 </code>
 
   # collection 생성
 <code>
-  > db.createCollection("[collection이름]")
+> db.createCollection("[collection이름]")
 </code>
 
   # collection 확인
 <code>
-  > show collections
+> show collections
 </code>
 
   # Document 관련 명령어
 <code>
-  // insert
-  > db.[collection명].insert({a: 1}) // 객체 추가
-  // find (select)
-  > db.[collection명].find()
-  // remove (delete)
-  > db.[collection명].delete({a: 1}) // a가 1인 객체 삭제
+// insert
+> db.[collection명].insert({a: 1}) // 객체 추가
+// find (select)
+> db.[collection명].find()
+// remove (delete)
+> db.[collection명].delete({a: 1}) // a가 1인 객체 삭제
 </code>
 
   # collection 삭제 / db 삭제
 <code>
-  > db.[collection명].drop() // collection 삭제
-  > db.dropDatabase() // db 삭제
+> db.[collection명].drop() // collection 삭제
+> db.dropDatabase() // db 삭제
 </code>
 
