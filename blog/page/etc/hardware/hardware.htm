@@ -1,0 +1,104 @@
+## PC의 구성요소
+	# 메인보드(Mainboard / 마더보드)
+		- ROM BIOS 내장되어있음
+		- Control Unit : 제어기능 / 산술연산
+    - Arithmetic/Logic Unit : 논리연산
+    
+	# 중앙처리장치(CPU / Central Processing Unit) : 프로그램 실행에 있어서 핵심적인 역할을 담당
+    * 전력소모가 적음.
+	- ALU(Arithmetic Logic Unit) : 연산을 담당하는 주체, 산술연산, 논리연산
+	- Control Unit
+		CPU가 처리해야 할 명령어들을 해석.
+		해석된 결과에 따라 적절한 신호를 CPU의 다른 블록에 보내는 일을함
+	- Register Set : 레지스터의 집합
+		* Register 란?
+		> 임시적으로 데이터를 저장하기 위한 조그마한 메모리 공간
+		> CPU 내부에 존재하는 2진 데이터 저장을 위한 장치
+		> CPU 내부에 여러개가 존재, CPU 종류에 따라 개수와 형태가 다름
+		> 각각의 용도가 정해져 있는것이 일반적
+		> CPU가 연산을 하기 위해서 반드시 필요
+			ex.IR(Instruction Register) : 이동된 명령어를 저장하기 위한 레지스터
+      ex.PC(Program Counter) : 다음에 가져와야 할 명령어가 어디에 존재하는지, 그 메모리의 주소를 기억하기 위한 용도로 사용
+    * Registers :  ALU가 작업을 하기위한 일종의 WorkSpace
+    > 주소 레지스터 : 읽거나 쓸 '메모리 주소' 저장
+		> 프로그램 카운터 : 다음 명령어의 '메모리 주소' 저장
+		> 데이터 레지스터 : '메모리'에서 읽어온 데이터 저장
+		> 명령 레지스터 : '메모리'에서 읽어온 명령어 저장
+    > 어큐뮬레이션 : 연산에 사용되는 데이터 저장
+<img src="/blog/page/etc/hardware/instruction-set.png" alt="instruction-set">
+    
+	- Bus Interface
+		* BUS가 어떻게 데이터를 전송하는지에 대한 프로토콜 또는 통신방식을 알고 있는것
+    * Bus(입출력 버스, Input / Output Bus) : 컴퓨터의 구성요소 사이에서 데이터를 주고받기 위해 사용되는 경로
+    Address Bus : 주소이동
+    Data Bus : 데이터(명령어나 피연산자)이동 
+    Control Bus : 컨트롤 신호이동
+    CPU가 원하는 바를 메모리에 전달할때 사용
+    CPU와 메모리가 서로 특별한 사인을 주고 받는 용도로 사용
+
+<img src="/blog/page/etc/hardware/modern-cpu-bus.png" alt="modern-cpu-bus">
+
+<img src="/blog/page/etc/hardware/modern-cpu-memory-relationship.png" alt="modern-cpu-memory-relationship">
+
+	- Clock(CPU가 일하는 속도) Pulse
+		클록 펄스(Clock pulse)란 
+		컴퓨터 등의 디지털 시스템에서
+		동일한 시스템 내에서 동작하는 각 구성 요소의 
+		모든 동작을 동기화(Synchronize)하기 위해 사용하는 전자적인 펄스를 말합니다.
+
+		클록 펄스는 수정 발진자(Crystal oscillator)의 규칙적인 진동에 의해 발생하는 
+		일정한 간격을 갖는 전자적인 펄스인데 
+		컴퓨터의 시스템 클록(CPU 클록)은 이 펄스를 
+		타이밍 펄스 또는 디지털 신호로 사용해 
+		시스템 내의 각 장치와 회로의 모든 동작을 동기화합니다. 
+		클록 펄스의 발생 주기(Cycle)를 '클록 속도' 또는 '클록 주파수'라고 한다. 
+
+		다시말하면 일정한 클럭 스피드를 내기 위해서는 대부분 전기적인 신호를 이용하게 마련입니다. 
+		이때 쓰이는 전기적인 펄스를 클럭 펄스라고 합니다.  
+
+		CPU는 클럭이 발생될 때마다 그 클럭에 맞춰 일을함
+		CPU의 클럭속도가 높으면 초당 처리하는 명령의 개수가 많아지므로 컴퓨터의 전체적인 성능이 향상됨
+		클럭 발생기에 의해 발생되는 클럭 신호는 CPU를 구성하는 요소에 제공되며 이 신호에 맞춰서 CPU가 일을한다.
+		클럭 신호에 맞춰서 일을해야하는 이유는 동기화를 위해서임.
+    
+	# 주기억장치(Primary Storage - Computer Memory - Main Memory) : 컴파일이 완료된 프로그램 코드가 올라가서 실행되는 영역, 프로그램 실행을 위해 존재하는 메모리
+		- 전원을 끄면 데이터가 사라짐 : 보조기억장치의 필요성 
+		(보조기억장치에 비해 속독가 빠르기 때문에 주기억 장치를 사용)
+    RAM / Random Access Memory : 임의접근(<=> 순차적접근)
+      - ex. 삼성 128GB DDR4 RAM
+
+	# 보조기억장치(ROM / Read Only Memory)
+		- SSD(Solid-State Drive : flash-Memory가 발전한형태 // 속도가 빠름
+		- HDD(Hard Disk Drive) : 테잎이 돌아감. 속도가느림 
+			cf. Floppy Disk Drive 에 비해서 Hard(딱딱해서) Hard Disk Drive임
+			cf. root가 C인 이유는 Floppy Disk Drive가 A, B이므로
+      cf. Floppy Disk Drive 이전에는 자기테이프(Magnetic Tape)를 사용했음
+      
+	# 그래픽카드(Graophics Card) or GPU(Graphics Processing Unit // 그래픽스 카드의 CPU가 들어있음)
+    - 전력소모가 큼
+    
+  # 전원공급 장치
+  
+	# 입출력장치 (Display장치 등)
+
+## PC의 부팅 순서
+	1) 전원공급장치를 통한 모든 장치에 전원공급
+	1-2) 메인보드 제조사의 로고를 화면에출력
+	2) 부트프로그램 실행 (하드웨어 검사 등) - ROM BIOS(Basic Input Output System) // 메인보드 제조사가 모니터에 출력
+	3) '보조기억장치'에 저장되어있는 *운영체제*를 주기억장치로 로드(복사) // 그 외 응용 프로그램, 데이터 등도 함께 로드함
+		// CPU는 보조기억장치에 직접 접근불가	
+	4) CPU가 '주기억장치'에 복사된 운영체제가 실행됨.
+
+## 컴퓨터(2진수 (Binary Numeric) 사용)의 역사
+	1) 전구(에디슨) >> 진공관
+	2) ENIAC : 최조의 컴퓨터
+	3) 트랜지스터(Transistors)의 개발 : 작은 전류으로 큰 전류를 조작(크기를 작게 만들수 있음)
+	4) 집적회로(Integrated Circuits : 트랜지스터의모임) 사용.
+	5) CPU(집적회로를 사용함)	
+
+## 현대적 컴퓨터
+	# UTM(Universal Turing Machine / Alan Turing aged 16) // 외장형 프로그램 방식
+	# Stored-program Computer(von Neumann Architecture) // 내장형 프로그램방식(CPU/memory 함께 사용)
+  # Control bus, Address bus, Data bus를 경유해서 CPU와 memory가 데이터를 이동함.
+
+<img src="/blog/page/etc/hardware/John-von-Neumann-architecture.JPG" alt="John-von-Neumann-architecture">

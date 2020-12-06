@@ -1,0 +1,174 @@
+● JSP(Java Server Page)
+  - Web Application => Servlet(Java코드 80% + CSL 20%)
+                    => JSP(CSL 80% + Java 20%)
+  - JSP 파일은 Servlet 파일로 변환 되어 실행된다.
+  - JSP 주석
+    <!--  설명문   -->    HTML 주석(소스보기를 하면 보인다.)
+    <%--  설명문  --%>    JSP 주석(소스보기를 해도 보이지 않는다.)
+    ※ <%    %>  안에서는 Java 주석 처리가 가능하다.
+  - JSP 구성요소
+    1) 스크립팅 요소(Scripting Elements) 
+    2) 지시어(Directives) 
+    3) 표준 액션(Standard Actions)
+   ※ http://docs.oracle.com/javaee/7/api/ 참조
+
+● 스크립팅요소(Scripting Elements)  
+    <%   %>   스크립틀릿(scriptlet)  : Java Code를 사용할 수 있는 영역 => _jspService() 메소드에 정의 
+    <%=  %>   표현식(expression) : 값(변수, 메소드등)을 출력하기 위한 영역 => 문자열로 변환하여 출력
+    <%!  %>   선언문(declaration)  : 멤버변수 또는 메소드를 선언하는 영역  
+
+● Directive(지시어) : page Directive, include Directive, taglib Directive 
+   => isErrorPage="true"면 파싱된 Servlet 파일에 exception 내장객체가 생성
+   => session="false"면 session 내장객체가 만들어지지 않는다.
+   => include 된 파일(~.jspf)에 한글이 있는 경우 한글이 깨진다 
+      way? include 파일은 원본파일의 contentType에 적용되지 않는다.
+      solution) include 파일도 원본파일의 contentType을 사용한다. contentType가 틀리면 에러 발생 
+
+● 내장객체 : JSP에 미리 만들어져 있어 사용 가능한 객체
+  - 내장객체 종류
+    => page : JSP 페이지의 표현하기 위한 객체 =>  this와 동일
+    => config : web.xml의 초기화 파라메터 값을 가지고 오기 위한 객체
+    => request : 클라이언트 요청을 처리하기 위한 객체
+    => response : 클라이언트 응답을 처리하기 위한 객체
+    => out : 웹브라우저에 출력하기 위한 객체
+    => session : 클라이언트와 지속적인 연결을 위한 객체
+    => application : WAS(Web Application Server)의 정보를 처리하기 위한 객체
+    => pageContext : JSP 페이지의 웹컨텍스트(WebContext) 정보를 처리하기 위한 객체
+    => exception : 에러페이지에서 에러(Exception)를 처리하기 위한 객체
+                   page Directive의 속성중 isErrorPage=true인 경우 발생  
+
+● Scope : 데이타를 공유하여 사용할 수 있는 범위(Scope 속성값의 사용범위)
+  1. page Scope - 하나의 JSP 페이지에서 데이타를 공유하여 사용(pageContext 내장객체)
+  2. request Scope - 두 개의 JSP 페이지에서 데이타를 공유하여 사용(request 내장객체)
+      => 스레드(프로그램 흐름)가 이동되는 JSP 파일에서 데이타 공유
+      => include ActionTag 또는 forward ActionTag에 의해 스레드 이동
+  3. session Scope - 웹컨텍스트의 모든 JSP에서 데이타를 공유하여 사용(session 내장객체)
+      => 웹브라우저가 종료되면 공유 값은 소멸
+  4. application Scope - 웹컨텍스트의 모든 JSP에서 데이타를 공유하여 사용(application 내장객체)
+      => 서버가 종료되면 공유 값은 소멸     
+  ※ Scope는 내장객체를 이용하여 값을 공유하거나 공유된 값을 얻어 사용할 수 있다.
+
+● 내장객체를 이용하여 Scope 데이타를 공유하거나 얻어오는 방법
+  1. 데이타 공유 => Key : 문자열   Value : 객체
+   형식) 내장객체.setAttribute(Key,Value);     
+  2. 공유 데이타 얻어오기
+   형식) 내장객체.getAttribute(Key);  
+    => 반드시 형변환을 해야만 사용 가능 
+
+● Standard Action Tags(표준 액션 태그) => <namespace:tagname>데이타</namespace:tagname>
+  - namespace를 이용하여 다른 markup 파일(xml파일)에서의 tagname을 구분 할 수 있다.  
+  - jsp 액션태그에서는 표현식(expression)이 사용 가능하다.
+
+  1) include 액션태그 : JSP파일에서 include JSP파일을 요청하여 처리 결과을 응답 받아 처리
+    형식) <jsp:include page="포함파일명"/>
+     
+    => 액션태그를 사용한 JSP 파일과 include된 JSP 파일은 request 내장객체를 이용하여 객체를 공유하여 사용한다.
+     ※ include 액션태그 사용시 주의 : request 객체의 한글 인코딩은 액션태그를 사용한 JSP 파일에서 인코딩 해야만 된다.(include된 JSP에서 사용하면 적용되지 않는다.)
+
+  2) forward 액션태그 : JSP파일에서 forward JSP파일로 제어권을 넘겨 처리
+    형식) <jsp:forward page="이동페이지명"/>
+
+    => forword 태그를 사용하면 URL은 요청 URL로 표시되지만 응답은 forward JSP파일이 한다. 
+    => forword 태그를 사용 JSP에서 객체를 forward JSP파일로 넘길 수 있다. => request 객체 이용  
+
+  3) useBean 액션태그 : Java 클래스(JavaBean = DTO클레스)를 이용하여 객체 생성 후 Scope 객체로 등록
+    형식) <jsp:useBean id="객체명" class="패키지명.클래스명" scope="Scope객체"></jsp:useBean>
+    => Scope 지정 가능하며 useBean 액션태그 안에 setProperty 태그 사용이 가능하다.
+    => 주의 : 클래스명을 사용할 때 패키지명까지 모든 지정
+
+  4) setProperty 액션태그 : useBean으로 만든 객체를 이용하여 setter 메소드를 호출하는 태그 
+    형식) <jsp:setProperty name="useBean객체" property="멤버변수명"/>
+    => form에서 입력한 데이타를 얻어와 setter 메소드로 객체의 멤버변수 값 변경
+    => 주의 : form의 파라메터명과 멤버변수의 이름이 같아야 된다.
+
+  5) getProperty 액션태그 : useBean으로 만든 객체를 이용하여 getter 메소드를 호출하는 태그 
+    형식) <jsp:getProperty name="useBean객체" property="멤버변수명"/>
+    => 객체의 멤버변수값을 출력하고자 할 경우 사용
+
+● JSP와 JDBC
+  - Apache DBCP 사용법 => 웹에서만 사용 가능
+    1. ojdbc6.jar 파일을 /WebContent/WEB-INF/lib 디렉토리에 복사하여 저장
+      => OracleDriver 클래스 사용 가능
+
+    2. /WebContent/META-INF/context.xml 파일을 복사하여 저장
+       => JNDI(Java Naming Directory Interface) 등록 
+          * Java 자원(인스턴스 생성하기 위한 정보)에 이름을 부여하여 사용하는 기능
+<code><samp>
+<Context>
+  		<Resource name="jdbc/OracleDB" 
+    auth="Container" 
+    type="javax.sql.DataSource"
+    driverClassName="oracle.jdbc.driver.OracleDriver" 
+    url="jdbc:oracle:thin:@localhost:1521:xe"
+    username="scott" 
+    password="tiger" 
+    factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" 
+    maxActive="500"
+    maxIdle="100" /> 
+</Context>
+</samp></code>
+     => context.xml 파일 수정(url, username, password)
+
+   3. InitialContext 객체로 context.xml의 Naming된 자원을 읽어 DataSource 객체 생성 
+    => DataSource 객체로 Connection 객체 얻어오기 
+
+● 회원 가입 및 로그인
+  - request로 객체 저장 후 forward로 페이지 이동
+    =>  forward 시키면 request를 공유하여 사용 가능하다.
+    =>  속성값 저장 : request.setAttribute("속성키",저장객체);
+    =>  속성값 얻기 : 객체명=(객체형변환)request.getAttribute("속성키"); 
+  - forward 액션태그 대신 RequestDispatcher 객체 사용 가능
+
+   형식-1) JSP에서 사용
+	<jsp:forward page="이동페이지"/>
+
+   형식-2) Servlet에서 사용
+           RequestDispatcher 객체명
+		=request.getRequestDispatcher("이동페이지");
+	   객체명.forward(request, response);    
+  - 로그인처리 
+
+    => 로그인 성공시 session에 속성값 저장
+
+    => 로그인 사용 페이지에서는 session 속성값 여부 확인
+
+
+● 우편번호 테이블 생성
+  - http://www.postman.pe.kr/zipcode/index.html 에서 우편번호 원본파일 다운로드(zip파일)
+  - 우편번호 원본파일을 csv 파일(zipcode.csv)로 변환하여 저장 => Excel 이용
+   ※ 원본파일은 공백(탭)으로 데이타를 구분하며  csv 파일은 ,로 데이타를 구분
+  - zip.sql파일로 테이블 생성
+  - Oracle SQL Developer를 이용하여 zipcode.csv 파일의 내용을 zip 테이블에 저장
+  - zip 테이블을 이용하여 zipcode 테이블 생성 후 데이타 복사
+  create table zipcode(zipcode,dong, address) as select zipcode,DONG,SIDO||' '||GUGUN||' '||DONG||' '||RI||' '||BLDG||' '||BUNJI from zip;
+  - zipcode 테이블 확인 및 zip 테이블 삭제
+  select * from zipcode where dong like '%삼성%';
+  drop table zip PURGE;
+
+● 답변형 게시판
+  - 글저장 메소드(신규글 및 답변글 같이 처리)
+   => 신규글 : num을 전달받지 않는 글(부모글이 없는 경우)
+     1) ref는 자동 증가된 값과 동일한 값 부여
+     2) re_step 및 re_level은 0으로 초기화
+
+   => 답변글 : num을 전달받는 글(부모글이 있는 경우)
+     1) ref,re_step,re_level은 부모글에서 물려 받은 값 사용
+     2) ref가 같은 글중 부모글로 물려 받은 reStep보다 큰 re_step를 가진 글의 
+        re_step 값을 모두 1증가
+     3) 부모글에서 물려받은 reStep 및 reLevel의 값 1증가
+
+  - 이클립스 IP주소는 기본적으로 IPV6(128bit주소)를 이용
+    => IPV4(32bit주소)로 변경
+    Run >> Run Configurations... >> Tomcat 8.0 ... >> Arguments 
+    >> VM Arguments >> "-Djava.net.preferIPv4Stack=true" 내용 추가
+
+  - 게시글 출력
+   => ref로 내림차순 정렬 후 같은 경우 re_step으로 오름차순 정렬하여 검색
+
+  - 글목록에 대한 페이징 처리 => 전체 글 중 출력페이지의 글만 출력
+    pageSize : 한 페이지에 출력될 글의 갯수를 저장 => 임의 설정
+    pageNum : 출력될 페이지번호 저장 => 외부파일에서 값 얻어오기
+    totalArticle : board 테이블에 저장된 전체 글의 갯수
+    totalPage : 전체 페이지 갯수 저장 => totalArticle/pageSize+(totalArticle%pageSize==0?0:1)
+    startRow : 출력될 페이지의 글의 시작행번호
+    endRow : 출력될 페이지의 글의 마지막행번호

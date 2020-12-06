@@ -1,41 +1,45 @@
-//syntax에 맞는 코드 형식 변환
-String.prototype.convertHTML = function () {
-  return (
-    this
-      // 코드 안에 samp 태그를 사용하면 html 태그 사용가능 하도록 설정 (꺽쇠 무시)
-      .replaceAll(/<code>.*<\/code>/gs, function (codeText) {
-        const startcode = "codecodecode";
-        const endcode = "/code/code/code";
-
-        return codeText
-          .replaceAll("<code>", startcode)
-          .replaceAll("</code>", endcode)
-          .replaceAll(/<samp>.*<\/samp>/gs, function (sampText) {
-            return sampText
-              .replaceAll("<samp>", "")
-              .replaceAll("</samp>", "")
-              .replaceAll(/[<>]/g, function (tag) {
-                return `<span>${tag}</span>`;
-              });
-          })
-          .replaceAll(startcode, "<code>")
-          .replaceAll(endcode, "</code>");
-      })
-  );
-};
-
 function covertCodeForHTML(text, language) {
   switch (language) {
+    case schema.html:
+      return convertJavascript(text);
+    case schema.css:
+      return convertJavascript(text);
     case schema.javascript:
+      return convertJavascript(text);
+    case schema.typescript:
       return convertJavascript(text);
     case schema.nodejs:
       return convertJavascript(text);
+    case schema.java:
+      return convertJavascript(text);
+    case schema.python:
+      return convertPython(text);
     case schema.go:
-      return text;
+      return convertJavascript(text);
+    case schema.c:
+      return convertJavascript(text);
+    case schema.rust:
+      return convertJavascript(text);
     case schema.linux:
-      return text;
+      return convertJavascript(text);
+    case schema.kali:
+      return convertJavascript(text);
+    case schema.docker:
+      return convertJavascript(text);
+    case schema.database:
+      return convertJavascript(text);
+    case schema.server:
+      return convertJavascript(text);
+    case schema.cloud:
+      return convertJavascript(text);
+    case schema.ide:
+      return convertJavascript(text);
+    case schema.git:
+      return convertJavascript(text);
+    case schema.etc:
+      return convertJavascript(text);
     default:
-      return text;
+      return convertJavascript(text);
   }
 }
 
@@ -50,7 +54,7 @@ function convertJavascript(text) {
     )
     .replaceAll(/(var)/g, (t) => `<span class="c-yellow">${t}</span>`)
     .replaceAll(
-      /(const)|(let)/g,
+      /(const )|(let )/g,
       (t) => `<span class="c-lightgreen">${t}</span>`
     )
     .replaceAll(
@@ -96,3 +100,29 @@ function convertPython(text) {
       )
   );
 }
+
+//syntax에 맞는 코드 형식 변환
+String.prototype.convertHTML = function () {
+  return (
+    this
+      // 코드 안에 samp 태그를 사용하면 html 태그 사용가능 하도록 설정 (꺽쇠 무시)
+      .replaceAll(/<code>.*<\/code>/gs, function (codeText) {
+        const startcode = "codecodecode";
+        const endcode = "/code/code/code";
+
+        return codeText
+          .replaceAll("<code>", startcode)
+          .replaceAll("</code>", endcode)
+          .replaceAll(/<samp>.*<\/samp>/gs, function (sampText) {
+            return sampText
+              .replaceAll("<samp>", "")
+              .replaceAll("</samp>", "")
+              .replaceAll(/[<>]/g, function (tag) {
+                return `<span>${tag}</span>`;
+              });
+          })
+          .replaceAll(startcode, "<code>")
+          .replaceAll(endcode, "</code>");
+      })
+  );
+};

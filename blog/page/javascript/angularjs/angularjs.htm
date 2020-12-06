@@ -1,7 +1,144 @@
+## 공식 : https://docs.angularjs.org/api/ng
+
+## CDN
+<code><samp>
+/*AngularJS 1.7*/ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js" charset="utf-8"></script> 
+/*route*/ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28//angular-route.min.js"></script> 
+/*animate*/ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+</samp></code>
+
+## angularJs 표현식 : {{expression}}
+
+## angularJS 태그 속성
+  # 양방향 바인딩 : ng-model="expression($scope)"
+  # 분기문 : ng-show="Bool value"
+  # event 바인딩 : ng-click="func"
+  # 반복 처리 ng-repeat="ele in eles | filter(orderBy: , filter:, limitTo:number)"
+    - repeate 변수 : $index, $count
+
+## angularjs module 
+  # js
 <code>
-var app = angular.module(appName, []);
-
-app.controller(function()) {
-
-}
+// ngRoute: 라우팅을 위해 주입하는 Dependency
+angular.module('appName', ['ngRoute']); 
 </code>
+  # html
+<code><samp>
+<body ng-app="appName"></body>
+</samp></code>
+
+## Controller : 일반적으로 view control을 위해 사용
+  # js
+<code>
+angular.module("appName").controller("ControllerName", ["$scope",  function($scope){ 
+	//javascript($scope) source code... 
+}); 
+</code>
+  # html
+<code><samp>
+<div ng-controller="controllerName"></div>
+</samp></code>
+
+## Serviece : DB연동되는 데이터를 트랜젝션 관리하는데 사용됨
+	# factory
+<code>
+angular.module("appName").factory("factoryName", ["$http", "$q", function($http, $q){ 
+		return { 
+			taget_1: function(arg...){ 
+				// factory command [data access] 
+			}, 
+			teget_2: function(arg...){ 
+				// factory command [data access] 
+			} 
+		} 
+	});
+</code>
+  # service
+<code>
+angular.module("appname").service("serviceName", ["$http", "$q", function($http, $q){ 
+		this.serv_1 = function(arg..){ 
+			// service command [data access] 
+		}); 
+		this.serv_2 = function(arg..){ 
+			// service command [data access] 
+		}); 
+	}])
+```
+</code>
+
+## constant : $scope에 상수를 정의하기 위해 사용
+<code>
+angular.module("appName").constant("constName" ,{ 
+	const_1: "value_1", 
+	const_2: "value_2" 
+});
+</code>
+
+## config
+  # routing : 라우팅을 설정하는 기능으로 사dyd
+<code><samp>
+angular.module('appName').config(function($routeProvider){
+	$routeProvider
+		.when("route1", {
+			templateUrl: "tpl1.html",
+			controller: "Ctrl1",
+		})
+		.when("route2", {
+			templateUrl: "tpl2.html",
+			controller: "Ctrl1",
+		})
+		.otherwise({
+			// 없을경우
+			template: "<p id='permissionDenined'>Permission denined</p>",
+			controller: ""
+		})
+});
+</samp></code>
+
+## directive : -- 작성예정 **--
+
+## utility
+	# route에서 %2F를 slash로 바꿔주는 서비스
+<code>
+angular.module('managerApp').config(['$locationProvider', function($locationProvider) {
+	$locationProvider.hashPrefix('');
+}]);
+</code>
+
+## angularjs 제공 기본 DI
+  # $http : ajax 기능을 제공하는 $scope 변수
+  # $q : promise 기능을 제공하는 $scope 변수
+  
+  # $http와 $q를 활용한 ajax ( sync )
+<code>
+// service
+var deferred = $q.defer();
+$http({ 
+	method: 'POST', 
+	url: uri, 
+	data: $.param({param_1: "value1", param_2: "value2"}), 
+	headers: {'Content-Type': "application/x-www-form-urlencoded; charset=utf-8"} 
+}).then(function successCallback(response) { 
+	// ajax 성공 : response.data 반환 
+	deferred.resolve(response.data); // $q를 이용해 데이터를 제공 
+}, function errorCallback(xhr) { 
+	console.log("ajax error") 
+});
+
+//controller
+factoryName.taget_1("arg").then(function(data){ 
+	$scope.var = data; // data에 설정 
+}) 
+servicename.serv_1("arg").then(function(data){ 
+	$scope.var = data; // data에 설정 
+})
+</code>
+
+## angularjs 함께 사용할 수 있는 chart librarys
+
+  # zingchart : https://blog.zingchart.com/angularjs-chart-examples/
+  # angular-chart : https://jtblin.github.io/angular-chart.js/
+                  : https://embed.plnkr.co/plunk/tswjcE

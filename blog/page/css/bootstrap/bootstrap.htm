@@ -1,1 +1,110 @@
-bootstrap page!
+* twiter에서 제공하는 jQuery open sorce
+
+## CDN
+  # Bootstrap 4
+<code><samp>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</samp></code>
+
+  # Bootstrap 3
+<code><samp>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</samp></code>
+
+## bootstrap 제공 class
+  # container layout
+  container-fluat
+
+  grid (12개의 column을 한개의 row에 배치)
+  row	: 한줄을 의미
+
+  col-숫자 	// BS4
+  col-sm-숫자 : 문서가 576px이상이면 세로배치(스마트폰크기)
+  col-md-숫자 : 문서가 768px이상이면 세로배치
+  col-lg-숫자 : 문서가 992px이상이면 세로배치
+  col-xl-숫자 : 문서가 1200px이상이면 세로배치
+
+  # 문자열
+
+  # Bootstrap 제목태그 기본설정값 
+            BS3	        BS4
+      h1	40px	      36px
+      h2	32px	      30px
+      h3	28px	      24px
+      h4	24px	      18px
+      h5	20px	      14px
+      h6	16px	      12px
+
+  # display : BS4, 해당태그의 크기를 무시하고 새로운 크기를 추가, div, p, a, button 등 여러 태그에서 사용가능 
+
+  # 다양한태그
+    small : 설정된 크기보다 조금 작은 크기로 표시한다.
+    mark : 강조(배경색을 달리함)
+    abbr : 약어
+    initialism : 약어의 크기를 줄임
+    blockquote, footer : 인용구  BS4에서는 클래스를 넣어주도록해야함. blockquote, blockquote-footer
+    dl, dt, dd	: 항목표시
+    code	: 프로그램 코드표시
+    kdb	: 키보드 단축키
+    pre	: 태그내의 문자열을 작성한 모양 그대로 출력
+    
+  # 모양
+    font-weight-bold : BS4 굵게
+    font-weight-light : BS4 가늘게
+    font-weight-normal : BS 기본굵기
+    font-italic : BS4 기울어지게
+
+  # 정렬
+    text-left
+    text-center
+    text-right
+
+  # 일정크기가되면 정렬
+    text-*(sm/md/lg/xl)-left : BS4
+    text-*(sm/md/lg/xl)-center : BS4
+    text-*(sm/md/lg/xl)-right : BS4
+
+  # 영역설정
+    text-justify : 영역안에서 문자열 좌우를 맞춤. 자간을 변경
+    text-monospace : 모노스페이스 글자로 표시한다.(한글자의 길이를 일정하게 함.) BS4
+    text-nowrap : 영역을 벗어나더라도 개행되지않음
+
+  # 글자설정
+    text-lowercase : 문자열을 소문자로 표시
+    text-uppercase : 문자열을 대문자로 표시
+    text-capitalize : 첫 글자가 소문자일 경우 대문자로 표시
+
+    list-unstyled : ui나 oi 태그를 사용할 때 스타일을 제거
+    list-inline : ui나oi 태그의 항목을 가로방향으로 배치
+    list-inline-item : BS4 ui나 oi태그의 항목에 넣어서 가로방향으로 넣을 항목을 선택
+
+    dl-horizontal : BS3 dl태그에서 오른쪽으로 좀이동해서 나옴
+
+    pre-scrollalbe : pre태그에서 스크롤바가 안나오는 상황에서도 스크롤바를 생성함.
+
+  # Color
+    text-muted
+    text-primary
+    text-success
+    text-info
+    text-warning
+    text-danger
+    text-secondary : BS4
+    text-dark : BS4
+    text-body : BS4
+    text-light : BS4
+    text-white : BS4
+
+    bg-primary
+    bg-success
+    bg-info
+    bg-warning
+    bg-danger
+    bg-secondary : BS4
+    bg-dark : BS4
+    bg-light : BS4

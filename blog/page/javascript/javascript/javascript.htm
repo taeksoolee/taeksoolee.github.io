@@ -11,10 +11,10 @@ fetch(url, {
 }).then( res => res.json()).then(data => {...})
 </code>
 
-## tip : undefined 확인 코드
+## undefined 확인 코드
 <code>
 function test(t) {
-  return t || 'undefined text!';
+  return t || 'not undefined text!';
 }
 
 test() // 'undefined text!'

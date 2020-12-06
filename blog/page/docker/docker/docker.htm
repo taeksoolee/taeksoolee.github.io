@@ -1,19 +1,174 @@
+## docker
+  * docker는 OS 자원을 사용하므로 Root 사용자로 명령어를 입력해야 한다
 
-## 다운로드
+## docker 에디션
+  # CE - Coummunity Edition (무료)
+  # EE - Enterprise Edition  (유료)
+
+## docker-ce 다운로드 (ubuntu 20.4)
+  # 의존 패키지 설치
 <code>
-https://download.docker.com/linux/static/stable/
--qO- https://get.docker.com/ | sh [설치경로]
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+$ sudo apt update
+</code>
+  # Docker 설치가능 여부 확인
+<code>
+$ sudo apt-cache policy docker-ce
+</code>
+  # docker-cli 설치
+<code>
+$ sudo apt install docker-ce
+$ sudo docker --version
 </code>
 
+## docker 명령어
+  # 이미지 검색
+<code>
+$ sudo docker search [이미지명]
+</code>
+
+  # 이미지 다운로드 (dockerhub로부터)
+<code>
+$ sudo docker pull centos:latest
+</code>
+
+  # 사용가능한 image 목록 보기
+<code>
+$ sudo docker images
+</code>
+
+  # 컨테이너 생성 ( + 컨테이너 접속 )
+    -i (interactive) : 사용자가 입출력을 할 수 있는 상태로 함
+    -t : 가상 터미널을 에뮬레이션
+    -d : 컨테이너를 데몬프로세스로 실행
+    -p : 포트 포워딩 시 사용
+    -v --volume: 파일 공유 사용 (참고 : https://tttsss77.tistory.com/161)
+    --name 
+<code>
+$ sudo docker run [옵션] [이미지이름 or 이미지ID] [실행할 파일]
+// 사용예시
+$ sudo docker run -it docker.io/centos /bin/bash
+// 컨테이너 이름 설정
+$ sudo docker run -it --name [생성할컨테이너명] [이미지이름 or 이미지ID] /bin/bash
+// 포트포워딩 예시
+$ sudo docker run -it -p [HOSTport]:[DOCKERport] [이미지이름 or 이미지ID] /bin/bash
+// 파일 공유
+$ sudo docker run -it -v [HOSTdirectory]:[DOCKERdirectory] [이미지이름 or 이미지ID] /bin/bash
+</code>
+
+  # 컨테이너 종료
+    > ctrl + d: 메인실행파일인 쉘 종료 > 컨테이너 종료
+    > ctrl+p + ctrl+q : 컨테이너가 백그라운드에 살아있는 채로 Host OS가 실행
+
+  # 컨테이너 확인
+<code>
+$ sudo docker ps
+// 전체 목록
+$ sudo docker ps -a
+</code>
+
+  # 종료된 컨테이너 시작
+<code>
+$ sudo docker start [이미지이름 or 이미지ID]
+</code>
+
+  # 종료되지 않은 컨테이너 연결 (PID 1)
+<code>
+$ sudo docker attach [이미지이름 or 이미지ID]
+</code>
+
+  # 도커 내부 파일 실행
+    * 터미널(bash, zsh 등)을 실행하면 접속 (-it 옵션 사용)
+<code>
+$ sudo docker exec [옵션] [실행 파일]
+// bash 실행
+$ sudo docker exec -it /bin/bash
+</code>
+
+  # 컨테이너 종료
+<code>
+$ sudo docker stop [이미지이름 or 이미지ID]
+</code>
+
+  # 컨테이너 삭제
+<code>
+$ sudo docker rm [이미지이름 or 이미지ID]
+// -f : 강제종료 (도커 실행 중일 때 종료)
+</code>
+
+  # 컨테이너 이미지로 저장
+<code>
+$ sudo docker commit [컨테이너명 or 컨테이너ID] [이미지명] [선택:TAG]
+</code>
+
+  # 태그 설정 (이미지 복사 / 추가)
+<code>
+$ sudo docker tag [옵션] [이미지명]:[태그명] [이미지명]:[태그명]
+</code>
+
+  # push (도커허브 업데이트)
+<code>
+$ sudo docker push [이미지명] [DOCKER_USER_ID]/[이미지명]:[태그명]
+</code>
+
+  # docker image 파일 import
+<code>
+$ sudo docker load -i [이미지파일]
+</code>
+
+  # docker image 파일 export
+<code>
+$ sudo docker save -o [경로/이미지파일.tar] [이미지명]
+</code>
+
+  # docker container import (도커컨테이너로 추가)
+<code>
+$ docker import [이미지파일.tar]
+</code>
+
+  # docker container export (도커 컨테이너 파일 추출)
+<code>
+// 실행할 때 태그
+$ docker export [컨테이너명] > [이미지파일.tar]
+// 태그 지정
+$ docker export [컨테이너명]:[태그] > [이미지파일.tar]
+</code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr/>
 ## 도커 경로 설정
 <code>
 $ dockerd -g [경로]
 </code>
 
 ## 명령어
-1. 도커 버전 확인
+  # 도커 버전 확인
 <code>
-- docker version
+$ docker version
 </code>
 
 2. 컨테이너 실행
@@ -67,10 +222,7 @@ $ docker rm [컨테이너명 or 컨테이너ID]
 $ docker rmi [이미지명]
 </code>
 
-  # 컨테이너 이미지로 저장
-<code>
-$ docker commit [컨테이너명 or 컨테이너ID] [TAG]
-</code>
+
 
   # 이미지 파일 추출
 <code>

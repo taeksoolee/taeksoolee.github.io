@@ -74,16 +74,39 @@ $ chown
 $ chmod
 </code>
 
-## tail 명령어
-  
+## 파일을 읽는 명령어 
+  # cat [파일명]
+
+  # tail [파일명]
 <code>
-$ tail -F [파일명]
+$ tail -F test.txt
 -F : 실시간 반영
 </code>
 
-## link 파일 만들기
-<code>
+  # more
 
+  # less : 대용량 파일 읽을 때 적합
+
+
+## link 파일 / 디렉토리
+  * --backup[=CONTROL] : 대상파일이 이미 존재할 경우에 백업파일을 만든 후에 링크파일 생성
+  * -b : 링크파일 생성시에 대상파일이 이미 존재하면 백업파일을 만든 후에 링크파일을 생성
+  * -d : 디렉토리에 대한 하드링크파일생성을 가능하게 함. 단 root 권한으로 수행하더라도 시스템의 권한제한으로 인하여 실패할 가능성이 높음. (-F 와 --directory 는 -d 와 동일함)
+  * -f : 대상파일이 존재할 경우에 대상파일을 지우고 링크파일을 생성
+  * -i : 대상파일이 존재할 경우에 대상파일을 지울것인가를 확인요청 (--interactive 와 동일)
+  * -s : 심볼릭 링크파일을 생성
+  * -S : 백업파일 생성시에 원하는 접미사(suffix)를 지정할 수 있음
+  * -t, --target-directory=DIRECTORY : 링크파일을 생성할 디렉토리를 지정
+
+  # 심볼릭링크 (Symbolic Link)
+    * windows의 바로가기와 같은 개념
+<code>
+$ ln -s [원본파일] [링크파일]
+</code>
+  # 하드링크 (Hard Link)
+    * 원본 파일과 동일한 내용의 다른 파일
+<code>
+$ ln [원본파일] [링크파일]
 </code>
 
 ## 서버 시간(timezone) 변경
@@ -97,3 +120,32 @@ $ cd /usr/share/zoneinfo/
 // 1번 방법
 $ sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 </code>
+
+## find 명령어
+<code>
+$ sudo find / -name [파일명]
+</code>
+
+
+## systemctl : 시스템 환경에 대한 기능을 제공
+  # 실행 확인
+<code>
+$ sudo systemctl status [프로세스명]
+</code>
+
+## 변수 설정( export )
+<code>
+$ export [변수명]=[값]
+$ export VARIABLE="value"
+$ echo $VARIABLE => vlaue
+</code>
+
+## network (네트워크) 명령어
+  # net-tools (네트워크 명령어 모음) 설치
+
+  # ping
+
+  # nmap
+
+  # netstat
+

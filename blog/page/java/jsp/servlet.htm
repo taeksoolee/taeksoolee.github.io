@@ -1,0 +1,134 @@
+● 서블릿 작성 방법  => Web Application를 만들어 주는 Java 프로그램
+  1. javax.servlet.http.HttpServlet 클래스를 상속 받는다. 
+  2. HttpServlet 클래스의 doGet() 메소드를 오버라이딩한다.
+     =>  doGet(), doPost(), service()  :  요청이 있을 경우 요청을 처리하는 메소드
+     ※ HttpServletRequest(request) 객체 : 클라이언트에서 서버에 데이타를 전송하기 위한 객체
+        HttpServletResponse(response) 객체 : 서버에서 클라이언트로 데이타를 전송하기 위한 객체
+  3. 클라이언트에 전송할 데이타 타입 설정 => 인코딩 지정
+  4. 클라이언트에 데이타를 전송하기 위한 출력스트림 생성
+  5. 클라이언트에 데이타 전송 => HTML
+  - 서블릿 파일은 반드시 Servlet 매핑을 해야만 된다.
+    Servlet 매핑 : URL에서 Servlet 클래스를 요청하기 위한 이름을 지정
+     => WebContent >> WEB-INF >> web.xml 수정(servlet 및 servlet-mapping 태그 추가)
+<code><samp>
+<!--형식-->
+<servlet>
+    <servlet-name>서블릿명</servlet-name>
+    <servlet-class>서블릿클래스명</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>서블릿명</servlet-name>
+    <url-pattern>URL매핑이름</url-pattern>
+</servlet-mapping> 
+</samp></code>
+<code><samp>
+<!--사용 예제-->
+<servlet>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>com.itwill.servlet.HelloServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hello</servlet-name>
+    <url-pattern>/hello.itwill</url-pattern>
+</servlet-mapping> 
+</samp></code>
+
+    URL주소 - http://172.16.5.1:8000/test/hello.itwill
+        => HelloServlet 클래스의 내용 실행
+
+    ※ Servlet 3.0 이상에서는 web.xml를 수정하는 방법보다 Servlet 파일에
+       @WebServlet 어노테이션을 사용하여 매핑한다.
+       형식) @WebServlet("URL매핑이름")
+
+● Servlet에 의한 요청 및 응답
+  - 클라이언트 요청 후 서버에서의 작동 순서 
+    1) URL 분석
+    2) Site(Context) 검색
+    3) 요청 리소스 검색 => 리소스가 메모리에 없으면 리소스객체 생성
+                        => 리소스객체 있으면 생략
+      ※ 리소스 객체(Web객체)에 포함되어 있는 일반 객체도 같이 생성
+    4) 처리 스레드 생성 => 리소스 객체의 service메소드(doGet() 또는 doPost) 호출
+      ※ service 메소드에서 DAO객체의 메소드를 호출하여 원하는 기능 실행
+    5) 리소스 객체에서 처리된 결과를 클라이언트에 응답후 스레드 제거
+      ※ 리소스 객체 및 일반 객체는 사라지지 않는다.
+
+● Servlet객체의 LifeCycle(생명주기) 
+   1. init() 메소드 
+     => 서블릿 객체 생성 시 호출(1번만 호출)
+     => 서블릿에 대한 초기화 작업을 위한 메소드
+     ※ 서블릿 클래스의 생성자는 서블릿 관련 초기화 작업에 부적절하다.
+   2. service() 메소드(doGet() 또는 doPost())
+     => 서블릿 객체를 이용(클라이언트 요청)시 호출되는 메소드(요청할때마다 호출) 
+     => 요청에 대한 응답처리를 하기 위한 메소드
+   3. destroy() 메소드
+     => 서블릿 객체 소멸 시 호출(1번만 호출)
+     => 서블릿에 대한 마무리 작업을 위한 메소드
+
+● form 태그 및 request 인스턴스
+  - URL 요청 => Get 또는 Post
+    Get : URL에 QueryString을 사용하여 데이타 전송
+       => 소용량 데이타 전송 또는 보안이 필요 없는 데이타 전송
+      ex) http://172.16.5.1:8000/servlet/form_get.html?id=aaa&irum=bbb
+    Post : http 프로토콜을 사용하여 데이타 전송
+       => 대용량 데이타 전송 또는 보안이 필요한 데이타 전송 
+  - form으로 넘어온 데이타는 request객체의 getParameter()메소드에 의해 값을 반환받을 수 있다.
+    형식) String  저장변수=request.getParameter("파라메터명");
+  - Servlet에서의 한글 처리 => 입력받은 데이타를 한글로 입력 받을 수 있도록 인코딩 설정
+    형식) request.setCharacterEncoding("utf-8");
+    ※ Get 방식은 한글 처리을 위해 server.xml를 수정 => 63 Line
+<code><samp>
+<Connector connectionTimeout="20000" port="8000" protocol="HTTP/1.1" 
+           redirectPort="8443" URIEncoding="UTF-8"/>
+</samp></code>
+  - 이클립스 IP주소는 기본적으로 IPV6(128bit주소)를 이용
+    => IPV4(32bit주소)로 변경
+    Run >> Run Configurations... >> Tomcat 8.0 ... >> Arguments 
+    >> VM Arguments >> " -Djava.net.preferIPv4Stack=true" 내용 추가
+
+
+● 파일 업로드
+  - HTTP에서는 POST 방식으로 파일을 업로드 할 수 있는 방법을 제공하는데 다음과 같이 설정하여야 한다.
+    => form 태그에서 method를 POST방식으로 설정한다.
+    => action="서블릿명" : 파일 업로드를 위한 서블릿을 지정한다.
+    => enctype="multipart/form-data" : 업로드할 파일의 형식을 지정하는 것으로 반드시 설정한다.
+    => input[type="file", name="upfile"] : 파일을 업로드하기 위해 input type의 형식을
+       "file"로 지정해 주어야 한다. 이는 브라우저가 파일을 선택할 수 있는 버튼을 자동으로 제공함으로써,
+       사용자가 보내고자 하는 파일을 선택할 수 있도록 하는 것이다.
+    => oreilly 그룹의 cos 라이브러리 또는 Apache 그룹에서 제공하는 Commons Upload 라이브러리 중 
+       하나를 사용하여 업로드 처리
+  - enctype="multipart/form-data"을 처리하기 위한 cos.jar(MultiPartRequest 클래스)를 이용하면
+    보다 쉽게 업로드 처리 및 데이타 전송 가능
+    => cos.jar(MultiPartRequest 클래스를 가지고 있는 라이브러리 파일) 다운로드
+    => http://www.servlets.com >> com.oreilly.servlet >> cos-26Dec2008.zip 다운로드
+    => cos-26Dec2008.zip 압축 해제 >> cos-26Dec2008\lib >> cos.jar 
+    => cos.jar 파일 >> workspace\servlet\WebContent\WEB-INF\lib 폴더에 붙여넣기
+
+● 쿠키 및 세션
+  - HTTP 서비스는 서버와 클라이언트가 지속적인 연결이 이루어 지지 않는다.
+    (클라이언트 요청에 대한 서버 응답후 연결 해제)
+    => 서버와 클라이언트의 연결을 유지하기 위해 쿠키 또는 세션을 사용한다.
+  - 쿠키(Cookie) : 클라이언트에 저장되는 정보(문자열)
+  - 세션(Session) : 서버에 저장되는 정보(객체)
+
+  - Servlet에서의 쿠키와 세션
+      1) 클라이언트에 처음 요청 확인 => 클라이언트에 쿠키 저장(response 객체 이용 - JSESSIONID)
+        ※ 쿠키 생성 시 세션 등록 => 세션 바인딩을 하기 위해
+      2) 클라이언트 요청시 쿠키 확인 => 클라이언트의 쿠키 정보를 활용한 처리
+        ※ 세션 등록된 정보를 활용 => 장바구니객체(MAP을 사용) : session tracking 작업       
+
+  - 쿠키 생성, 활용, 삭제
+    ※ 주의) 호스트명이 ip주소인 경우 쿠키 사용이 제한 된다.  ex) 172.16.6.6 > localhost로 변경
+    ※ 쿠키정보경로 => C:\Users\user\AppData\Roaming\Microsoft\Windows\Cookies
+
+  - 세션 생성, 활용, 삭제
+
+    1) 클라이언트 > 서버의 페이지 요청(처음 요청) > Cookie(JSESSIONID) 확인 > Cookie(JSESSIONID)가 없는 경우 JSESSIONID 생성  
+       > HttpSession객체를 생성하여 JSESSIONID 등록(Session) : 세션객체(장바구니객체, 사물함객체) 
+       > Cookie객체를 생성하여 JSESSIONID 등록(Cookie)하여 클라이언트에게 전송  : 클라이언트의 구분
+    2) 클라이언트 > 서버의 페이지 요청 : 제품 요청(JSESSIONID가 등록된 Cookie 전송) > Cookie(JSESSIONID) 확인 >
+       > Cookie(JSESSIONID)가 있는 경우 Cookie에 저장된 JSESSIONID 값 얻기
+       > 세션 바인딩(binding) : 얻어낸 JSESSIONID를 이용하여 서버에 저장된 HttpSession객체(세션객체) 반환
+       > 세션객체에 제품 담기 : MAP의 형태로 데이타 저장(키 및 값 저장) > 응답
+
+## servlet 라이프사이클
+<img src="/blog/page/java/jsp/servlet-lifecycle.png" alt="servlet-lifecycle">

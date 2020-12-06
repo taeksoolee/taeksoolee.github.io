@@ -1,0 +1,23 @@
+## 사용방법
+  # 로그인 (dockerhub login)
+<code>
+$ sudo docker login
+</code>
+
+  # DOCKER_USER_ID 설정
+<code>
+$ export DOCKER_USER_ID="lts1490"
+$ echo $DOCKER_USER_ID
+</code>
+
+  # 이미지 만들기
+    * 참고 : https://galid1.tistory.com/323
+<code>
+$ sudo docker commit [컨테이너명] [이미지명]:[태그명]
+$ sudo docker tag [이미지명]:[태그명] $DOCKER_USER_ID/[이미지명]:[태그명]
+</code>
+
+  # 이미지 푸시
+<code> 
+  $ sudo docker push $DOCKER_USER_ID/[이미지명]:[태그명]
+</code>

@@ -1,0 +1,31 @@
+* web은 정보전달이 가장 큰 목적
+
+## web server : web서비스를 제공해주는 컴퓨터
+	* server 소켓을 실행해 크라이언트를 계속 기다려야함
+		** WAS(web application server) : 웹서버로 만들어주는 프로그램
+			ef. appach.tomcat (java에서 가장많이 사용)/ JEUS .... 
+	         ** www(world wide web)  : 인터넷에 가장 가까운 네트워크 서비스
+  => http / https (80 port) 기반으로 만들어짐
+  
+## web client
+	# Browser : webserver에 접속한하는 프로그램  // URL로 접근
+		// chrome, ie, safari, opera
+
+	# URL(인터넷상에서 사용되는 자원) :  http://ipAdress:port/context/Resource
+		- http에서는 80(약속된 포트번호)은 생략 가능
+    - context 생략시 Root context로 결합
+
+## webDirectory (webApps) : WAS가 리소스를 찾는 디렉토리	
+
+## DOM
+  # dom parser : 각 브라우저마다 다르게 갖고 있음
+  # dom parsing : dom tree를 만들어 문서를 해석함
+  # rendering : 브라우저에 원하는 형태로 뿌려줌
+
+## publishing : 모든사람(시각장애인등)을 위한 페이지를 만듦 => 디자인을 단순화
+
+## client가 요청하면 response 후에 server측에서 연결을 종료함.
+	(불특정다수에게 정보를 제공(인증작업을 하지않음)하므로 서버의 부담을 줄이기 위해서)
+  ** 쿠키(javascript), 세션(java)을 이용해서 클라이언트의 정보를 저장
+  
+<img src="/blog/page/etc/network/web-structure.JPG" alt="web-structure">

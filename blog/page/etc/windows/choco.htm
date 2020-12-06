@@ -1,0 +1,357 @@
+## chocolatey 프로그램 : windows 패키지 매니저 도구
+  * 공식 : https://chocolatey.org/
+
+  https://github.com/rkttu/dotfiles/blob/master/chocolatey.cmd
+
+## chocolatey
+  # 설치
+<code>
+> @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
+> powershell.exe
+ps > Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+</code>
+
+  # upgrade
+<code>
+// choco 최신버전
+> choco upgrade chocolatey -y
+// 패키지 전체 최신버전
+> choco upgrade all -y
+</code>
+  
+
+
+## chocolatey packcage 설치
+  * 참고 : https://github.com/rkttu/dotfiles/blob/master/chocolatey.cmd
+  # REM Install command-line tools using Chocolatey.
+
+  # REM Make sure we're using the latest Chocolatey.
+<code>
+> choco upgrade chocolatey -y
+</code>
+
+  # REM Upgrade any already-installed packages.
+<code>
+> choco upgrade all -y
+</code>
+
+  # REM Install GNU core utilities
+<code>
+> choco install gnuwin32-coreutils.install -y
+</code>
+
+  # REM Install MinGW
+<code>
+> choco install mingw -y
+</code>
+
+  # REM Install SED
+<code>
+> choco install gnuwin32-sed.install -y
+</code>
+
+  # REM Install Wget
+<code>
+> choco install wget -y
+</code>
+
+  # REM Install macOS/Linux default packages
+<code>
+> choco install vim -y
+</code>
+
+<code>
+> choco install nano -y
+</code>
+
+<code>
+// grep windows
+> choco install grepwin -y
+</code>
+
+<code>
+> choco install openssh -y
+</code>
+
+<code>
+> choco install nmap -y
+</code>
+
+<code>
+> choco install 7zip.install -y
+</code>
+
+<code>
+> choco install git.install -y
+</code>
+
+<code>
+> choco install ruby -y
+</code>
+
+<code>
+> choco install python3 -y
+</code>
+
+<code>
+> choco install graphviz -y
+</code>
+
+<code>
+// 커맨드라인 json 프로세서
+// 참고 : https://www.44bits.io/ko/post/cli_json_processor_jq_basic_syntax
+> choco install jq -y
+</code>
+
+<code>
+> choco install sqlite -y
+</code>
+
+<code>
+> choco install itunes -y
+</code>
+
+  # REM Install Programming Languages
+<code>
+> choco install nodejs.install -y
+</code>
+
+<code>
+> choco install jdk8 -y
+</code>
+
+<code>
+> choco install maven -y
+</code>
+
+<code>
+> choco install gradle -y
+</code>
+
+<code>
+> choco install golang -y
+</code>
+
+<code>
+> choco install dotnetcore-sdk -y
+</code>
+
+<code>
+> choco install llvm -y
+</code>
+
+  # REM Install Windows-flavored packages
+<code>
+> choco install sysinternals -y
+</code>
+
+<code>
+> choco install notepadplusplus -y
+</code>
+
+<code>
+> choco install vscode -y
+</code>
+
+<code>
+> choco install cmder -y
+</code>
+
+<code>
+> choco install fiddler -y
+</code>
+
+<code>
+> choco install reshack -y
+</code>
+
+<code>
+> choco install heidisql -y
+</code>
+
+<code>
+> choco install rdcman -y
+</code>
+
+<code>
+> choco install filezilla -y
+</code>
+
+<code>
+> choco install tightvnc -y
+</code>
+
+<code>
+> choco install winscp -y
+</code>
+
+<code>
+> choco install hwinfo.install -y
+</code>
+
+<code>
+> choco install sourcetree -y
+</code>
+
+<code>
+> choco install windirstat -y
+</code>
+
+<code>
+> choco install queueexplorer-standard -y
+</code>
+
+<code>
+> choco install baretail -y
+</code>
+
+<code>
+> choco install winmerge -y
+</code>
+
+<code>
+> choco install crystaldiskmark -y
+</code>
+
+<code>
+> choco install rufus -y
+</code>
+
+<code>
+> choco install firefox -y
+</code>
+
+<code>
+> choco install googlechrome -y
+</code>
+
+<code>
+> choco install lastpass -y
+</code>
+
+<code>
+> choco install lastpass-for-applications -y
+</code>
+
+<code>
+> choco install openvpn -y
+</code>
+
+<code>
+> choco install sqlitebrowser -y
+</code>
+
+<code>
+> choco install flashplayerplugin -y
+</code>
+
+<code>
+> choco install adobeair -y
+</code>
+
+<code>
+> choco install gom-player -y
+</code>
+
+<code>
+> choco install slack -y
+</code>
+
+  # REM Font
+<code>
+> choco install firacode -y
+</code>
+
+<code>
+> choco install d2codingfont -y
+</code>
+
+  # REM DevOps related
+<code>
+> choco install terraform -y
+</code>
+
+<code>
+> choco install vault -y
+</code>
+
+<code>
+> choco install kubernetes-cli -y
+</code>
+
+<code>
+> choco install mysql.utilities -y
+</code>
+
+<code>
+> choco install docker -y
+</code>
+
+<code>
+> choco install svn -y
+</code>
+
+<code>
+> choco install webpicmd -y
+</code>
+
+<code>
+> choco install aria2 -y
+</code>
+
+  # REM Cloud provider related
+<code>
+> choco install awscli -y
+</code>
+
+<code>
+> choco install azure-cli -y
+</code>
+
+<code>
+> choco install gcloudsdk -y
+</code>
+
+  # REM Windows SDK
+<code>
+> choco install windows-sdk-10.1 -y
+</code>
+
+<code>
+> choco install windows-sdk-8.1 -y
+</code>
+
+<code>
+> choco install vcbuildtools -y
+</code>
+
+<code>
+> choco install dependencywalker -y
+</code>
+
+<code>
+> choco install ilspy -y
+</code>
+
+
+  # REM Misc
+<code>
+> choco install ffmpeg -y
+</code>
+
+<code>
+> choco install ghostscript.app -y
+</code>
+
+<code>
+> choco install nssm -y
+</code>
+
+<code>
+> choco install ripgrep -y
+</code>
+
+<code>
+> choco install phantomjs -ychoco
+</code>

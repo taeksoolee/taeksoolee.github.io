@@ -512,8 +512,8 @@ function scrollAnimation(el, destination, term, isAdd, isClear) {
 
 const itemsEl = document.querySelector(".items");
 document.documentElement.addEventListener("keydown", function (e) {
-  const animationTerm = 4;
-  const animationTopTerm = 40;
+  const animationTerm = 10;
+  const animationTopTerm = 10;
   if (e.code === "Escape") {
     app.isOpendNav = !app.isOpendNav;
   } else if (e.shiftKey && e.code === "Tab") {

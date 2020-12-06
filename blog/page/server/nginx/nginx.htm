@@ -1,0 +1,42 @@
+
+만든사람 : Igor Sysoev(러시아) 개발자
+
+* 동시접속 처리에 특화된 웹 서버 프로그램
+* 동시접속(약 700명) 이상이라면 서버를 증설 또는 Nginx 환경을 권장
+
+## 역할
+  # 정적 파일을 처리하는 HTTP 서버
+
+  # 응용프로그램 서버에 요청을 보내는 리버스 프록시
+    * 클라이언트는 가짜 서버에 요청
+      > 프록시 서버(nginx)가 리버스 서버(Webapp등)로부터 데이터를 가져옴
+
+## nginx.conf 파일에서 location 지시어를 사용하여 요청 배분
+
+
+## 설치 / 제거
+  # ubuntu apt 설치 (/etc/nginx)
+<code>
+// 설치 
+$ sudo apt install nginx
+// 제거
+$ sudo apt remove nginx
+// 버전확인
+$ nginx -v
+</code>
+
+  # compile 설치 (/usr/local/nginx/coinf 또는 /usr/local/etc/nginx)
+
+
+
+
+## nginx.conf 파일
+  * nginx는 master와 worker 프로세스로 나뉨
+  # user : nginx 프로세스가 실행되는 권한 (worker 프로세스의 권한 지정)
+    >> www-data(default)
+    >> nginx : worker process
+
+
+    
+
+

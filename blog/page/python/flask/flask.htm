@@ -1,0 +1,30 @@
+## 설치
+<code>
+$ pip install flask
+</code>
+
+## 버전 확인
+<code>
+$ flask --version
+</code>
+
+## 서버 실행 ( default port : 5000)
+<code>
+$ flask run
+</code>
+
+## 기본예제 : app.py
+<code>
+from flask import Flask, render_template 
+
+app = Flask(__name__) 
+
+@app.route('/') 
+def index(): 
+    # return 'Hello Flask' 
+    return  render_template('index.html') 
+@app.route('/info') 
+def info(): 
+    # return 'Info' 
+    return  render_template('info.html') 
+</code>

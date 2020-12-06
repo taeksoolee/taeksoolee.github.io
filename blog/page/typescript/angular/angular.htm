@@ -1,0 +1,125 @@
+## angular cli : node 기반에 angualr 프로젝트를 컨트롤하는 커맨드라인 인터페이스
+  # 설치
+<code>
+$ npm install -g @angualr/cli
+</code>
+
+  # 버전확인
+<code>
+$ ng --version
+</code>
+
+  # angular 프로젝트 생성
+    * 하나의 RootModule / app.module.ts
+    * 여러개의 FeatureModule을 가짐
+<code>
+$ ng new [프로젝트명]
+</code>
+
+  # 서버를 실행
+<code>
+$ ng serve
+</code>
+
+  # 모듈, 컴포넌트, 클래스, 서비스등을 생성하는 명령
+  --module moduleName  : 모듈을 설정
+  --inline-style : 컴포넌트.ts 파일에 스타일 설정
+  --inline-template : 컴포넌트.ts 파일에 html 삽입
+  -- export : 외부로 익스포트 할 수 있도록 설정
+<code>
+$ ng generate [option]
+</code>
+
+  # 빌드
+<code>
+$ ng build 
+</code>
+
+## aop
+
+
+## Template Statement : 이벤트 바인딩에 사용되는 문법
+  * 표현식과 문장은 다른 파서에 의해 작동되므로 구분해서 사용해야 함.
+  # 템플릿 표현식 : {{템플릿 표현식}}
+<code><samp>
+<h1>{{title}}</h1>
+</samp></code>
+
+  # 단방향 바인딩 : [속성]="템플릿 표현식"
+<code><samp>
+<todo [todo]="work">
+</samp></code>
+
+  # 단방향 바인딩 : (이벤트)="템플릿 문장"
+<code><samp>
+<button (click)="handle()">
+</samp></code>
+
+  # 양방향 바인딩 : [(ngModel)]="템플릿 표현식"
+<code><samp>
+<input type="text" [(ngModel)]="name">
+</samp></code>
+
+  # @input() 을 사용하여 부모>자식 컴포넌트로 객체를 주입
+
+  # @output(), emitter 를 통하여 값을 자식>부모 컴포넌트로 객체를 방출
+
+## universal : angular SSR
+  # 엔진 설치
+<code>
+$ ng add @nguniversal/express-engine 
+$ ng add @nguniversal/aspnetcore-engine
+$ ng add @nguniversal/hapi-engine
+$ ng add @nguniversal/socket-engine
+</code>
+
+  # 서버 코드 작성 // server.ts : 노드 서버를 가동하는 (express)
+<code>
+  app.get('/api/*', (req, res) => {
+    res.status(404).send('data requests are not supported');
+  });
+  
+  app.get('*', (req, res) => {
+    res.render('index', { req });
+  });
+  
+  app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+</code>
+
+  # 서버를 구성할 때 유의할 점
+    - app 내의 페이지 호출과 다른 api 호출, asset 호출을 구분해야 함
+		- api 호출은 /api 내부에 구성 
+		- /api 호출은 data 호출
+		- /api 호출이 아니고 파일 확장자가 없으면 app 내의 페이지 호출
+		- 기타 호출은 asset 호출
+
+## bootstrap
+  # 일반 적용
+<code>
+$ npm install --save @bootstrap3
+</code>
+<code>
+// angular.json
+...
+styles: [
+"node_modules/bootstrap/dist/css/bootstrap.min.css",
+]
+...
+</code>
+<code>
+// 사용
+@import "~bootstrap/dist/css/bootstrap.css";
+</code>
+
+  # angular/cli 설치
+<code>
+$ ng add ngx-bootstrap@5.1.0
+// okta 설치
+$ npm install --save-exact ngx-timeline@5.0.0 @okta/okta-angular@1.2.1
+</code>
+
+  # index.html header에 라이브러리 추가
+<code><samp>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</samp></code>

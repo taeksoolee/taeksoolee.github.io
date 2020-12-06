@@ -1,0 +1,84 @@
+## 프로젝트 빌드 과정
+	프로젝트 생성 - 사용자 정의 프로젝트
+	라이브러리 설정 - 라이브러리 관리와 의존성 체크
+	코드 작업
+	컴파일
+	테스트
+	패키지 만들기
+	배포 - 라이브러리 저장소 활용
+	레포팅
+
+## 설치
+  maven.apache.org >> bin.zip file download
+  mvn 파일 파일 path 지정
+  M2_HOME
+
+## 자바프로젝트 생성 명령어
+  mvn archetype:generate -DgroupId=com.newlecture -DartifactId=javaprj -DarchetypeArtifactId=maven-archetype-quickstart
+
+  - maven-archetype-quickstart : 자바 개발에 사용되는 기본적인 템플릿
+  -D : 구분자
+  1.다른 사람이 만든 maven-archetype-quickstart 라는 프로젝트 구조를 기본으로
+  2.내가 javaproj 새로운 프로젝트를 생성
+  3.그 때 내 프로젝트를 식별하기 위한 그룹명은 com.newlecture 이다.
+
+  SNAPSHOT : 개발 중이라는 의미
+
+  javaprj\src\main\java\com\newlecture\App.java 소스 수정
+
+  pom.xml 있는 곳에서
+  mvn compile  : java파일을 컴파일
+  mvn package : java파일을 컴파일 후 jar파일로 패키지화 
+
+## 실행명령어
+  java -cp target
+  javaprj-1.0-SNAPSHOT.jar com.newlecture.App
+
+## Build Lifecycle
+  mvn compile
+  mvn test
+  mvn package
+  mvn install
+  mvn deploy
+
+  단계
+  <phases>
+    <phase>validate</phase>
+    <phase>initialize</phase>
+    <phase>generate-sources</phase>
+    <phase>process-sources</phase>
+    <phase>generate-resources</phase>
+    <phase>process-resources</phase>*
+    <phase>compile</phase>**
+    <phase>process-classes</phase>*
+    <phase>generate-test-sources</phase>
+    <phase>process-test-sources</phase>*
+    <phase>generate-test-resources</phase>
+    <phase>process-test-resources</phase>
+    <phase>test-compile</phase>*
+    <phase>process-test-classes</phase>
+    <phase>test</phase>**
+    <phase>prepare-package</phase>*
+    <phase>pre-integration-test</phase>
+    <phase>integration-test</phase>
+    <phase>post-integration-test</phase>
+    <phase>verify</phase>
+    <phase>package</phase>**
+    <phase>install</phase>**
+    <phase>deploy</phase>**
+  </phases>
+
+  phases : 메이븐 실행 단계
+  plug-in : 각각 단계의 소프트웨어 //  http://maven.apache.org/plugins/index.html
+  Goal : 소프트웨어의 플러그인의 단위 프로그램
+
+## mvn help:descibe -Dcmd=compile
+    : pulg-in이나 goal정보를 보는 mvn 명령
+
+## ${userHome}\.m2\repository : 메이븐 로컬 저장소 경로
+
+## 라이브러리 오류 문제 해결
+    >> 이클립스를 종료후 ${userHome}\.m2\repository 하위 폴더를 전부삭제후 이클립스 실행(자동추가)
+
+## 이클립스 라이브러리 인덱스 갱신 방법
+    Maven repository >> Global Repositories >> central >> RebuildIndex

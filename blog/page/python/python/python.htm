@@ -1,3 +1,15 @@
+## hello world
+	# helloWorld.py
+<code>
+# -*- coding:utf-8 -*-
+print('hello world')
+</code>
+
+## utf8 설정
+<code>
+# -*- coding:utf-8 -*-
+</code>
+
 ## 삼항연산자
 <code>
 # if - else 이용
@@ -39,26 +51,6 @@ print(f'{aa=} {bb=}') # aa=0 bb=1
 	* 참고사항
 	len(자료구조 변수) : 원소의 갯수 반환
 
-## 정규식
-<code>
-import re
-
-p = re.compile([정규식])
-m = p.match([테스트문자열])
-print(m) # 실패시 None, 성공시 match 객체 반환
-
-if m:
-	# success
-else:
-	# fail
-</code>
-
-## 시간 모듈
-<code>
-import time
-import ...
-</code>
-
 ## magic method
   # __name__ : 현재 실행의 모듈을 가리킴
 	// import module일 경우 모듈 이름이되며, main 영역일 경우 __main__이름으로 출력
@@ -93,9 +85,41 @@ def test(**kwargs):
 test(a=1, b=2) # (a, 1)\n(b, 2)
 </code>
 
-## 내장 함수
-	# sys.path
+## python 기본 라이브러리
+	# os
+<code>
+
+</code>
+
+	# sys
 <code>
 import sys
 sys.path
+</code>
+
+	# urllib : URL 작업을 위한 여러 모듈을 모은 패키지
+<code>
+import urllib
+</code>
+
+	# re : 정규식을 사용하도록 하는 라이브러리
+<code>
+import re
+
+p = re.compile([정규식])
+m = p.match([테스트문자열])
+print(m) # 실패시 None, 성공시 match 객체 반환
+
+if m:
+	# success
+else:
+	# fail
+</code>
+
+	# time
+
+	# datetime
+		- timedelta : 시간 계산을 위해 사용
+<code>
+from datetime from timedelta datetime
 </code>

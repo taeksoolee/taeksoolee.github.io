@@ -9,6 +9,8 @@ const category = [
   { name: schema.python },
   { name: schema.go },
   { name: schema.c },
+  { name: schema.cpp },
+  { name: schema.csharp },
   { name: schema.rust },
   { name: schema.linux },
   { name: schema.kali },

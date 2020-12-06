@@ -1,0 +1,64 @@
+● 형상관리서버
+  - 형상관리서버(협업툴) : 소스, 버전등 변경 관리 >> 클라이언트에서는 eclipse를 이용해 작업
+   => CVS, SubVersion(SVN), Git등 
+
+    ※ CVS 플러그인은 설치되어 있으나 SubVersion은 플러그인을 설치해야 사용 가능
+  - repertory(저장소) 역활 
+    IMPORT      클라이언트   ---->   서버   (팀장이 만든 프로젝트를 최초에 한번 전송)   
+    CHECKOUT    클라이언트   <----   서버   (서버에 존재하는 프로젝트를 팀원이 다운로드 - 다른 클라이언트에서 작업하고자 할 경우 : 한번만 전송)  
+    COMMIT      클라이언트   ---->   서버   (작업한 파일을 서버로 전송 : 자주 실행) 
+    UPDATE      클라이언트   <----   서버   (서버에 변경된 파일을 클라이언트로 전송 : 자주 실행)  
+
+  1. Visual SVN Server 서버 설치
+     1) https://www.visualsvn.com/server/download/ 에서 서버 프로그램 다운로드 및 설치
+     2) user 생성 및 group 생성 후 user를 group에 포함
+     3) repertory를 생성하여 그룹(사용자)에 권한 부여  
+     4) URL를 이용해 확인
+
+  2. 이클립스에 SVN 클라이언트 설치
+     1) help >> install New Software 클릭
+     2) work with => Oxygen - http://download.eclipse.org/releases/oxygen 선택
+     3) Collaboration >> Subversive SVN Team Provider 선택 >> next >> next >> 동의 >> 설치
+     4) 플러그인 설치 후 이클립스 재실행 >> Window >> Preferences >> Team >> SVN >> SVN Connector >> Get SVN Connector >> SVN 1.8.14 선택 >> next >> next >> 동의 >> 설치
+     5) Connector 설치 후 이클립스 재실행
+     6) 확인 : Window >> Preferences >> Team >> SVN > SVN Connector 확인	
+
+  3. 이클립스에서 SVN Server에 접속
+     1) IMPORT 작업 : 프로젝트를 서버에 전송하는 작업(한번만 실행) - 팀장이 실행
+       프로젝트 생성(메인페이지 작성) >> 프로젝트 >> 오른쪽 버튼 >> Team >> Share Project >> SVN 선택 >> URL, 계정, 암호 입력 
+       >> finish >> import(서버에 파일 전송) >> Visual SVN Server 또는 웹브라우저에서 확인  
+
+      ※ revision number : 파일에 붙은 숫자 >> commit 할 때 마다 숫자가 증가
+      ※ 전송하고자 하는 디렉토리에 파일이 하나도 없다면 전송되지 않는다.
+      ※ 미전송 파일을 계속 업로드 하지 않도록 설정
+         window >> show view >> Navigator >> ?로 설정된 폴더 및 파일 >> Team >> add yo SVN: ignore 처리    
+     2) CHKOUT 작업 : IMPORT된 프로젝트를 클라이언트로 전송(클라이언트가 틀린 경우에만 사용) - 팀원만 적용
+
+       New >> Other >> SVN >> Project From SVN >> Next >> 인증 >> URL : Browse 클릭 >> 프로젝트의 trunk 선택 >> finish >> 프로젝트 선택 설정 >> finish
+
+    3) COMMIT 작업 : 프로젝트에서 파일을 변경한 후 서버로 파일을 전송
+
+       변경된 파일(앞에 > 표시가 됨) >> 오른쪽 버튼 >> Team >> Commit 선택
+
+    4) UPDATE 작업 : 서버에 저장된 파일을 전송 받는 작업(프로그램 변경 전에 한 번 실행한 후 사용하는 것이 좋다.)
+
+       프로젝트 >> 오른쪽 버튼 >> Team >> Update 선택 
+  
+   ※ Commit 할 경우 상위 revision number가 존재하는 경우 Commit 에러 발생
+     해결> Window >> Show View >> Other >> Team >> Synchronize View 선택 >> 오른쪽 버튼 >> Synchronize 선택 
+           >> 문제가 되는 파일이 존재 >> 오른쪽 버튼 >> Override and Commit(또는 Override and Update) 선택
+
+     해결> 문제가 되는 파일이 존재 >> 더블 클릭 >> 화면에서 프로그램 비교후 파일 내용 변경 >> Make as Merged >> commit 가능(나중에 수정 가능)
+           pakeage explorer에서 update한 경우 동일한 라인의 데이타를 변경한 경우 충돌 발생 >> 문제 파일 수정 후 오른쪽 버튼
+
+   ※ incomming(update 목록) 또는 outgoing(commit 목록) 확인 => Synchronize View에서 선택하여 전체 update 또는 commit 가능 
+   ※ SVN 영역 
+      => trunk : 소스의 주 개발 작업을 진행하는 폴더
+      => branches : 소스의 실험적인 작업을 진행하는 폴더
+                    소스의 현재 버전을 유지보수 하고, 현재 버전을 기반으로 차기 버전을 개발할 경우 이 폴더 이용 
+      => tags : 현재 릴리즈된 소스를 관리하기 쉽게 따로 보관하는데 사용 
+                개발을 위한 것이 아니라 보관을 위한 것이기 때문에 export만 해야 한다 
+                체크아웃하여 커밋 할 경우 경고 메시지가 출력된다.
+    ※ 다른 작업으로 변환
+       프로젝트 >> 오른쪽 버튼 >> Team >> switch >> URL 또는 revision 변경 후 finish
+  - 프로젝트 완성하면 프로젝트를 war파일로 저장하여 서버의 webapps에 전송하면 된다.
