@@ -1,0 +1,57 @@
+## OSI 7 layer : Network OSI 7계층
+
+1. Physical [Bits]
+	허브, 리피터, 전선, 전파, 광섬유, 동축케이블, 도파관, 모뎀
+	, DSU/CSU (라우터와 같은 데이터 터미널 장비를 Digital Signal 1 T1 라인과 같은 디지털 회로에 연결하는 데 사용되는 디지털 인터페이스 장치)
+	PSTN(공중 전화망)
+2. Data Link *** [Frames]
+	Ethernet * : CSMA/CD Carrier Sense Multiple Access/Collision Avoidance 프로토콜을 이용하여 통신
+	, Token Ring
+	, MAC * Media Access Control : 링크 계층에서 통신을 위한 인터페이스의 고유 식별자
+	, PPP, HDLC, Frame relay, ISDN, ATM,FDDI
+	, 브리지 * : 여러 개의 네트워크 세그먼트를 연결하는 통신 장비
+	, 스위치 * : 처리 가능한 패킷의 숫자가 큰 것으로, 네트워크 단위 들을 연결하는 통신 장비
+	, 무선랜
+3. Network *** [Packets]
+	IP ** Internet Protocol
+	, ICMP Internet Control Message Protocol: TCP/IP에서 IP 패킷을 처리할 때 발생되는 문제를 알려주는 프로토콜
+	, IGMP
+	, X.25
+	, CLNP
+	, ARP
+	, RARP
+	, BGP
+	, OSPF
+	, RIP
+	, IPX
+	, DDp
+	, 라우터 * : 패킷의 위치를 추출하여, 그 위치에 대한 최적의 경로를 지정하며, 이 경로를 따라 데이터 패킷을 다음 장치로 전향시키는 장치
+4. Transport *** [Segments]
+	TCP(/IP) ** Transmission Control Protocol : TCP는 근거리 통신망이나 인트라넷, 인터넷에 연결된 컴퓨터에서 실행되는 프로그램 간에 일련의 옥텟을 안정적으로, 순서대로, 에러없이 교환할 수 있게 함.
+	, UDP 
+	, RTP
+	, SCTP
+	, SPX
+	, AppleTalk
+	, ARP	
+	, 게이트웨이
+5. Session [Data]
+	protocol : SSH, TLS
+	* 응용간의 질서 제어
+6. Presentation [Data]
+	protocol : JPEG, MPEG, SMB, AFP
+	* 이해할 수 있는 포맷 변환
+7. Application [Data]
+	protocol : DHCP, DNS, FTP, HTTP
+  * 서비스 제공
+  
+<img src="/blog/page/etc/network/osi7layer.jpg" alt="osi7layer">
+
+<hr />
+<img src="/blog/page/etc/network/osi7layer-1.png" alt="물리 계층">
+<img src="/blog/page/etc/network/osi7layer-2.png" alt="데이터링크 계층">
+<img src="/blog/page/etc/network/osi7layer-3.png" alt="네트워크 계층">
+<img src="/blog/page/etc/network/osi7layer-4.png" alt="전송(변환) 계층">
+<img src="/blog/page/etc/network/osi7layer-5.png" alt="세션 계층">
+<img src="/blog/page/etc/network/osi7layer-6.png" alt="표현 계층">
+<img src="/blog/page/etc/network/osi7layer-7.png" alt="응용 계층">

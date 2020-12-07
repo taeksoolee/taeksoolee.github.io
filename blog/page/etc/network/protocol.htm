@@ -1,5 +1,4 @@
-
-* 참고 : https://ko.wikipedia.org/wiki/TCP/UDP%EC%9D%98_%ED%8F%AC%ED%8A%B8_%EB%AA%A9%EB%A1%9D
+## 참고 : https://ko.wikipedia.org/wiki/TCP/UDP%EC%9D%98_%ED%8F%AC%ED%8A%B8_%EB%AA%A9%EB%A1%9D
   * 0번 ~ 1023번: 잘 알려진 포트 (well-known port)
   * 1024번 ~ 49151번: 등록된 포트 (registered port)
   * 49152번 ~ 65535번: 동적 포트 (dynamic port)
@@ -45,15 +44,20 @@ ex - Filezila
 	전송 받은 메일을 저장하고 있다가 사용자가 메일 서버에 접속하면 이를 보내주는 역할을 하는 전자 우편 수신 프로토콜
 
 ## DHCP : port(67,68)
-	Dynamic Host Configuration Protocol
+	* Dynamic Host Configuration Protocol
 	클라이언트가 동적인 IP 주소를 할당받아 인터넷을 사용 할 수 있게 해주는 프로토콜
 	고유한 IP주소를 가져야 다른 네트워크나 인터넷에 접속 할 수 있는데, DHCP는 고유한 IP주소 없이 접속할 때 자동으로 새로운 IP주소를 할당해준다.
 	- port(67) : BOOTP 서버
   - port(68) : BOOTP 클라이언트
   
 ## ICMP : port(1)
+	* Internet Control Message Protocol
+	TCP/IP에서 IP 패킷을 처리할 때 발생되는 문제를 알려주는 프로토콜
 	운영체제에서 오류메시지를 전송받는데 주로 쓰인다.
   몇몇 진단프로그램을 제외한 남지는 데이터를 교환하지 않는다.
   
 ## NETBIOS : port(139)
 	컴퓨터 어플리케이션들이 근거리 통신망을 통해 통신 할 수 있게 한다.
+
+## RTSP : port
+	* Real Time Streaming Protocol

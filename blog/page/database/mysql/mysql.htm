@@ -10,6 +10,23 @@ $ mysql -u root -p
 > show full columns from [테이블명]
 </code>
 
+## mysql 범위 날짜 테이블 뽑는 쿼리
+<code>
+select a.Date 
+from (
+    select curdate() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as Date
+    from (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as a
+    cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as b
+    cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c
+    cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as d
+) a
+where a.Date between '2010-01-21' and '2010-01-23'
+</code>
+
+## FK (forign key)
+  * 참조 무결성 도구
+  * 반드시 FK에는 INDEX 설정할 것!! (성능이슈)
+
 <hr>
 ## 참고
   # MySQL 쓰면서 하지 말아야 할 것 17가지 : https://blog.lael.be/post/370

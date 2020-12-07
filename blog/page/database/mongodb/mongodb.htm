@@ -64,3 +64,119 @@
 > db.dropDatabase() // db 삭제
 </code>
 
+  # 계정 생성
+<code>
+> use admin
+> db.createUser(
+  {
+    user: 'root',
+    pwd: 'toor',
+    roles: ['root']
+  }
+)
+</code>
+
+## mongodb 설정 (mongodb 설치경로 : /data/lib/mongodb/[mongoDB]/)
+  # mongoconfig.yml 파일 작성
+<code>
+
+systemLog:
+  destination: file # 저장 형식
+  path: "/data/lib/mongodb/[mongoDB]/mongod.log" # 저장 경로 설정
+  logAppend: true
+
+storage:
+  dbPath: "/data/mongodb"
+  journal:
+    enabled: true
+
+net:
+  bindIp: 0.0.0.0
+  port: 27017
+
+setParameter:
+  enableLocalhostAuthBypass: true
+
+  security:
+    # authorization: enabled
+    authorization: disabled
+</code>
+
+  # 설정 실행 (환경변수 설정 필요)
+<code>
+$ mongod --config /data/lib/mongodb/[mongoDB]/mongoconfig.yml &
+</code>
+
+## mongodb CRUD
+## select (read)
+  # 기본 검색
+<code>
+// 전체 검색
+> db.[collection].find()
+// 조건 검색. where key=value
+> db.[collection].fine({key: value})
+</code>
+
+  # 검색 함수 : pretty, sort
+<code>
+// 전체(보기 좋게) 검색 
+> db.[collection].find().pretty()
+// 전체(정렬하여) 검색
+> db.[collection].find().sort()
+</code>
+
+  # 비교 연산자 : $eq, $gt, $gte, $lt, $lte, $ne, $in $nin
+<code>
+> db.[collection].find({key: {[비교연산자]: value [비교연산자]: value} ...})
+// 예시
+> db.[collection].find({$in: [val1, val2]})
+</code>
+
+  # 논리 연산자 : $or $and, $not, $nor
+  
+  # projection 사용 : 검색 field 선택
+<code>
+> db.[collection].find([검색조건],[projection])
+> db.[collection].find({},{field1: true, field2: true, field3: false})
+</code>
+
+## insert
+  # 사용
+<code>
+> db.[collection].insert([document JSON])
+</code>
+
+## delete
+<code>
+// key가 value인 document 삭제
+> db.[collection].remove({key: value})
+</code>
+
+## INDEX
+  * property: unique, ...
+
+  # 단일 INDEX 추가
+<code>
+> db.[collection].createIndex({key: 1}, {[property]: true})
+</code>
+
+  # 복합 INDEX 추가
+<code>
+> db.[collection].createIndex({key1: 1, key2: 1}, {[property]: true})
+</code>
+
+  # INDEX 조회
+<code>
+> db.[collection].getIndexes()
+</code>
+
+  # INDEX 삭제
+<code>
+> db.[collection].dropIndex()
+</code>
+
+  # _id 인덱스를 제외한 모든 인덱스 제거
+<code>
+> db.[collection].dropIndexes()
+</code>
+

@@ -11,6 +11,16 @@
   # EXPLAIN 키워드
 
 
+  # mysql 인덱스 검색
+<code>
+// INDEX 목록 확인 (검색)
+> SELECT DISTINCT TABLE_NAME, INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_NAME=[검색테이블]
+
+// 인덱스 검색
+> SHOW INDEX FROM [테이블명 : 대소문자 구분함]
+</code>
+
+
 <hr />
 ## 참고
   # [mysql] 인덱스 정리 및 팁 : https://jojoldu.tistory.com/243

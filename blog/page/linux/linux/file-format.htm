@@ -1,0 +1,60 @@
+## 파일형식
+  # XML
+<code><samp>
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <apiVesion>v1</apiVesion>
+  <kind>Test</kind>
+  <metadata>
+      <name>hello</name>
+      <labels>
+        <app>world</app>
+      </labels>
+  </metadata>
+  <!--object-->
+  <object>
+    <!--array-->
+    <items>
+      <!--<key>value</key>-->
+      <item>abc</item>
+    </items>
+  </object>
+</root>
+
+</samp></code>
+
+  # ymul (또는 yml)
+<code>
+apiVesion: v1
+kind: test
+metadata:
+  name: hello
+  labels:
+    app: worl
+# object
+object:
+  # array : 하단 -(하이픈)으로 array 구분
+  items:
+  - item: abc # key: value
+</code>
+
+  # Json
+<code>
+{
+  "apiVesrsion": "v1",
+  "kind": "test"
+  "metadata": {
+    "name": "hello",
+    "labels" : [
+      {"app": "world"}
+    ]
+  },
+  "object" : {
+    "items" : [
+      "item": "abc"
+    ]
+  }
+}
+
+</code>
+

@@ -37,9 +37,6 @@
   camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
   scene.add(camera);
 
-  
-  
-
   // 3. renderer 생성
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setPixelRatio( window.devicePixelRatio ); // 비율 설정
@@ -75,6 +72,7 @@ scene.add( axesHelper );
 
 ## 주요 객체(object) 사용
   # mesh obj
+    * THREE.MeshBasicMaterial 옵션: color(지정), transparent(투명), map(texture 설정)
 <code>
 // cube (box)
 const geometry = new THREE.BoxBufferGeometry( 5, 5, 5 );
@@ -82,6 +80,9 @@ const material = new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: tr
 const mesh = new THREE.Mesh( geometry, material );
 
 // cylinder (원기둥, 코인)
+var geometry = new THREE.CylinderGeometry( 1.5, 1.5, 2, 32 );
+var material = new THREE.MeshBasicMaterial( {map: iotSensorTexture} );
+var cylinder = new THREE.Mesh( geometry, material );
 
 // ball
 
