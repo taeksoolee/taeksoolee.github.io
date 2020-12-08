@@ -1232,6 +1232,16 @@ const contents = [
     date: "20201121",
   },
   {
+    title: "stack(buffer)overflow",
+    depth1: schema.kali,
+    depth2: schema.kali,
+    depth3: schema.kali,
+    depth4: schema.kali,
+    fileName: "kali.htm",
+    desc: "버퍼오버플로우, 스택오버플로우",
+    date: "20201121",
+  },
+  {
     title: "metasploit",
     depth1: schema.kali,
     depth2: schema.metasploit,
