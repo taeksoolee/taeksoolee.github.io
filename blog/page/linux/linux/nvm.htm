@@ -1,0 +1,21 @@
+# nvm : node version manager
+
+## linux 설치 방법 (ubuntu 16.04)
+<code>
+// 1. build 관련 모듈 설치
+$ sudo apt install build-essential libssl-dev
+
+// 2. nvm 설치
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v[버전]/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+// 3. bashrc(zsh) 적용
+$ source ~/.bashrc
+
+// 4. 설치확인
+$ nvm --version
+
+// 5. node 설치 ( + npm)
+$ nvm install 14.15.1
+</code>
+

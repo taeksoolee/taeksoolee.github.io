@@ -1112,6 +1112,16 @@ const contents = [
     date: "20201121",
   },
   {
+    title: "nvm",
+    depth1: schema.linux,
+    depth2: schema.linux,
+    depth3: schema.linux,
+    depth4: schema.nodejs,
+    fileName: "nvm.htm",
+    desc: "",
+    date: "20201209",
+  },
+  {
     title: "linux",
     depth1: schema.linux,
     depth2: schema.linux,
@@ -1178,7 +1188,7 @@ const contents = [
     depth3: schema.zsh,
     depth4: schema.zsh,
     fileName: "zsh.htm",
-    desc: "",
+    desc: "oh-my-zsh, ohmyzsh",
     date: "20201121",
   },
   {

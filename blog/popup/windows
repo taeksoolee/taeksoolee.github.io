@@ -17,4 +17,8 @@
 # 단어 검색 ( linux의 grep )
   $ findstr [찾을단어]
 
+# 터미널 프로그램 사용 : https://monthlywoongah.tistory.com/115
+  * 스토어에서 다운로드
+  * alt + shift + + : 수직분할
+  * alt + shift + - : 수평분할
 </pre>
