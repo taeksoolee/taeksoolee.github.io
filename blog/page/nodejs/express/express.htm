@@ -11,7 +11,6 @@ const express = require('express');
 const app = express();
 
 app.get('', function() {
-  // static file
   res.send('hello wolrd');
 });
 
@@ -96,4 +95,15 @@ connection.query(sql, (err, rows, fields) => {
   if(err) throw err;
   console.log(rows)
 });
+</code>
+
+## 정적파일 사용
+<code>
+const express = require('expres');
+const app = express();
+
+// pulbic 디렉토리 아래 있는 파일 접근 가능
+app.use(express.static('/public'));
+
+app.listen(3000);
 </code>
