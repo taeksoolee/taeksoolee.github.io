@@ -7,8 +7,17 @@ console.log('hello world');
 ## 기본 변수
   # __dirname : 프로젝트 default 경로
   
-  # process
-    .env.NODE_ENV
+## node 환경변수
+<code>
+// linux
+$ export NODE_ENV=production # 또는 development
+// window
+> set NODE_ENV=production
+
+// nodejs
+console.log(process.env.NODE_ENV) => production
+</code>
+  
 
 ## CommonJS
   * module loading system
