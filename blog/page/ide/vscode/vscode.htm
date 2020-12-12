@@ -1,11 +1,3 @@
-## linux 환경 javascript 환경 설정
-<code>
-$ mkdir ~/.npm-global
-$ npm config set prefix ~/.npm-global
-$ echo 'PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.profile
-$ . ~/.profile
-</code>
-
 ## ubuntu 설치
 <code>
 $ sudo apt install curl
@@ -49,18 +41,12 @@ npm install -g eslint
   # Live Server
   # Material Icon Theme
 
-## svn 연결 
-  # window
-  1. svn 확장
-  2. C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\resources\app\product.json 
+## linux 환경 javascript 환경 설정
 <code>
-extensionAllowedProposedApi: {
-  "johnstoncode.svn-scm"
-}
-</code>
-  3. 실행
-<code>
-> svn: chekout
+$ mkdir ~/.npm-global
+$ npm config set prefix ~/.npm-global
+$ echo 'PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.profile
+$ . ~/.profile
 </code>
 
 ## java-spring 연동
@@ -80,5 +66,16 @@ extensionAllowedProposedApi: {
     * java.autobuild 검색 후 설정
     * JSP는 자동 설정 현재는 불가..
 
-
-  
+## svn 연결 
+  # window
+  1. svn 확장
+  2. C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\resources\app\product.json 
+<code>
+extensionAllowedProposedApi: {
+  "johnstoncode.svn-scm"
+}
+</code>
+  3. 실행
+<code>
+> svn: chekout
+</code>
