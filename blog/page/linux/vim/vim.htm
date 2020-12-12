@@ -1,3 +1,20 @@
+## vim 설치
+	# ubuntu 설치
+<code>
+% sudo apt update
+// vim-tiny
+$ sudo apt install vim
+// 클립보드 지원 vim : vim-huge(gvim 또는 vim-gtk, vim-gnome을 설치)
+$ sudo apt install vim-gtk
+</code>
+
+## 클립보드 사용
+	* 참고 : https://hyoje420.tistory.com/49
+	# ~/.vimrc 설정 : 시스템 클립보드를 vim 클립보드로 사용
+<code>
+set clipboard=unnamedplus
+</code>
+
 ## hot key
 	# 명령어
 <code>
@@ -155,5 +172,3 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let b:ale_fixers = ['eslint']
 let g:ale_fix_on_save = 1
 </samp></code>
-
-

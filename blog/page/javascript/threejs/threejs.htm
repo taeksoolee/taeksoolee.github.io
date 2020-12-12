@@ -1,3 +1,21 @@
+<hr/>
+// s3d project
+<code>
+// 
+function goCameraPostion(mesh) {
+   const {x, y, z} = mesh.position;
+
+    controls.reset();
+    camera.position.set(parseFloat(x)-5, parseFloat(y) + 3, parseFloat(z)+20);
+    controls.target.set(parseFloat(x), parseFloat(y), parseFloat(z));
+    controls.update();
+}
+
+goCameraPostion(findWork);
+</code>
+
+<hr/>
+
 ## 공식 사이트 : http://threejs.org/
 ## 참고
 
@@ -262,32 +280,7 @@ animate() {
 }
 </samp></code>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<hr/>
 
 ## 개념
   # 사원수(quaternion) 개념

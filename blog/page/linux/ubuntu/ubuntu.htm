@@ -129,3 +129,17 @@ LANG="ko_KR.UTF-8"
   # 절차 후 꼭 재부팅 할것
 
 ## 네트워크 수동설정 참고 : https://webdir.tistory.com/188
+
+
+## vscode 설치
+<code>
+$ sudo apt install curl
+// 마이크로소프트 GPG 키를 다운로드하여 /etc/apt/trusted.gpg.d/ 경로에 복사
+$ sudo sh -c 'curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg'
+// Visual Studio Code를 다운로드 받기 위한 저장소를 추가
+$ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+
+$ sudo apt update
+$ sudo apt install code
+$ code
+</code>
