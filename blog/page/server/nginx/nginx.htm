@@ -77,7 +77,9 @@ $ yum install gcc g++
 $ sudo .configure --help
 </code>
 <code>
-// 예시
+// 예시 (모듈 x)
+$ sudo ./configure --with-zlib=../zlib-1.2.11 --with-pcre=../pcre-8.32 --with-openssl=../openssl-1.0.1e --with-http_ssl_module --with-debug --prefix=/usr/local/nginx --user=www-data --group=www-data
+// 예시 (모듈 o)
 $ sudo ./configure --with-zlib=../zlib-1.2.11 --with-pcre=../pcre-8.32 --with-openssl=../openssl-1.0.1e --with-http_ssl_module --with-debug --add-module=../echo-nginx-module-0.45 --prefix=/usr/local/nginx --user=www-data --group=www-data
 /* options
 --with-(zlib | pcre | openssl) : NGINX가 의존하고 있는 라이브러리들의 소스 경로

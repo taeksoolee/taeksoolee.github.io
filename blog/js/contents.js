@@ -1132,6 +1132,16 @@ const contents = [
     date: "20201121",
   },
   {
+    title: "linux-server",
+    depth1: schema.linux,
+    depth2: schema.linux,
+    depth3: schema.linux,
+    depth4: schema.linux,
+    fileName: "linux-server.htm",
+    desc: "리눅스 서버정보 확인 명령어, 정보확인",
+    date: "20201121",
+  },
+  {
     title: "tmux",
     depth1: schema.linux,
     depth2: schema.linux,

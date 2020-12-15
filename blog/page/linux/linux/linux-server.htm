@@ -1,0 +1,53 @@
+## linux 서버정보 확인 명령어
+  # 리눅스 정보
+<code>
+// 모든정보
+$ uname -a
+// 하드웨어 종류
+$ uname -m
+// 호스트 이름
+$ uname -n
+// 소유자 이름
+$ uname -p
+// 현재 버전
+$ uname -r
+</code>
+
+  # OS 버전
+<code>
+$ cat /proc/version
+</code>
+
+  # OS 종류
+<code>
+$ rpm -qa | grep release
+$ cat /etc/issue.ney
+</code>
+
+  # CPU 정보
+<code>
+$ cat /proc/cpuinfo
+$ dmesg | grep CPU
+</code>
+
+  # 메모리 정보
+<code>
+$ cat /proc/memiinfo
+$ dmseg | grep memory
+</code>
+
+  # HDD 용량
+<code>
+$ df -h
+$ dmesg | grep SCSI
+</code>
+
+  # RAID 정보
+<code>
+$ cat /proc/mdstat
+</code>
+
+  # 실시간 CPU, Memory, Process 사용량
+<code>
+$ top
+</code>
