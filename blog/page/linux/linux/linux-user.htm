@@ -1,0 +1,43 @@
+## 계정 목록
+  # 전체목록
+<code>
+$ cat /etc/passwd
+</code>
+
+  # bash 사용자목록
+<code>
+$ grep /bin/bash /etc/passwd
+</code>
+
+## 명령어
+  # 계정 생성
+    * 레드햇 계열에서는, useradd 명령어로 생성되는 일반 사용자 계정의 UID가 500 이상
+<code>
+// home 디렉토리 생성 등 기본 설정 포함 명령
+$ sudo adduser [username]
+// 계정만 생성 명령
+$ sudo useradd [username]
+</code>
+
+  # 계정 관리자 권한 부여
+<code>
+$ sudo adduser [username] sudo
+</code>
+
+  # 계정 삭제
+<code>
+// home 디렉토리 생성 등 기본 설정 포함 명령
+$ sudo deluser [username]
+// 계정만 삭제 명령
+$ sudo userdel [username]
+</code>
+
+## 권한 관련 명령어
+  # 폴더 또는 파일 주인변경
+<code>
+$ chown
+</code>
+  # 폴더 또는 파일 권한변경
+<code>
+$ chmod
+</code>

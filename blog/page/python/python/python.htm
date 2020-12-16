@@ -58,13 +58,24 @@ print(f'{aa=} {bb=}') # aa=0 bb=1
 	> 현재 프로세스가 main 영역일 경우 실행될 코드를 작성
 <code>
 if __name__ == '__main__':
-    ...
+    # logic ...
 </code>
 
 	# __new__ : ?
 
-## python에서 asterisk(*)
+	# __repr__ : (representation) repr([객체]) 함수 호출시 호출 됨
+<code>
+class Test():
+	def __init__(self, a):
+		self.a = a
 
+	def __repr__(self):
+		return 'a is {}'.format(a)
+
+repr(Test(1)) # a is 1
+</code>
+
+## python에서 asterisk(*)
 	# * : args / 가변인자로 사용 가능
 <code>
 def test(*args):
@@ -122,4 +133,16 @@ else:
 		- timedelta : 시간 계산을 위해 사용
 <code>
 from datetime from timedelta datetime
+</code>
+
+
+
+## 문자열 처리하는 다양한 방법
+<code>
+foo = 1
+bar = 2
+
+'{foo}, {bar}'.format(foo=foo, bar=bar) # 포맷 함수 사용
+f'{foo}, {bar}' # 포맷 스트링 사용
+'%s, %s' % (foo, bar) # 포맷 사용
 </code>

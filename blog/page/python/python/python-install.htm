@@ -1,0 +1,20 @@
+## compile
+  참고 : https://m.blog.naver.com/PostView.nhn?blogId=ahalinux&logNo=220998708510&proxyReferer=https:%2F%2Fwww.google.com%2F
+  # source 다운로드
+<code>
+$ wget https://www.python.org/ftp/python/[버전]/Python-[버전].tar.xz
+$ tar xfJ Python-[버전].tar.xz
+// 다운로드 예시
+$ wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tar.xz
+$ tar xfJ Python-3.7.9.tar.xz
+</code>
+
+  # python 설정 수정 및 컴파일 (설치 디렉토리 이동 후)
+    * gcc v필요
+<code>
+$ ./configure --prefix=[경로지정]
+$ ./configure --prefix=/usr/Python3.7.9
+$ make & make install
+</code>
+
+

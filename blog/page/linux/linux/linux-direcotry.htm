@@ -1,0 +1,85 @@
+## 경로
+  /       : root
+  ./      : 현재
+  ../     : 부모
+  ~/     : home
+  $     : 마지막을 의미하는 경우가 많음
+
+## 파일형태
+  파일형태    user(wrx) group (wrx) other(wrx)
+  -  : file
+  d : directory
+  l : link
+
+  w : write ( 쓰기권한)
+  r: read (읽기 권한)
+  x : execute (실행 권한)
+
+## 명령어
+  * 참고 : https://itholic.github.io/linux-basic-command/
+<code>
+ls 
+-l(리스트 형태로 보여줌)
+-a(모두 보여줌)
+-i(인덱스를 보여줌)
+</code>
+
+
+## 디렉토리 / 파일 명령어
+  # 디렉토리 생성
+<code>
+$ mkdir [디렉토리 명]
+-p (--parents) 상위 경로 생성
+-m (--mode=MODE) 권한 설정 (기본 755)
+-v (--verbose) 디렉토리 생성후 메시지 출력
+</code>
+
+  # 파일 생성
+<code>
+$ touch [파일명]
+</code>
+
+  # 파일 / 디렉토리 삭제
+<code>
+$ rm -f [파일명]
+// * 완전 삭제(주의 할것)
+$ rm -rf [디렉토리 명]
+</code>
+
+  # 복사
+<code>
+$ cp -rp [복사할파일] [복사될 파일]
+-r 디렉토리 이하파일
+-p 메타 데이터 함께 복사
+
+// 대용량 파일복사
+$ cp -rf [source] [target]
+$ rsync -anv --progress [sorce] [target] 
+</code>
+
+  # 이동
+<code>
+$ mv [이동할파일] [이동될 파일]
+</code>
+
+  # 파일 또는 디렉토리 검색 명령어
+<code>
+$ sudo find / -name [파일명 디렉토리]
+</code>
+
+  # 실행파일 위치 검색
+<code>
+$ witch [실행파일명]
+</code>
+
+## 파일을 읽는 명령어 
+  # cat [파일명]
+
+  # tail [파일명]
+<code>
+$ tail -F test.txt
+-F : 실시간 반영
+</code>
+
+  # more : ?
+  # less : 대용량 파일 읽을 때 적합

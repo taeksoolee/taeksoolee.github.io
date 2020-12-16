@@ -1,0 +1,213 @@
+## sqlalchemy 환경 설정
+  # 설치
+<code>
+$ pip install sqlalchemy
+</code>
+
+  # 버전 확인 
+<code>
+import sqlalchemy
+print(sqlalchemy.__version)
+</code>
+
+  # mysql : mysql 드라이버(패키지) 설치
+    * DB_URL = 'mysql+mysqlconnector://root:passowrd@127.0.0.1:3306/test_db?charset=utf8'
+<code>
+$ pip install mysql-connector-python
+</code>
+
+## sqlalchemy 커넥션 연결
+  # 연결 / 테스트
+<code>
+from sqlalchemy import create_engine
+
+# echo(logging 모듈) 사용. 순수 SQL을 보여줌
+engine = create_engine(DB_URL, echo=False)
+print(engine.execute('select 1').scalar()) # 쿼리 테스트 
+</code>
+
+  # 연결 / 테이블 조회
+<code>
+from sqlalchemy import create_engine, MetaData, Table
+
+connection = engine.connect()
+metadata = MetaData()
+table = Table('test', metadata, autoload=True, autoload_with=engine)
+
+print(table.columns.keys()) # 테이블 컬럼 list 반환
+</code>
+
+## sqlalchemy 테이블 (ORM)
+  * 참고 : https://edykim.com/ko/post/getting-started-with-sqlalchemy-part-1/#%EB%A7%A4%ED%95%91-%EC%84%A0%EC%96%B8
+  # Model 작성 예시
+<code><samp>
+from sqlalchemy import Column, Integer, String, Sequence
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base() ## Base 클래스 생성
+
+class Test(Base):
+    __tablename__ = 'test' # 테이블 명 설정
+
+    # Firebird나 오라클에서는 PK를 생성할 때 sequence가 필요
+    # sqlite나 postgresql 외 dbms에서는 길이를 반드시 설정해야함.
+    # idx = Column(Integer, Sequence('id_seq'), sequenceprimary_key=True) # oracle
+    idx = Column(Integer, sequenceprimary_key=True)
+    foo = Column(String(10))
+    bar = Column(String(10))
+
+    def __init__(self, foo, bar):
+        self.foo = foo
+        self.bar = bar
+
+    def __repr__(self):
+      return "<Test('%s', '%s')>" % (self.foo, self.bar)
+# 테이블 생성
+engine = create_engine(DB_URL, echo=False)
+Base.metadata.create_all(engine)
+</samp></code>
+
+  # Session 처리
+<code>
+from sqlalchemy.orm import sessionmaker
+
+# 세션 생성
+# 1. 생성할 때 bind
+Session = sessionmaker(bind=engine)
+
+# 2. 생성후 bind
+# Session = sessionmaker()
+# Session.configure(bind=engine)
+
+# insert
+#  - one
+session.add(Test('a','b')))
+#  - multi
+session.add_all([Test('c', 'd'), Test('e', 'f')])
+
+## query
+# 작성 예정
+
+
+# TCL
+session.commit()
+# session.rollback()
+</code>
+
+
+## flask-sqlalchemy
+  # 설치
+<code>
+$ pip install flask-sqlalchemy
+</code>
+
+  # 사용
+<code>
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'this is secret'
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+</code>
+
+  # 모델 작성
+<code><samp>
+  class Test(db.Model):
+  __table_name__ = 'test'
+
+  id = db.Column(db.Integer, primary_key=True)
+  username = db.Column(db.String(100), unique=True, nullable=False)
+  email = db.Column(db.String(120), unique=True, nullable=False)
+  password = db.Column(db.String(100), nullable=False)
+  profile_image = db.Column(db.String(100), default='default.png')
+
+  def __repr__(self):
+      return f"<Test('{self.id}', '{self.username}', '{self.email}')>"
+</samp></code>
+
+  # 작성 모델 생성
+<code>
+db.create_all()
+</code>
+
+  # insert
+<code>
+db.session.add(Test())
+db.commit()
+</code>
+
+  # select
+<code>
+// 기본 사용
+rst = Test.query.all() # get list
+rst = Test.query.one()
+rst = Test.query.first() # get scalar
+# rst = db.query(Test).all()
+</code>
+
+## flask_marshmallow와 함께사용
+  * 참고 : https://rahmanfadhil.com/flask-rest-api/
+  # 설치
+<code>
+$ pip install flask-mashmallow
+</code>
+
+  # 사용
+<code><samp>
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from flask_restful import Api, Resource
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
+api = Api(app)
+
+# 모델 작성
+class Test(db.Model):
+  idx=db.Column(db.Integer, primary_key=True)
+  foo = db.Column(db.String(50))
+  bar = db.Column(db.String(50))
+  
+  def __repr__(self):
+    return '<Test %s>' % self.foo, self.bar
+
+# 스키마 작성
+class TestSchema(ma.Schema):
+      class Meta:
+        fields = ('idx', 'foo', 'bar')
+        model = Test
+
+test_schema = TestSchema()
+test_schemas = TestSchema(many=True)
+
+# api 작성
+class TestListResource(Resource):
+  def get(self):
+      tests = Test.query.all()
+      return tests-schema.dump(tests)
+
+api.add_resource(PostListResource, '/posts')
+
+if __name__ == '__main__':
+  app.run(debug=True)
+</samp></code>
+
+
+## 예외
+<code>
+from sqlalchemy.orm.exc import MultipleResultsFound
+from sqlalchemy.orm.exc import NoResultFound
+</code>
+
+
+
+## 칼럼
+  # SQLAlchemy Relationship Loading 완전정복 : http://engineersinkorea.com/2020/01/11/complete-sqlalchemy-relationship-loading/
