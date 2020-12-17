@@ -64,7 +64,7 @@ $ mv [이동할파일] [이동될 파일]
 
   # 파일 또는 디렉토리 검색 명령어
 <code>
-$ sudo find / -name [파일명 디렉토리]
+$ sudo find [디렉토리] -name [파일명]
 </code>
 
   # 실행파일 위치 검색
@@ -75,11 +75,24 @@ $ witch [실행파일명]
 ## 파일을 읽는 명령어 
   # cat [파일명]
 
+  # head [파일명]
+<code>
+$ head test.txt
+$ head -n2 test.txt
+-n[숫자] : 숫자 줄까지만 보여줌
+</code>
+
   # tail [파일명]
 <code>
 $ tail -F test.txt
 -F : 실시간 반영
+$ tail -n2 test.txt
+-n[숫자] : 숫자 줄까지만 보여줌
 </code>
 
   # more : ?
   # less : 대용량 파일 읽을 때 적합
+  # cmp : 파일을 비교
+  # diff : 파일의 다른점을 검색
+
+  # file : 파일정보를 읽음
