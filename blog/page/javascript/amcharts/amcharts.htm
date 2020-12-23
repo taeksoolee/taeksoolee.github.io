@@ -15,3 +15,11 @@ var axisBreak = valueAxis.axisBreaks.create();
 axisBreak.startValue = 2100;
 axisBreak.endValue = 22900;
 </code>
+
+
+## exporting
+  # png 삭제시 background 제거
+<code>
+chart.exporting.menu = new am4core.ExportMenu();
+chart.exporting.backgroundColor = am4core.color('#f00', 0)
+</code>
