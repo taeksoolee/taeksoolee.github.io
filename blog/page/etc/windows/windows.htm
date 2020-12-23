@@ -5,13 +5,17 @@
   mv [변경전] [변경후]
   cp [변경전] [변경후]
 
-## type fileName : 텍스트를 콘솔에서 띄우는 명령어
+## type fileName : 텍스트를 콘솔에서 띄우는 명령어 (리눅스 cat)
 
 ## chcp : 현재 국가를 확인하는 명령어  
   437 : OEM-미국
   949 : OEM-한국
   65001 : utf-8
 
+## findstr : 검색 명령어 (현재 디렉토리 기준)
+<code>
+> findstr /si [검색단어] [파일형식]
+</code>
 
 ## tracert -4 url : 경로추적
 
@@ -27,12 +31,17 @@
 
   # 네트워크를 시작하는 명령어
 <code>
-  netsh wlan start hostednetwork
+> netsh wlan start hostednetwork
 </code>
 
   # wifi 비밀번호를 알아내는 명령어
 <code>
-  netsh wlan show profiles name="name" key=clear
+> netsh wlan show profiles name="name" key=clear
+</code>
+
+## route : 라우트 테이블 검색
+<code>
+> route print
 </code>
 
 ## tree 디렉토리의 구조를 확인할수 있는 명령어

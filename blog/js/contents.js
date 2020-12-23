@@ -20,6 +20,16 @@ const contents = [
     date: "20201121",
   },
   {
+    title: "css 필터",
+    depth1: schema.css,
+    depth2: schema.css,
+    depth3: schema.css,
+    depth4: schema.css,
+    fileName: "css-filter.htm",
+    desc: "filter",
+    date: "20201222",
+  },
+  {
     title: "flex box",
     depth1: schema.css,
     depth2: schema.css,
@@ -810,6 +820,16 @@ const contents = [
     fileName: "python.htm",
     desc: "",
     date: "20201121",
+  },
+  {
+    title: "pexpect",
+    depth1: schema.python,
+    depth2: schema.python,
+    depth3: schema.python,
+    depth4: schema.python,
+    fileName: "pexpect.htm",
+    desc: "",
+    date: "20201223",
   },
   {
     title: "python 설치",

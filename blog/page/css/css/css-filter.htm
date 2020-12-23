@@ -1,0 +1,29 @@
+## css  필터 적용
+  * 참고 : https://developer.mozilla.org/ko/docs/Web/CSS/filter
+<code>
+/* SVG 필터를 가리키는 URL */
+filter: url("filters.svg#filter-id");
+
+/* filter-function 값 */
+filter: blur(5px);
+filter: brightness(0.4);
+filter: contrast(200%);
+filter: drop-shadow(16px 16px 20px blue);
+filter: grayscale(50%);
+filter: hue-rotate(90deg);
+filter: invert(75%);
+filter: opacity(25%);
+filter: saturate(30%);
+filter: sepia(60%);
+
+/* 다중 값 */
+filter: contrast(175%) brightness(3%);
+
+/* 필터 없음 */
+filter: none;
+
+/* 전역 값 */
+filter: inherit;
+filter: initial;
+filter: unset;
+</code>
