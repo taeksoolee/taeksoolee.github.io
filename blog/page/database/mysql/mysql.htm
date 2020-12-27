@@ -32,8 +32,30 @@ where a.Date between '2010-01-21' and '2010-01-23'
 mysql > alter table change [변경전이름] [변경후이름] [변경될타입]
 </code>
 
+
+## 시작, 종료방법
+  # windows : net 사용 (관리자 권한)
+<code>
+$ net start mysql
+$ net stop mysql
+
+$ net start mariadb
+$ net stop mariadb
+</code>
+  # linux
+<code>
+$ service mysqld restart
+</code>
+
+## windows에서 char 설정 바꾸는방법
+  # mariadb 10.x\data\my.ini 설정 파일 수정
+<code>
+[mysqld]
+character-set-server=utf8
+[client]
+default-character-set=utf8
+</code>
+
 <hr>
 ## 참고
   # MySQL 쓰면서 하지 말아야 할 것 17가지 : https://blog.lael.be/post/370
-
-

@@ -52,3 +52,38 @@ $ godoc: 문서를 표시. HTTP를 통해 문서 확인.
 $ gorename: 변수, 함수 등을 형 안전(type-safe) 방식으로 이름 변경
 $ go generate: 코드 생성기를 호출하는 표준 방식
 </code>
+
+
+## vscode에서 go 자동완성(intellisense) 느릴때 해결방법
+  * gopls(go language server) 설정 할것
+  # setting  설정
+    Go: Autocomplete Unimported Packages 체크 => gopls 사용
+    Go: Docs Tool 'gogetdoc' 사용  => gopls 서버 변경
+  # settings.js 참고
+<code>
+go.useLanguageServer": true,
+"[go]": {
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": false,
+    },
+    // Optional: Disable snippets, as they conflict with completion ranking.
+    "editor.snippetSuggestions": "none",
+},
+"[go.mod]": {
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": false,
+    },
+},
+"gopls": {
+    // Add parameter placeholders when completing a function.
+    "usePlaceholders": true,
+
+    // If true, enable additional analyses with staticcheck.
+    // Warning: This will significantly increase memory usage.
+    "staticcheck": false,
+},
+"go.autocompleteUnimportedPackages": true,
+"go.docsTool": "gogetdoc"
+</code>
