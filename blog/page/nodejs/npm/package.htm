@@ -1,0 +1,21 @@
+## script 설정
+  * npm start : start 스크립트는 run 명령어 사용 x
+  * npm run [스크립트명]
+<code>
+{
+  "script": {
+    "start": "...",
+    "build": "..."
+  }
+}
+</code>
+
+## proxy 설정
+  * 클라이언트 개발시 서버 자원을 이용할 수 있도록 프록시 설정
+  # 로컬로 프록시 설정
+<code>
+{
+  ...
+  "proxy": "http://localhost:8080"
+}
+</code>

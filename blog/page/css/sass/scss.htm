@@ -1,0 +1,254 @@
+참고 : https://heropy.blog/2018/01/31/sass/
+
+## ssas와 같은 전처리기로 처리
+
+## preprocesser 설치
+<code>
+$ npm install --global node-sass
+$ node-sass [옵션?] [입력파일경로] [출력파일경로]
+</code>
+
+## preprocesser option
+  # watch : 파일의 변경을 감지
+<code>
+$ node-sass --watch [입력파일경로] [출력파일경로]
+</code>
+
+## 주석
+<code>
+// 하나의 행 주석
+/* 여러 행 주석 */
+</code>
+
+## 데이터 종류 (Data Types)
+  # Numbers : 숫자
+    * 1, .82, 20px, 2em
+  # Strings : 문자
+    * bold, relative, "/images/a.png", "dotum"
+  # Colors : 색상
+    * red, blue, #FFFF00, rgba(255,0,0.5)
+  # Booleans : 논리
+    * true, false
+  # Nulls : 아무것도없음 / 속성값으로 null 사용시 컴파일 x
+    * null
+  # Lists : 공백 또는 ,로 구분된 값의 목록
+    * (apple, orange), apple ornage
+  # Maps: key: value의 값
+    * (apple: a, orange: o)
+
+## 중첩 (Nesting)
+<code>
+.section {
+  width: 100%;
+  .list {
+    padding: 20px;
+    li {
+      float: left;
+    }
+  }
+}
+</code>
+  # 중첩 벗어나기 (@at-root)
+<code>
+.list {
+  $w: 100px;
+  $h: 50px;
+  li {
+    width: $w;
+    height: $h;
+  }
+  @at-root .box {
+    width: $w;
+    height: $h;
+  }
+}
+</code>
+
+## 상위 선택자 참조 (Ampersand)
+<code>
+.btn {
+  position: absolute;
+  &.active {
+    color: red;
+  }
+}
+
+.list {
+  li {
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+</code>
+
+<code>
+.fs {
+  &-small {font-size: 12px;}
+  &-medium {font-size: 14px;}
+  &-large {font-size: 16px;}
+}
+</code>
+
+## 중첩 속성 (ex: font-, margin-)
+<code>
+.box {
+  font: {
+    weight: bold;
+    size: 10px;
+    family: sans-serif;
+  }
+  margin: {
+    top: 10px;
+    left: 20px
+  }
+  padding: {
+    bottom: 40px;
+    right: 30px;
+  }
+}
+</code>
+
+## 변수
+<code>
+$color-primary: #e96900;
+$url-images: "/assets/images/";
+$w: 200px;
+
+.box {
+  width: $w;
+  margin-left: $w;
+  background: $color-primary url($url-images + "bg.jpg")
+}
+</code>
+  # 유효범위 (scope)
+<code>
+.box1 {
+  $color: #111;
+  background: $color;
+}
+//Error
+.box2 {
+  background: $color;
+}
+</code>
+
+  # 재 할당 (Reassignment)
+<code>
+$red: #FF0000;
+$blue: #0000FF;
+
+$color-primary: $blue;
+$color-danger: $red;
+
+.box {
+  color: $color-primary;
+  background: $color-danger;
+}
+</code>
+
+  # 전역설정 (!global)
+<code>
+.box1 {
+  $color: #111 !global; // global 변수가 있을 경우 값이 덮어 씌워짐
+  background: $color;
+}
+
+.box2 {
+  background: $color;
+}
+</code>
+
+  # 초깃값 설정 (!default)
+    * default로 설정 (값이 있을 경우 적용 안함)
+    * 외부 라이브러리(bootstrap 등) 에서 사용됨
+<code>
+$color-primary: red;
+
+.box {
+  $color-primary: blue !default; // default가 있으므로 적용 x
+  background: $color-primary; // red
+}
+</code>
+
+  # 문자 보간 (#{})
+<code>
+$family: unquote("Droid+Sans");
+@import url("http://fonts.googleapis.com/css?family=#{$family}")
+</code>
+
+## 가져오기 : import
+  # 기본적으로 Sass 파일 적용
+<code>
+@import "hello" // hello.scss 또는 _hello.scss
+@import "hello", "world";
+</code>
+  # CSS import하는 예외 상황
+<code>
+@import "hello.css" // 확장자가 .css
+@import "http://hello.com/hello" // 파일이름이 'http://'로 시작
+@import url(hello) // url() 사용
+@import "hello" screen; // 미디어쿼리 사용
+</code>
+
+## 연산 : Operations
+  # 산술 연산자
+    * +, -, *(연산 대상 중 한개가 반드시 숫자), /(오른쪽이 반드시 숫자), %
+
+  # 비교 연산자
+    * ==, !=, <, >, <=, >=
+
+  # 논리 연산자
+    * and, or, not
+
+  # 숫자 연산 ( Numbers )
+<code>
+// 상대적 단위 연산 : CSS calc() 함수 사용
+width: 50% - 20px // Error
+width: calc(50% - 20px); 
+
+// 나누기(/) 연산 주의사항
+div {
+  // Error
+  margin: 30px / 2; // CSS 구분자 /로 인식하여 'margin: 20px / 2'로 컴파일
+
+  // 값 또는 그 일부가 변수에 저장되거나 함수에 의해 반환되는 경우
+  $w: 10px;
+  margin: $w / 2;
+  // 값이 ()로 묶여있는 경우
+  margin: (30px / 2);
+  // 값이 다른 산출 표현식의 일부로 사용되는 경우
+  margin: 0px + 30px / 2;
+}
+</code>
+
+  # 문자 연산 ( Strings )
+<code>
+div::after {
+  content: "Hello" + World; //hello world
+  flex-flow: row + "-reverse" + " " + wrap; // flex-flow: row-reverse wrap;
+}
+</code>
+
+  # 색상 연산 ( Colors )
+<code>
+div {
+  color: #123456 + #654321; // color: #777777
+  // R : 12 + 65 = 77
+  // G : 34 + 43 = 77
+  // B : 56 + 21 + 77
+
+  // rgba() 사용 연산시 alpha 값이 동일해야 함.
+  background: rgba
+}
+
+.div {
+  $color: rgba(10,20,30, .5);
+  // opcify() : 더 불투명하게
+  color: opacify($color, .3); // 0.5 + 0.3
+  // transparentize() // 더 투명하게
+  background: transparentize($color, .2);  // 0.5 - 0.2
+}
+
+</code>
+
