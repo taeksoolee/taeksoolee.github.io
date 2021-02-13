@@ -77,6 +77,7 @@ const schema = {
   nosql: "nosql",
   mongodb: "mongodb",
   redis: "redis",
+  postgresql: "postgresql",
   firebase: "firebase",
   server: "server",
   nginx: "nginx",
