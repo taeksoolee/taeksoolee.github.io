@@ -1,0 +1,184 @@
+## default port : 5432
+
+## windows 설정 변경
+  # 설정 파일 확인 / 변경(변경 후 postgresql 재시작)
+<code>
+// sysdm.cpl > 고급 > 환경변수
+// postgres path : c:\Program Files\PostgreSQL\[version]
+> notepad c:\Program Files\PostgreSQL\[version]\data\pg_hba.conf
+</code>
+
+  #  local 접속 설정: method trust 설정시 login 없이 접속가능 (비밀번호 등 변경할 때 사용)
+<code>
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+# "local" is for Unix domain socket connections only
+# local   all             all                                     scram-sha-256
+# local   all             all                                     trust
+local   all             all                                     md5
+# IPv4 local connections:
+# host    all             all             127.0.0.1/32            scram-sha-256
+# host    all             all             127.0.0.1/32            trust
+host    all             all             127.0.0.1/32            trust
+# IPv6 local connections:
+# host    all             all             ::1/128                 scram-sha-256
+# host    all             all             ::1/128                 trust
+host    all             all             ::1/128                 md5
+</code>
+
+
+## postgresql client 사용 (psql)
+<code>
+// client 실행
+$ psql --username postgres --dbname postgres
+
+// role 확인
+# \du;
+// role 생성
+# create role [role 이름];
+$ sudo -u postgres createdb [role 이름] --owner=[role 이름]
+
+
+// databases 확인 (List of Databases)
+# \l;
+</code>
+
+<cod><samp>
+  일반
+  \copyright             PostgreSQL 사용법 및 저작권 정보 표시
+  \crosstabview [칼럼들] 쿼리를 실행하고, 피봇 테이블 형태로 자료를 보여줌
+  \errverbose            최대 자세히 보기 상태에서 최근 오류를 다 보여줌
+  \g [(OPTIONS)] [FILE]  쿼리 실행 (결과는 지정한 파일로, 또는 | 파이프로);
+                         \g 명령에서 인자가 없으면 세미콜론과 같음
+  \gdesc                 쿼리를 실행하지 않고 그 결과 칼럼과 자료형을 출력
+  \gexec                 쿼리를 실행하고, 그 결과를 각각 실행 함
+  \gset [PREFIX]         쿼리 실행 뒤 그 결과를 psql 변수로 저장
+  \gx [(OPTIONS)] [FILE] \g 명령과 같으나, 출력을 확장 모드로 강제함
+  \q                     psql 종료
+  \watch [SEC]           매 초마다 쿼리 실행
+
+도움말
+  \? [commands]          psql 역슬래시 명령어 설명
+  \? options             psql 명령행 옵션 도움말 보기
+  \? variables           psql 환경 설정 변수들에 설명 보기
+  \h [NAME]              SQL 명령 구문 도움말, 모든 명령을 표시하려면 * 입력
+
+쿼리 버퍼
+  \e [FILE] [LINE]       외부 편집기로 쿼리 버퍼(또는 파일) 편집
+  \ef [FUNCNAME [LINE]]  외부 편집기로 해당 함수 내용 편집
+  \ev [VIEWNAME [LINE]]  외부 편집기로 해당 뷰 정의 편집
+  \p                     쿼리 버퍼의 내용 표시
+  \r                     쿼리 버퍼 초기화(모두 지움)
+  \w FILE                쿼리 버퍼를 파일에 기록
+
+입력/출력
+  \copy ...              클라이언트 호스트에 있는 자료를 SQL COPY 명령 실행
+  \echo [-n] [STRING]    문자열을 표준 출력에 기록 (-n 줄바꿈 없음)
+  \i FILE                파일에서 명령 실행
+  \ir FILE               \i 명령과 같으나, 경로가 현재 위치 기준 상대적
+  \o [FILE]              모든 쿼리 결과를 파일 또는 |파이프로 보냄
+  \qecho [-n] [STRING]   문자열을 \o 출력 스트림에 기록 (-n 줄바꿈 없음)
+  \warn [-n] [STRING]    문자열을 stderr에 기록 (-n 줄바꿈 없음)
+
+조건문
+  \if EXPR               조건문 시작
+  \elif EXPR             else if 구문 시작
+  \else                  조건문의 그 외 조건
+  \endif                 조건문 끝
+
+정보보기
+  (옵션: S = 시스템 개체 표시, + = 추가 상세 정보)
+  \d[S+]                 테이블, 뷰 및 시퀀스 목록
+  \d[S+]  NAME           테이블, 뷰, 시퀀스 또는 인덱스 설명
+  \da[S]  [PATTERN]      집계 함수 목록
+  \dA[+]  [PATTERN]      접근 방법 목록
+  \dAc[+] [AMPTRN [TYPEPTRN]]  연산자 클래스 목록
+  \dAf[+] [AMPTRN [TYPEPTRN]]  연산자 부류 목록
+  \dAo[+] [AMPTRN [OPFPTRN]]   연산자 부류 소속 연산자 목록
+  \dAp    [AMPTRN [OPFPTRN]]   연산자 가족에 포함된 지원 함수 목록
+  \db[+]  [PATTERN]      테이블스페이스 목록
+  \dc[S+] [PATTERN]      문자셋 변환자 목록
+  \dC[+]  [PATTERN]      자료형 변환자 목록
+  \dd[S]  [PATTERN]      다른 곳에서는 볼 수 없는 객체 설명을 보여줌
+  \dD[S+] [PATTERN]      도메인 목록
+  \ddp    [PATTERN]      기본 접근권한 목록
+  \dE[S+] [PATTERN]      외부 테이블 목록
+  \det[+] [PATTERN]      외부 테이블 목록
+  \des[+] [PATTERN]      외부 서버 목록
+  \deu[+] [PATTERN]      사용자 매핑 목록
+  \dew[+] [PATTERN]      외부 데이터 래퍼 목록
+  \df[anptw][S+] [PATRN] [agg/normal/procedures/trigger/window] 함수 목록
+  \dF[+]  [PATTERN]      텍스트 검색 구성 목록
+  \dFd[+] [PATTERN]      텍스트 검색 사전 목록
+  \dFp[+] [PATTERN]      텍스트 검색 파서 목록
+  \dFt[+] [PATTERN]      텍스트 검색 템플릿 목록
+  \dg[S+] [PATTERN]      롤 목록
+  \di[S+] [PATTERN]      인덱스 목록
+  \dl                    큰 개체 목록, \lo_list 명령과 같음
+  \dL[S+] [PATTERN]      프로시져 언어 목록
+  \dm[S+] [PATTERN]      materialized 뷰 목록
+  \dn[S+] [PATTERN]      스키마 목록
+  \do[S]  [PATTERN]      연산자 목록
+  \dO[S+] [PATTERN]      collation 목록
+  \dp     [PATTERN]      테이블, 뷰 및 시퀀스 액세스 권한 목록
+  \dP[itn+] [PATTERN]    파티션 릴레이션 목록 [인덱스/테이블만] [n=nested]
+  \drds [PATRN1 [PATRN2]] 데이터베이스별 롤 설정 목록
+  \dRp[+] [PATTERN]      복제 발행 목록
+  \dRs[+] [PATTERN]      복제 구독 목록
+  \ds[S+] [PATTERN]      시퀀스 목록
+  \dt[S+] [PATTERN]      테이블 목록
+  \dT[S+] [PATTERN]      데이터 형식 목록
+  \du[S+] [PATTERN]      롤 목록
+  \dv[S+] [PATTERN]      뷰 목록
+  \dx[+]  [PATTERN]      확장 모듈 목록
+  \dy     [PATTERN]      이벤트 트리거 목록
+  \l[+]   [PATTERN]      데이터베이스 목록
+  \sf[+]  함수이름       함수 정의 보기
+  \sv[+] 뷰이름          뷰 정의 보기
+  \z      [PATTERN]      \dp와 같음
+
+출력 형식
+  \a                     정렬되지 않은 출력 모드와 정렬된 출력 모드 전환
+  \C [STRING]            테이블 제목 설정 또는 값이 없는 경우 설정 안 함
+  \f [STRING]            unaligned 출력에 대해 필드 구분자 표시 또는 설정
+  \H                     HTML 출력 모드 전환(현재 off)
+  \pset [이름 [값]]      테이블 출력 옵션 설정
+                         (border|columns|csv_fieldsep|expanded|fieldsep|
+                         fieldsep_zero|footer|format|linestyle|null|
+                         numericlocale|pager|pager_min_lines|recordsep|
+                         recordsep_zero|tableattr|title|tuples_only|
+                         unicode_border_linestyle|unicode_column_linestyle|
+                         unicode_header_linestyle)
+  \t [on|off]            행만 표시(현재 off)
+  \T [STRING]            HTML <table> 태그 속성 설정 또는 비었는 경우 설정 안 함
+  \x [on|off|auto]       확장된 출력 전환 (현재 off)
+
+연결
+  \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
+                         새 데이터베이스에 접속 (현재 "postgres")
+  \conninfo              현재 데이터베이스 접속 정보 보기
+  \encoding [ENCODING]   클라이언트 인코딩 표시 또는 설정
+  \password [USERNAME]   사용자 암호를 안전하게 변경
+
+운영 체제
+  \cd [DIR]              현재 작업 디렉터리 변경
+  \setenv NAME [VALUE]   환경 변수 지정 및 해제
+  \timing [on|off]       명령 실행 시간 전환(현재 off)
+  \! [COMMAND]           셸 명령 실행 또는 대화식 셸 시작
+
+변수
+  \prompt [TEXT] NAME    사용자에게 내부 변수를 설정하라는 메시지 표시
+  \set [NAME [VALUE]]    내부 변수 설정 또는 미지정 경우 모든 변수 목록 표시
+  \unset NAME            내부 변수 설정 해제(삭제)
+
+큰 개체
+  \lo_export LOBOID FILE
+  \lo_import FILE [COMMENT]
+  \lo_list
+  \lo_unlink LOBOID      큰 개체 작업
+</samp></cod>
+
+
+## user 암호변경 SQL
+<code>
+# alter user postgres with password '1234';
+</code>

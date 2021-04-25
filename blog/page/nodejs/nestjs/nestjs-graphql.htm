@@ -1,0 +1,78 @@
+## 작성방식
+  # code first : 데코레이터와 타입스크립트의 클래스를 사용해서 GraphQL 스키마와 상응하는 것을 만들게 되는데, 이 방법은 타입스크립트만을 배타적으로 사용하기 위한 경우 알맞는 방식
+  # schema first :  소스의 원천 (source of truth)가 GraphQL Schema Definition Language file (GraphQL SDL)이다. SDL은 특정 언어와 관계 없는 방향으로 스키마 파일들을 다른 플랫폼 사이에서 제공
+  (Nest는 자동적으로 타입스크립트 정의를 GraphQL 스키마에 기반해서 생성해주게 됨)
+
+
+## 실습 예제 (https://medium.com/@feedbotstar/nest-js-graphql-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-f38adf767fa8)
+  # 프로젝트 생성 & 패키지 설치
+<code>
+$ nest new graphql-tutorial
+// yarn
+
+$ yarn add @nestjs/graphql graphql-tools type-graphql graphql apollo-server-express
+
+$ yarn add @nestjs/typeorm typeorm mysql2 pg
+</code>
+
+  # server/app.module.ts 수정
+<code>
+import { GraphQLModule } from '@nestjs/graphql';
+
+...
+@Module({
+    imports: [
+        GraphQLModule.forRoot({
+            autoSchemaFile: 'schema.gpl'
+        }),
+      ...
+</code>
+
+  # 스키마 설계
+<code>
+  // 상품 조회
+  query {
+      getProducts {
+          id, title, price
+      }
+  }
+  // 상품 생성
+  mutation {
+    createProduct(
+      data: { title: "벨벳", price: 890000 }
+    ) {
+      id, title, price
+    }
+  }
+</code>
+
+  # 모델 생성
+<code>
+// module
+$ nest g mo product
+// service
+$ nest g s product
+// resolver
+$ nest g r product
+</code>
+
+  # Product 엔터티를 생성
+<code>
+
+</code>
+
+  # 
+<code>
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Product])],
+  providers: [ProductService, ProductResolver],
+...
+</code>
+
+<code>
+  TypeOrmModule.forRoot({
+  ...
+      "entities": [Product, .....],
+  }),
+</code>
