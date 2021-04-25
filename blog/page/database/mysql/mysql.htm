@@ -56,6 +56,13 @@ character-set-server=utf8
 default-character-set=utf8
 </code>
 
+
+## 테이블 한글
+<code>
+$ LTER TABLE database.table MODIFY COLUMN col VARCHAR(255)  
+  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+</code>
+
 <hr>
 ## 참고
   # MySQL 쓰면서 하지 말아야 할 것 17가지 : https://blog.lael.be/post/370

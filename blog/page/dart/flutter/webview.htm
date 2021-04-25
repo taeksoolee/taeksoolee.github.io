@@ -1,0 +1,57 @@
+## webview_flutter 사용방법 
+  1. pubspec.yaml 수정 (pub get)
+<code>
+  dependencies:
+  flutter:
+    sdk: flutter
+
+  webview_flutter: ^0.3.24
+</code>
+
+  2. Native 코드 수정(https://kyungsnim.net/98)
+  # Android (/app/src/main/AndroidManifast.xml) 
+<code><samp>
+<android
+  ...
+  android:usesClearTextTraffic="true">
+  <activity></activity>
+</android>
+
+</samp></code>
+
+  # IOS (/ios/Runner/Info.plist)
+<code><samp>
+<key>io.flutter.embedded_views_preview</key>
+<string>YES</string>
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+  <key>NSAllowsArbitrayryLoadsInWebContent</key>
+  <true />
+</dict>
+</samp></code>
+  
+  4. Widget 작성
+<code>
+  import 'package:url_launcher/url_launcher.dart';
+
+  class WebViewPage extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('웹뷰 걸음마'),
+        ),
+        body: Container(
+          child: WebView(
+            initialUrl: "https://m.naver.com",
+            javascriptMode: JavascriptMode.unrestricted,
+          ),
+        )
+      );
+    }
+  }
+</code>
+
+

@@ -1,0 +1,162 @@
+## 카카오톡
+  * 참고 : https://pub.dev/packages/kakao_flutter_sdk
+1. pubspec.yaml dependencies 추가
+<code><samp>
+dependencies:
+  kakao_flutter_sdk: ^0.5.4
+</samp></code>
+
+2. Native 추가
+  * AndroidManifast.xml activity 추가
+<code><samp>
+<activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+  <intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+      <data android:host="oauth"
+              android:scheme="kakao{NATIVE_APP_KEY}" />
+  </intent-filter>
+</activity>
+</samp></code>
+
+  * IOS info.plist 추가
+<code><samp>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <!-- common -->
+    <string>kakao${native_app_key_here}</string>
+
+    <!-- KakaoTalk login -->
+    <string>kakaokompassauth</string>
+    <string>storykompassauth</string>
+
+    <!-- KakaoLink -->
+    <string>kakaolink</string>         
+    <string>kakaotalk-5.9.7</string>
+</array>
+</samp></code>
+
+3. dart 코드 작성
+<code>
+import 'package:flutter/services.dart';
+import 'package:kakao_flutter_sdk/all.dart';
+import 'package:kakao_flutter_sdk/common.dart';
+
+class ... {
+  @override
+  void initState() {
+    KakaoContext.clientId = '9535cebedf9b344123a3a187f1e1639f';
+    KakaoContext.javascriptClientId = 'e70d2f6203269c4cbb695b2773c3856b'; 
+    super.initState();
+  }
+
+  ...
+
+  void _loginForKakao() async {
+    try {
+      final installed = await isKakaoTalkInstalled();
+      print(installed);
+      String authCode = await AuthCodeClient.instance.request();
+      print(authCode);
+
+      AccessTokenResponse token = await AuthApi.instance.issueAccessToken(authCode);
+      print('toke is ::: ');
+      print(token.accessToken);
+      AccessTokenStore.instance.toStore(token); // Store access token in AccessTokenStore for future API requests
+      User user = await UserApi.instance.me();
+      print('user is ::: ');
+      print(user.kakaoAccount.profile.nickname);
+      print(user.kakaoAccount.profile.profileImageUrl);
+      print(user.kakaoAccount.email);
+
+
+    } on KakaoAuthException catch (e) {
+      // some error happened during the course of user login... deal with it.
+      print('KakaoAuthException');
+      // some error happened during the course of user login... deal with it.
+      print(e);
+    } on KakaoClientException catch (e) {
+      print('KakaoClientException');
+      print(e);
+      //
+    } on PlatformException catch (e) {
+      // print('PlatformException');
+      // print(e.message);
+      // print(e.code);
+
+      if(e.code == 'CANCELED') {
+        print('user cancel');
+      } else {
+        print('error catch ::: ' + e.code);
+      }
+    }catch (e) {
+      print('catch');
+      print(e);
+      //
+    }
+  }
+}
+</code>
+
+
+## 네이버
+  * 참고 : https://pub.dev/packages/flutter_naver_login
+1. pubspec.yaml dependencies 추가
+  <code><samp>
+  dependencies:
+    flutter_naver_login: ^1.2.1
+  </samp></code>
+2. Native 추가
+  * Android - android/app/src/main/res/values/strings.xml
+<code><samp>
+  <?xml version="1.0" encoding="utf-8"?>
+  <resources>
+      <string name="client_id">[client_id]</string>
+      <string name="client_secret">[client_secret]</string>
+      <string name="client_name">[client_name]</string>
+  </resources>
+</samp></code>
+  * Android - android/app/src/main/res/values/strings.xml (application 자식요소로 작성 필요)
+<code><samp>
+<application
+android:name="io.flutter.app.FlutterApplication"
+android:label="flutter_naver_login_example"
+android:icon="@mipmap/ic_launcher">
+  <meta-data
+      android:name="com.naver.sdk.clientId"
+      android:value="@string/client_id" />
+  <meta-data
+      android:name="com.naver.sdk.clientSecret"
+      android:value="@string/client_secret" />
+  <meta-data
+      android:name="com.naver.sdk.clientName"
+      android:value="@string/client_name" />
+...
+</samp></code>
+
+
+
+  * IOS info.plist 추가 : 확인 필요
+
+3. dart 코드 작성
+<code>
+import 'package:flutter_naver_login/flutter_naver_login.dart';
+
+class ... {
+  void _loginForNaver() async {
+    try {
+      NaverLoginResult res = await FlutterNaverLogin.logIn();
+      print(await FlutterNaverLogin.currentAccessToken);
+      print(res.account.id);
+      print(res.account.email);
+      print(res.account.nickname);
+      print(res.account.gender);
+      print(res.account.age);
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+</code>

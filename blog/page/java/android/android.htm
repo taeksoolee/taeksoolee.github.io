@@ -1,0 +1,12 @@
+## kakao developer
+  # flatform 등록
+    * 해시키 등록
+<code><smap>
+// mac
+$ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android -keypass android | openssl sha1 -binary | openssl base64
+$ keytool -exportcert -alias <RELEASE_KEY_ALIAS> -keystore <RELEASE_KEY_PATH> | openssl sha1 -binary | openssl base64
+// windows
+> keytool -exportcert -alias androiddebugkey -keystore C:\Users\{user}\.android\debug.keystore -storepass android -keypass android | openssl sha1 -binary | openssl base64
+> keytool -exportcert -alias <RELEASE_KEY_ALIAS> -keystore <RELEASE_KEY_PATH> | PATH_TO_OPENSSL_LIBRARY\bin\openssl sha1 -binary | PATH_TO_OPENSSL_LIBRARY\bin\openssl base64
+</smap></code>
+

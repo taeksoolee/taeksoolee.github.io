@@ -102,4 +102,6 @@ const schema = {
   algorithm: "algorithm",
   raspberrypi: "raspberrypi",
   rest: "rest",
+  flutter: "flutter",
+  dart: "dart",
 };

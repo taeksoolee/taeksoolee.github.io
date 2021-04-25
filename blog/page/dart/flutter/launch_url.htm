@@ -1,0 +1,43 @@
+## luancher 사용방법
+  * URL로 다른 앱 실행
+1. pubspec.yaml 수정 (pub get)
+<code>
+  dependencies:
+  flutter:
+    sdk: flutter
+
+  url_launcher: ^5.4.0  
+</code>
+
+<code>
+  import 'package:url_launcher/url_launcher.dart';
+  
+  class ... {
+    final _url = 'https://www.google.com';
+
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('launch_test'),
+          ),
+          body: Container(
+            alignment: Alignment.center,
+            child: Column(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: _launchURL,
+                  child: Text('launch google'),
+                ),
+              ] 
+            ),
+          ),
+        ),
+      );
+    }
+
+    void _launchURL() async =>
+    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+  }
+</code>

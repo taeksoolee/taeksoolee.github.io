@@ -11,6 +11,7 @@ const category = [
   { name: schema.c },
   { name: schema.cpp },
   { name: schema.csharp },
+  { name: schema.dart },
   { name: schema.rust },
   { name: schema.linux },
   { name: schema.kali },
