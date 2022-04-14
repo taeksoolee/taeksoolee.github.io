@@ -1,0 +1,63 @@
+@keyframes slider {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+:root {
+  /* TypeIt */
+  --ti-cursor-color: dodgerblue;
+  --ti-cursor-font-weight: bold;
+}
+
+body {
+  background-color: #45ded9;
+}
+
+section {
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem 0;
+
+  -webkit-box-shadow: 6px 6px 7px -4px rgba(0,0,0,0.45); 
+  box-shadow: 6px 6px 7px -4px rgba(0,0,0,0.45);
+
+  opacity: 0;
+}
+
+section.slider {
+  /* transition: all 1s; */
+  animation-name: slider;
+  animation-delay: 0s;
+  animation-duration: .8s;
+  /* animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1); */
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+
+  opacity: 1;
+}
+
+#title {
+  text-align: center;;
+}
+
+#introduce {
+  font-size: 1.2rem;
+  /* font-style: italic; */
+  font-weight: bold;
+  text-align: center;
+}
+
+.desc {
+  font-style: italic;
+}
+
+.image {
+  max-height: 100px;
+  float: right;
+}
