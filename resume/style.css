@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'NotoSansKR';
+  src: url(/assets/fonts/NotoSansKR-Regular.otf)
+}
+
+* {
+  font-family: 'NotoSansKR';
+}
+
+a {
+  font-style: normal;
+  text-decoration: none;
+}
+
+:root {
+  --color-white: white;
+  --color-gray00: gray;
+
+  --font-size-root: 0.8rem;
+  --padding-root: 1rem;
+}
