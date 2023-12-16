@@ -1,6 +1,5 @@
-let toggle = document.querySelector('.toggle');
-let card = document.querySelector('.card');
+document.querySelector('#app')?.querySelector('main')?.classList.remove('hidden');
 
-toggle.onclick = function() {
-  card.classList.toggle('active');
-}
+// fetch('http://ts-lee.com').then((res) => {
+//   console.log('!!', res);
+// })

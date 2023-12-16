@@ -2,11 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+      color: #495057;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .number {
+      font-size: 10em;
+      font-weight: bold;
+      color: #e44d26;
+      margin: 0;
+    }
+
+    .text {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .emoji {
+      font-size: 4em;
+      margin-top: 20px;
+    }
+
+    .link {
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div>404</div>
+  <div class="container">
+    <p class="number">404</p>
+    <p class="text">Page Not Found</p>
+    <p class="emoji">😢</p>
+    <a href="/" class="link">Go back to Home</a>
+  </div>
 </body>
 </html>

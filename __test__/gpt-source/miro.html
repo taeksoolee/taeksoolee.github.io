@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #maze {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #000;
+      overflow: hidden;
+    }
+
+    .wall {
+      position: absolute;
+      background-color: #000;
+    }
+
+    #player {
+      position: absolute;
+      background-color: #00f;
+      width: 20px;
+      height: 20px;
+      transition: 0.1s;
+    }
+  </style>
+</head>
+<body>
+  <div id="maze">
+    <!-- Maze walls -->
+    <div class="wall" style="top: 0; left: 100px; width: 100px; height: 20px;"></div>
+    <div class="wall" style="top: 80px; left: 0; width: 20px; height: 100px;"></div>
+    <div class="wall" style="top: 80px; left: 180px; width: 20px; height: 100px;"></div>
+    <div class="wall" style="top: 180px; left: 100px; width: 100px; height: 20px;"></div>
+
+    <!-- Player -->
+    <div id="player"></div>
+  </div>
+
+  <script>
+    const maze = document.getElementById('maze');
+    const player = document.getElementById('player');
+
+    document.addEventListener('keydown', movePlayer);
+
+    function movePlayer(e) {
+      const step = 20;
+
+      switch (e.key) {
+        case 'ArrowUp':
+          move(0, -step);
+          break;
+        case 'ArrowDown':
+          move(0, step);
+          break;
+        case 'ArrowLeft':
+          move(-step, 0);
+          break;
+        case 'ArrowRight':
+          move(step, 0);
+          break;
+      }
+
+      checkBoundary();
+    }
+
+    function move(x, y) {
+      const playerRect = player.getBoundingClientRect();
+      const mazeRect = maze.getBoundingClientRect();
+
+      const newX = playerRect.left - mazeRect.left + x;
+      const newY = playerRect.top - mazeRect.top + y;
+
+      player.style.transform = `translate(${newX}px, ${newY}px)`;
+    }
+
+    function checkBoundary() {
+      const playerRect = player.getBoundingClientRect();
+      const mazeRect = maze.getBoundingClientRect();
+
+      if (
+        playerRect.left < mazeRect.left ||
+        playerRect.right > mazeRect.right ||
+        playerRect.top < mazeRect.top ||
+        playerRect.bottom > mazeRect.bottom
+      ) {
+        // Player tried to go outside the maze, reset position
+        player.style.transform = 'translate(0, 0)';
+      }
+    }
+  </script>
+</body>
+</html>
