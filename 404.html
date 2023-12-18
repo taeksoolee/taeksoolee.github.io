@@ -3,59 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f8f9fa;
-      color: #495057;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="/images/my-profile-img.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    .container {
-      text-align: center;
-    }
-
-    .number {
-      font-size: 10em;
-      font-weight: bold;
-      color: #e44d26;
-      margin: 0;
-    }
-
-    .text {
-      font-size: 2em;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .emoji {
-      font-size: 4em;
-      margin-top: 20px;
-    }
-
-    .link {
-      margin-top: 20px;
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-
-    .link:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/script.js"></script>
+  <script type="module">
+    import tailwindConfig from '/tailwind.config.js';
+    tailwind.config = tailwindConfig;
+  </script>
 </head>
 <body>
-  <div class="container">
-    <p class="number">404</p>
-    <p class="text">Page Not Found</p>
-    <p class="emoji">😢</p>
-    <a href="/" class="link">Go back to Home</a>
-  </div>
+  <main class="flex flex-col justify-center algin-center w-screen h-screen m-0 bg-slate-100 text-slate-700">
+    <p class="text-[160px] text-center text-orange-600">404</p>
+    <p class="text-center text-2xl my-2">페이지를 찾지 못했습니다.</p>
+    <p class="text-center text-5xl my-2">😢</p>
+    <a href="/" class="text-center my-2 text-sky-400 text-xl hover:text-sky-500 hover:underline">Go back to Home</a>
+  </main>
 </body>
 </html>
