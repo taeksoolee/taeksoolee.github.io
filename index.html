@@ -59,18 +59,14 @@
 <body>
   <div id="app">
     <main class="hidden bg-slate-100 min-h-screen">
-      <div class="drop-shadow-lg bg-white p-2 text-center">
+      <nav class="drop-shadow-lg h-[64px] bg-white p-2 text-center">
         <h1 class="text-5xl">🏠</h1>
-        <div class="absolute">
-          <div class="w-[100px] h-[100px] bg-red-500 border-2 border-slate-700"></div>
-          <div class="w-[100px] h-[100px] bg-red-500 border-2 border-slate-700"></div>
-        </div>
-      </div>
+      </nav>
 
       <div class="my-8">
         <section class="mx-4 mb-12">
           <h2 class="text-lg mb-4">💁‍♂️ 내 프로필</h2>
-          <div class="h-[250px] shadow-md bg-white text-sm text-gray-600 p-4 flex flex-col justify-between">
+          <div class="shadow-md bg-white text-sm text-gray-600 p-4 flex flex-col justify-between">
             <div>
               <div class="flex algin-center gap-2 mb-4">
                 <img src="/images/my-profile-img.png" alt="Taeksoolee Emogi" width="32" class="rounded-full" />
@@ -122,21 +118,25 @@
         <section class="mx-4 mb-12">
           <h2 class="text-lg mb-4">🚀 내 프로젝트</h2>
           <ul>
+            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
+              <a href="https://evcaro.com">Evcaro</a>
+              <desc class="hidden md:inline-block text-slate-400 text-sm">전기차 지원금 조회 앱</desc>
+            </ll>
             <ll class="flex justify-between bg-white p-4 shadow-md mb-1 cursor-pointer hover:bg-sky-100 text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click();">
               <a href="https://taeksoolee.github.io/blog">Blog</a>
-              <desc class="hidden lg:inline-block text-slate-400 text-sm">개인 공부를 위한 블로그</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="/profile-card">Profile Card</a>
-              <desc class="hidden lg:inline-block text-slate-400 text-sm">프로필 카드</desc>
+              <desc class="hidden md:inline-block text-slate-400 text-sm">개인 공부를 위한 블로그</desc>
             </ll>
             <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
               <a href="https://taeksoolee.github.io/data-anywhere">Data Anywhere</a>
-              <desc class="hidden lg:inline-block text-slate-400 text-sm">그리드 데이터 이동</desc>
+              <desc class="hidden md:inline-block text-slate-400 text-sm">URL 공유로 데이터를 이동할 수 있는 앱</desc>
             </ll>
             <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="https://evcaro.com">Evcaro</a>
-              <desc class="hidden lg:inline-block text-slate-400 text-sm">전기차 지원금 조회 앱</desc>
+              <a href="/profile-card">Profile Card</a>
+              <desc class="hidden md:inline-block text-slate-400 text-sm">프로필 카드</desc>
+            </ll>
+            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
+              <a href="/cursor-eyes/">Cursor Eyes</a>
+              <desc class="hidden md:inline-block text-slate-400 text-sm">마우스 커서에 따라 시선이 이동하는 캐릭터</desc>
             </ll>
           </ul>
         </section>
