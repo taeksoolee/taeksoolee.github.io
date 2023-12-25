@@ -17,3 +17,15 @@ window.addEventListener('mousemove', (e) => {
   rightInnerEye.style.left = `${rightX}px`;
 
 });
+
+
+
+const bgColors = Object.freeze([
+  'gray', 'red', 'orange', 'yellow', 'green', 'skyblue', 'blue', 'purple',
+]);
+
+let colorIdx = 0;
+
+window.addEventListener('click', () => {
+  document.querySelector(':root').style.setProperty('--bg-color', bgColors[colorIdx++ % bgColors.length]);
+})

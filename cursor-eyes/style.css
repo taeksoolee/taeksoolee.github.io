@@ -1,5 +1,5 @@
 body {
-  background-color: gray;
+  background-color: var(--bg-color, gray);
 }
 
 .eyes-container {
@@ -59,7 +59,7 @@ body {
 }
 
 .mouse {
-  background-color: white;
+  background-color: black;
 }
 
 .mouse-left {
