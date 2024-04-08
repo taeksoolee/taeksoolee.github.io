@@ -14,8 +14,6 @@ function recursive(obj, prefix='') {
 
 angular.module('app', ['ngRoute'])
   .config(function($routeProvider) {
-    console.log();
-
     $routeProvider
       .when('/', {
         redirectTo: '/list',
@@ -29,14 +27,14 @@ angular.module('app', ['ngRoute'])
           <h1>Pokemons</h1>
           <div>
             <p> Total : {{ state.total }} </p>
-            <a ng-if="state.previous" ng-href="#!/?data={{ state.previous | encodeUrl }}">Previous</a>
-            <span ng-if="!state.previous">Previous</span>
-
-            <a ng-if="state.next" ng-href="#!/?data={{ state.next | encodeUrl }}">Next</a>
-            <span ng-if="!state.next">Next</span>
-
-            <div>{{ pager | json }}</div>
           </div>
+          <nav>
+            <span ng-repeat="page in pager.pages">
+              <span ng-if="page === pager.cur">{{ page }}</span>
+              <a ng-if="page !== pager.cur" ng-href="#!/?cur={{ page }}&limit={{ pager.limit }}">{{ page }}</a>
+              &nbsp;&nbsp;
+            </span>
+          </nav>
           <ul>
             <li ng-repeat="pokemon in state.pokemons">
               <a ng-href="#!/detail?data={{ pokemon.url | encodeUrl }}">
@@ -50,20 +48,23 @@ angular.module('app', ['ngRoute'])
       })
       .when('/detail', {
         template: `
+        <div ng-if="loading">
+          Loading...
+        </div>
+        <div ng-if="!loading">
           <h1>{{ state.pokemon.name }}</h1>
+          <span>order: {{ state.pokemon.order }}</span>
           <div ng-repeat="sprite in state.pokemon.sprites">
             <img ng-src="{{ sprite[1] }}" ng-alt="{{ sprite[0] }}" />
             <hr />
           </div>
+        </div>
         `,
         controller: 'DetailCtrl',
       })
   })
   .filter('encodeUrl', function() {
     return (input) => encodeURIComponent(input);
-  })
-  .filter('decodeUrl', function() {
-    return (input) => decodeURIComponent(input)
   })
   .service('api', function($http, $q) {
     this.call = function(url) {
@@ -85,55 +86,74 @@ angular.module('app', ['ngRoute'])
       return deffered.promise;
     }
   })
-  .controller('HomeCtrl', function($scope, $log, $routeParams, api) {
+  .controller('HomeCtrl', function($scope, $routeParams, $log, api) {
+    const cur = parseInt($routeParams.cur ?? '1');
+    const limit = parseInt($routeParams.limit ?? '20');
+
+    const start = (cur-1)*limit; // offset
+    const end = start+limit;
+
     $scope.loading = true;
-    $scope.pager = {
-      cur: 1,
-      limit: 20,
-    };
 
-    let { data: url } = $routeParams;
-    if (!url) {
-      url = `https://pokeapi.co/api/v2/pokemon?offset=${($scope.pager.cur-1)*$scope.pager.limit}&limit=${$scope.pager.limit}`;
-    }
-
-    api.call(url)
+    api.call(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1`)
       .then(function(res) {
-        $log.debug(res.data);
-        const searchEntriy = Object.fromEntries(new URLSearchParams(new URL(url).search).entries());
+        api.call(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${res.data.count}`)
+        .then(function(res) {
+          $scope.state = {
+            pokemons: res.data.results.slice(start, end),
+            total: res.data.count,
+          }
 
-        const offset = parseInt(searchEntriy.offset);
-        const limit = parseInt(searchEntriy.limit);
-        
-        $scope.pager = {
-          cur: (offset/limit)+1,
-          limit,
-        };
+          const allPages = Array.from({ length: Math.ceil(res.data.count / limit) })
+            .map((_, i) => i+1);
 
-        $scope.state = {
-          pokemons: res.data.results,
-          previous: res.data.previous,
-          next: res.data.next,
-          total: res.data.count,
-        }
-        $scope.loading = false;
+          const pages = [cur];
+          const MAX_PAGE = 5;
+          let i=1;
+          const idx = cur-1;
+          let next = null;
+          let prev = null;
+          while(true) {
+            if (pages.length >= MAX_PAGE) break;
+            next = allPages[idx+i] ?? null;
+            next !== null && pages.push(next);
+
+            if (pages.length >= MAX_PAGE) break;
+            prev = allPages[idx+(i*-1)] ?? null;
+            prev !== null && pages.unshift(prev);
+
+            if (next === null && prev === null) break;
+            i++;
+          }
+
+          $scope.pager = {
+            cur,
+            limit,
+            pages,
+          }
+          $scope.loading = false;
+        })
       });
   })
   .controller('DetailCtrl', function($scope, $log, $routeParams, api) {
+    $scope.loading = true;
+
     const { data: url } = $routeParams;
 
-    $scope.state = {
-      pokemon: {
-        name: '',
-        sprites: [],
-      },
-    }
+    $scope.state = null;
 
     api.call(url)
       .then(function(res) {
         $log.debug(res.data);
-        $scope.state.pokemon.name = res.data.name;
-        $scope.state.pokemon.sprites = recursive(res.data.sprites);
+        $scope.state = {
+          pokemon: {
+            name: res.data.name,
+            order: res.data.order,
+            sprites: recursive(res.data.sprites),
+          }
+        };
+
+        $scope.loading = false;
       });
 
   });
