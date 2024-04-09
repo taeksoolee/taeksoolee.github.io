@@ -42,19 +42,19 @@ angular.module('app', ['ngRoute'])
             <p class="text-gray-500"> Total : {{ state.total }} </p>
           </div>
           <nav class="mb-4">
-            <span class="inline-block w-10 h-10 mx-2 content-middle">
+            <span class="inline-block w-10 h-10 content-middle">
               <span ng-if="pager.first === pager.cur" class="flex justify-center items-center  bg-blue-200 text-blue-500 w-full h-full">{{ pager.first }}</span>
               <a ng-if="pager.first !== pager.cur" ng-href="#!/?cur={{ pager.first }}&limit={{ pager.limit }}" class="flex justify-center items-center w-full h-full bg-gray-200 text-gray-400 hover:text-blue-500">
                 {{ pager.first }}
               </a>
             </span>
-            <span ng-repeat="page in pager.pages" class="inline-block w-10 h-10 mx-2 content-middle">
+            <span ng-repeat="page in pager.pages" class="inline-block w-10 h-10 mx-1 content-middle">
               <span ng-if="page === pager.cur" class="flex justify-center items-center  bg-blue-200 text-blue-500 w-full h-full">{{ page }}</span>
               <a ng-if="page !== pager.cur" ng-href="#!/?cur={{ page }}&limit={{ pager.limit }}" class="flex justify-center items-center w-full h-full bg-gray-200 text-gray-400 hover:text-blue-500">
                 {{ page }}
               </a>
             </span>
-            <span class="inline-block w-10 h-10 mx-2 content-middle">
+            <span class="inline-block w-10 h-10 content-middle">
               <span ng-if="pager.last === pager.cur" class="flex justify-center items-center  bg-blue-200 text-blue-500 w-full h-full">{{ pager.last }}</span>
               <a ng-if="pager.last !== pager.cur" ng-href="#!/?cur={{ pager.last }}&limit={{ pager.limit }}" class="flex justify-center items-center w-full h-full bg-gray-200 text-gray-400 hover:text-blue-500">
                 {{ pager.last }}
@@ -107,7 +107,7 @@ angular.module('app', ['ngRoute'])
     return (input) => encodeURIComponent(input);
   })
   .filter('pokename', function($rootScope) {
-    return (input) => $rootScope.pokenames[input]?.[0] ?? '';
+    return (input) => $rootScope.pokenames?.[input]?.[0] ?? '';
   })
   .service('api', function($http, $q) {
     this.call = function(url) {
