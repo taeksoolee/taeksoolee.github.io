@@ -63,10 +63,11 @@ angular.module('app', ['ngRoute'])
           </nav>
           <ul>
             <li ng-repeat="pokemon in state.pokemons" class="mb-1">
-              <a ng-href="#!/detail?data={{ pokemon.url | encodeUrl }}" class="group inline-block w-full hover:text-blue-500 hover:border-b hover:border-blue-400">
+              
+              <a ng-href="#!/detail?number={{ pokemon.number }}" class="group inline-block w-full hover:text-blue-500 hover:border-b hover:border-blue-400">
                 <span class="inline-block w-14">[{{ pokemon.number | number }}]</span>
-                <span class="inline-block w-24 font-bold">{{ pokemon.number | pokename }} </span>
-                <span class="text-gray-400 group-hover:text-inherit">{{ pokemon.name }}</span>
+                <span class="inline-block font-bold">{{ pokemon.number | pokename }} </span>
+                <span class="text-xs text-gray-400 group-hover:text-inherit">{{ pokemon.name }}</span>
               </a>
             </li>
           </ul>
@@ -86,7 +87,8 @@ angular.module('app', ['ngRoute'])
           <div class="border w-fit">
             <img ng-src="{{ state.pokemon.img }}" alt="{{ state.pokemon.name }}" class="w-80 h-80"/>
             <div class="p-4">
-              <div class="text-2xl">{{ state.pokemon.name }}</div>
+              <span class="inline-block font-bold">{{ state.pokemon.number | pokename }} </span>
+              <span class="text-xs text-gray-400 group-hover:text-inherit">{{ state.pokemon.name }}</span>
             </div>
           </div>
           <!--
@@ -201,17 +203,18 @@ angular.module('app', ['ngRoute'])
   .controller('DetailCtrl', function($scope, $log, $routeParams, api) {
     $scope.loading = true;
 
-    const { data: url } = $routeParams;
+    const { number } = $routeParams;
 
     $scope.state = null;
 
-    api.call(url)
+    // api.call(url)
+    api.call(`https://pokeapi.co/api/v2/pokemon/${number}/`)
       .then(function(res) {
         $log.debug(res.data);
         $scope.state = {
           pokemon: {
             name: res.data.name,
-            order: res.data.order,
+            number,
             sprites: recursive(res.data.sprites),
             img: res.data.sprites.other.home.front_default
           }
