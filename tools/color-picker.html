@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+  />
+  <style>
+    body {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Color Picker</h1>
+    <article>
+      <div>
+        <fieldset role="group">
+          <label>
+            Red
+            <input id="red" type="number" min="0" max="255" />
+          </label>
+          <label>
+            Green
+            <input id="green" type="number" min="0" max="255" />
+          </label>
+          <label>
+            Blue
+            <input id="blue" type="number" min="0" max="255" />
+          </label>
+          <!-- <label>Alpha</label>
+          <input id="alpha" type="number" min="0" max="255" /> -->
+        </fieldset>
+        <fieldset role="group">
+          <label>
+            Code
+            <input id="code" type="text" />
+          </label>
+        </fieldset>
+      </div>
+      <hr />
+      <div>
+        <label>
+          Color
+          <input id="color" type="color" />
+        </label>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const $red = $('#red');
+    const $green = $('#green');
+    const $blue = $('#blue');
+    const $code = $('#code');
+    const $color = $('#color');
+
+    const curColor = '';
+    const setCurColor = (code) => {
+      $color.val(code);
+    }
+
+    function handleChangeCode() {
+      const code = $code.val();
+      const tmp = code.split('');
+
+      const prefix = tmp.splice(0, 1)[0];
+      if (prefix !== '#') {
+        $code.attr('aria-invalid', 'true');
+        return;
+      }
+
+      const numbers = tmp;
+      if (numbers.length !== 6) { // alpha 필요하면 8
+        $code.attr('aria-invalid', 'true');
+        return;
+      } 
+      for (const number of numbers) {
+        if (!/[0-9a-f]/.test(number)) {
+          $code.attr('aria-invalid', 'true');
+          return;
+        }
+      }
+
+      $code.removeAttr('aria-invalid');
+
+      const rgb = [];
+      while(numbers.length !== 0) {
+        const number = parseInt(numbers.splice(0, 2).join(''), 16);
+        rgb.push(number);
+      }
+
+      const [red, green, blue] = rgb;
+      $red.val(red);
+      $green.val(green);
+      $blue.val(blue);
+
+      setCurColor(code);
+    }
+
+    $code.on('input', function(e) {
+      handleChangeCode();
+    });
+
+    function handleChangeRGB() {
+      const red = parseInt($red.val());
+      const green = parseInt($green.val());
+      const blue = parseInt($blue.val());
+
+      if (Number.isNaN(red) || !(red >= 0 && red <= 255)) {
+        $red.attr('aria-invalid', 'true');
+        return;
+      }
+      if (Number.isNaN(green) || !(green >= 0 && green <= 255)) {
+        $green.attr('aria-invalid', 'true');
+        return;
+      }
+      if (Number.isNaN(blue) || !(blue >= 0 && blue <= 255)) {
+        $blue.attr('aria-invalid', 'true');
+        return;
+      }
+
+      $red.removeAttr('aria-invalid');
+      $green.removeAttr('aria-invalid');
+      $blue.removeAttr('aria-invalid');
+
+      const rgb = [red, green, blue];
+
+      let code = ['#'];
+      rgb.forEach(function(color) {
+        code.push(color.toString(16).padStart(2, '0'));
+      });
+
+      code = code.join('');
+      $code.val(code);
+
+      setCurColor(code);
+    }
+
+    [$red, $green, $blue].forEach(function($el) {
+      $el.on('input', function(e) {
+        handleChangeRGB($code.val());
+      });
+    });
+
+
+    function handleChangeColor() {
+      $code.removeAttr('aria-invalid');
+      $red.removeAttr('aria-invalid');
+      $green.removeAttr('aria-invalid');
+      $blue.removeAttr('aria-invalid');
+
+      const code = $color.val();
+      $code.val(code);
+
+      const rgb = [];
+      const numbers = code.split('').slice(1);
+      while(numbers.length !== 0) {
+        const number = parseInt(numbers.splice(0, 2).join(''), 16);
+        rgb.push(number);
+      }
+
+      const [red, green, blue] = rgb;
+      $red.val(red);
+      $green.val(green);
+      $blue.val(blue);
+    }
+
+    $color.on('input', () => {
+      handleChangeColor();
+    })
+
+    $(document).ready(function() {
+      const defaultValue = '#000000';
+      $code.val(defaultValue);
+      handleChangeCode();
+    });
+  </script>
+</body>
+</html>
