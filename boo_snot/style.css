@@ -1,0 +1,32 @@
+html, body, div {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  width: 100vw;
+  overflow: hidden;
+}
+
+#snot {
+  background-image: url('./img/snot.png');
+  background-repeat: 1;
+  background-size: contain;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+#boo {
+  background-image: url('./img/boo.jpg');
+  background-repeat: 1;
+  background-size: contain;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
