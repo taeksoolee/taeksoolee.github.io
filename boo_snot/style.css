@@ -10,8 +10,9 @@ html, body, div {
 
 #snot {
   background-image: url('./img/snot.png');
-  background-repeat: 1;
+  background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -21,8 +22,9 @@ html, body, div {
 }
 #boo {
   background-image: url('./img/boo.jpg');
-  background-repeat: 1;
+  background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   width: 100vw;
   height: 100vh;
   position: absolute;
