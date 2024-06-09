@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>scrolling</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    .container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    .box {
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+    }
+    .nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100px;
+      position: absolute;
+      top: calc(50% - 50px);
+      right: 30px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .nav a::after {
+      content: '○';
+    }
+
+    .nav a.active::after {
+      content: '●';
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="#a" class="active"></a>
+    <a href="#b"></a>
+    <a href="#c"></a>
+    <a href="#d"></a>
+  </nav>
+  <div class="container">
+    <div id="a" class="box" style="background-color: red;"></div>
+    <div id="b" class="box" style="background-color: green;"></div>
+    <div id="c" class="box" style="background-color: blue;"></div>
+    <div id="d" class="box" style="background-color: black;"></div>
+  </div>
+
+  <script>
+    const defaultCur = '#a';
+    const position = new Proxy({
+      cur: localStorage.getItem('cur') ?? defaultCur,
+    }, {
+      get(target, p) {
+        if (p === 'cur') {
+          return localStorage.getItem('cur') ?? defaultCur;
+        } else {
+          return null;
+        }
+      },
+      set(target, p, newValue) {
+        try {
+          document.querySelector(newValue);
+          target[p] = newValue;
+          localStorage.setItem('cur', newValue);
+          return true;
+        } catch(err) {
+          console.log(err);
+          return false;
+        }
+      }
+    });
+
+    function move() {
+      document.querySelector('.container').scrollTo(
+        0,
+        document.querySelector(position.cur).offsetTop, 
+        {behavior: 'smooth'}
+      );
+    }
+
+    move();
+    document.querySelectorAll('.nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(event) {
+        event.preventDefault();
+        position.cur = this.getAttribute('href');
+        move();
+      });
+    });
+
+    const debounce = (function () {
+      let processing = false;
+
+      return function (callback, ms) {
+        if (!processing) {
+          processing = true;
+          setTimeout(function () {
+            callback();
+            processing = false;
+          }, ms);
+        }
+      }
+    })();
+
+    const intersectionObserver = new IntersectionObserver(function (entries) {
+      const id = `#${entries[0].target.id}`;
+      position.cur = id;
+      document.querySelectorAll('a').forEach(anchor => {
+        const hash = new URL(anchor.href).hash;
+        if (hash === position.cur) {
+          anchor.classList.add('active');
+        } else {
+          anchor.classList.remove('active');
+        }
+      });
+    }, {
+      threshold: 1,
+    });
+
+    intersectionObserver.observe(document.querySelector('#a'));
+    intersectionObserver.observe(document.querySelector('#b'));
+    intersectionObserver.observe(document.querySelector('#c'));
+    intersectionObserver.observe(document.querySelector('#d'));
+  </script>
+  
+</body>
+</html>
