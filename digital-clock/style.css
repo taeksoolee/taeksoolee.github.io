@@ -24,7 +24,7 @@ div {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(100vw / 3);
+  font-size: calc(100vw / 2.6);
 }
 
 span:first-child::after {
