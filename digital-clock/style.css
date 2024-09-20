@@ -1,0 +1,54 @@
+@import url('https://fonts.cdnfonts.com/css/arial-2');
+
+:root {
+  --color: #fff;
+  --bg-color: #000;
+}
+
+html, body {
+  font-family: 'Arial', sans-serif;
+  padding: 0px;
+  margin: 0px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--color);
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(100vw / 3);
+}
+
+span:first-child::after {
+  content: ':';
+  animation: twinkle 1s infinite;
+}
+
+@keyframes blank {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    color: var(--color);
+  }
+  50% {
+    color: var(--bg-color);
+  }
+  100% {
+    color: var(--color);
+  }
+}
