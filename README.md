@@ -1,3 +1,2 @@
-# taeksoolee.github.io
-
-# [home](https://taeksoolee.github.io)
+# My Site
+> [taeksoolee.github.io](https://taeksoolee.github.io)
