@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎉 이모지 파티클 폭죽</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+      height: 100%;
+    }
+    .particle {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      user-select: none;
+      animation: explode 1s ease-out forwards;
+    }
+    @keyframes explode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const EMOJIS = ["🎉", "✨", "🎊", "💥", "💫", "🌟"];
+    
+    function createEmojiBurst(x, y) {
+      for (let i = 0; i < 20; i++) {
+        const el = document.createElement("div");
+        el.className = "particle";
+        el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 100 + 30;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
+        el.style.setProperty("--x", `${dx}px`);
+        el.style.setProperty("--y", `${dy}px`);
+        document.body.appendChild(el);
+
+        setTimeout(() => {
+          el.remove();
+        }, 1000);
+      }
+    }
+
+    // 주기적으로 중앙에서 폭죽
+    setInterval(() => {
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight / 2;
+      createEmojiBurst(x, y);
+    }, 1200);
+
+    // 클릭하면 해당 위치에서 폭죽
+    window.addEventListener("click", (e) => {
+      createEmojiBurst(e.clientX, e.clientY);
+    });
+  </script>
+</body>
+</html>
