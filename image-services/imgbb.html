@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImgBB</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/4.2.0/dexie.min.js" integrity="sha512-LuXLH9xON6/aAGYxi4Z1Dx8588Z80gY3iMmGtUlYmblUc1ulC/cGHuANXIvm8fnIWp5ShUk2MRBIWylGguXF9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+  <main>
+    <section class="container" x-data="{
+      key: $persist(''),
+      db: null,
+    }" x-init="() => {
+      db = new Dexie('imgbbDB');
+      db.version(1).stores({
+        images: '++id, title, url_viewer, url, display_url, width, height, size, time, expiration, delete_url'
+      });
+    }">
+      <h1>ImgBB Image Example</h1>
+      <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer">ImgBB Website</a>
+      <a href="https://api.imgbb.com/" target="_blank" rel="noopener noreferrer">ImgBB API Documentation</a>
+
+      <hr />
+      <div>
+        <input x-model="key" type="text" placeholder="API Key" />
+      </div>
+
+      <hr />
+      <div x-data="{
+        filename: '',
+        image: null,
+        isLoading: false,
+        isOpenedSuccessModal: false,
+        imageFileInput: null,
+      }">
+        <form name="uploadForm" @submit.prevent="async () => {
+          if (!key) {
+            alert('Please enter your API Key.');
+            return;
+          }
+          if (!filename) {
+            alert('Please enter a filename.');
+            return;
+          }
+          if (!image) {
+            alert('Please select an image file.');
+            return;
+          }
+
+          isLoading = true;
+          try {
+            const formData = new FormData();
+            formData.append('key', key);
+            formData.append('name', filename + '.jpeg');
+            formData.append('image', image);
+
+            /**
+            * @typedef {Object} ImgbbResponse
+            * @property {Object} data
+            * @property {string} data.id
+            * @property {string} data.title
+            * @property {string} data.url_viewer
+            * @property {string} data.url
+            * @property {string} data.display_url
+            * @property {number} data.width
+            * @property {number} data.height
+            * @property {number} data.size
+            * @property {number} data.time
+            * @property {number} data.expiration
+            * @property {Object} data.image
+            * @property {string} data.image.filename
+            * @property {string} data.image.name
+            * @property {string} data.image.mime
+            * @property {string} data.image.extension
+            * @property {string} data.image.url
+            * @property {Object} data.thumb
+            * @property {string} data.thumb.filename
+            * @property {string} data.thumb.name
+            * @property {string} data.thumb.mime
+            * @property {string} data.thumb.extension
+            * @property {string} data.thumb.url
+            * @property {Object} data.medium
+            * @property {string} data.medium.filename
+            * @property {string} data.medium.name
+            * @property {string} data.medium.mime
+            * @property {string} data.medium.extension
+            * @property {string} data.medium.url
+            * @property {string} data.delete_url
+            * @property {boolean} success
+            * @property {number} status
+            */
+
+            /**
+              * @type {ImgbbResponse}
+              */
+            const result = await fetch('https://api.imgbb.com/1/upload', {
+              method: 'POST',
+              body: formData,
+            }).then(response => response.json());
+
+            if (!result.success) {
+              throw new Error('Invalid API Key or Upload Error');
+            }
+
+            filename = '';
+            image = null;
+            $refs.imageFileInput.value = '';
+
+            await db.images.add(result.data);
+            
+            // alert('Upload successful!');
+            isOpenedSuccessModal = true;
+          } catch (error) {
+            console.log(error);
+            alert('Upload failed: ' + error.message);
+          } finally {
+            isLoading = false;
+          }
+        }">
+          <label>
+            <span>FileName</span>
+            <input type="text" name="filename" x-model="filename" :disabled="isLoading" />
+          </label>
+
+          <input type="file" name="image" placeholder="Select Image" @change="image = $event.target.files[0]" x-ref="imageFileInput" :disabled="isLoading" />
+
+          <button :aria-busy="isLoading">Upload to ImgBB</button>
+        </form>
+
+        <dialog :open="isOpenedSuccessModal">
+          <article>
+            <header>
+              <!-- <button aria-label="Close" rel="prev" @click="isOpenedSuccessModal = false"></button> -->
+              <h3>Upload Successful!</h3>
+            </header>
+            <div style="width: 64px; height: 64px; margin-bottom: 1rem; text-align: center;">
+              <!-- icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 100%; height: 100%; color: green;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p>Your image has been uploaded successfully.</p>
+            <button @click="isOpenedSuccessModal = false">Close</button>
+          </article>
+        </dialog>
+      </div>
+
+      <hr />
+      <div x-data="{
+        images: [],
+      }">
+        <button @click="async () => {
+          const allImages = await db.images.toArray();
+          images = allImages;
+        }">load</button>
+
+        <!-- 캐러셀 -->
+        <div style="display: flex; overflow-x: auto; gap: 1rem; padding: 1rem 0;">
+          <template x-for="img in images" :key="img.id">
+            <div style="min-width: 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+              <h4 x-text="img.title"></h4>
+              <img :src="img.url" :alt="img.title" style="width: 100%; height: auto; margin-top: 0.5rem;" />
+              <p style="font-size: 0.8rem; margin-top: 0.5rem;">Size: <span x-text="(img.size / 1024).toFixed(2) + ' KB'"></span></p>
+              <a :href="img.url_viewer" target="_blank" rel="noopener noreferrer">View Image</a>
+            </div>
+          </template>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
