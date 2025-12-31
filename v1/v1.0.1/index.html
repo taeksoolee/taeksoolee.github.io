@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="corporate">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taeksoo Lee | Portfolio</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+  <style>
+    :root {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Pretendard Variable", sans-serif;
+      background-color: #f8fafc;
+      /* 연한 블루 그레이 배경 */
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    .font-sora {
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* 1. 마우스 스포트라이트 효과 */
+    .spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(600px circle at var(--x) var(--y), rgba(37, 99, 235, 0.08), transparent 40%);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* 2. CSS Scroll-driven Animations (No Library) */
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .reveal-item {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 30%;
+    }
+
+    /* 3. 테두리 빛 효과 (Sense Detail) */
+    .bento-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .bento-card:hover {
+      border-color: rgba(37, 99, 235, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.1);
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="spotlight" id="spotlight"></div>
+
+  <header class="navbar sticky top-0 z-[100] px-6 lg:px-20 transition-all duration-300 backdrop-blur-md bg-white/70 border-b border-slate-200 h-20">
+    <div class="flex-1">
+      <a href="#" class="font-sora font-extrabold text-2xl tracking-tighter text-blue-600">
+        Taeksoo<span class="text-slate-400">.dev</span>
+      </a>
+    </div>
+    <div class="flex-none hidden md:block">
+      <ul class="menu menu-horizontal font-bold text-slate-500 gap-4">
+        <li><a href="#about" class="hover:text-blue-600 transition-colors">About</a></li>
+        <li><a href="#projects" class="hover:text-blue-600 transition-colors">Works</a></li>
+        <li><a href="https://github.com/taeksoolee" target="_blank" class="btn btn-ghost btn-circle"><i class="fa-brands fa-github text-xl"></i></a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
+
+    <section class="min-h-[80vh] flex flex-col items-center justify-center text-center space-y-10 pt-20">
+      <div class="reveal-item inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold text-xs tracking-widest uppercase">
+        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+        Currently Open to Offers
+      </div>
+
+      <h1 class="reveal-item text-6xl md:text-9xl font-sora font-extrabold tracking-tighter leading-none text-slate-900">
+        Crafting <br> <span class="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-fill-transparent italic">Digital Depth.</span>
+      </h1>
+
+      <p class="reveal-item max-w-2xl text-lg md:text-xl text-slate-500 font-medium leading-relaxed">
+        안녕하세요, 프론트엔드 개발자 이택수입니다. <br>
+        기술적 한계를 넘어 사용자에게 닿는 **완결성 있는 경험**을 추구합니다.
+      </p>
+
+      <div class="reveal-item flex gap-4 pt-4">
+        <a href="#projects" class="btn btn-primary bg-blue-600 border-none btn-lg rounded-2xl px-12 text-white shadow-xl shadow-blue-200 hover:scale-105 transition-transform">View Works</a>
+        <button onclick="window.scrollTo(0, 1000)" class="btn btn-ghost btn-lg text-slate-400 font-bold">Learn More</button>
+      </div>
+    </section>
+
+    <section id="about" class="scroll-mt-28 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[600px]">
+
+        <div class="reveal-item md:col-span-8 md:row-span-2 bento-card rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden relative group">
+          <div class="flex flex-col md:flex-row gap-10 items-start md:items-center">
+            <div class="avatar">
+              <div class="w-40 h-40 rounded-[2rem] ring ring-blue-100 ring-offset-4 shadow-2xl overflow-hidden group-hover:rotate-2 transition-transform duration-500">
+                <img src="/images/my-profile-img.png" alt="이택수" />
+              </div>
+            </div>
+            <div class="space-y-4">
+              <h2 class="text-5xl font-extrabold text-slate-900 tracking-tight">이택수</h2>
+              <div id="animationText" class="font-sora font-bold text-blue-600 text-xl tracking-widest uppercase opacity-80">
+                <span>F</span><span>r</span><span>o</span><span>n</span><span>t</span><span>e</span><span>n</span><span>d</span>
+                <span class="mx-1"></span>
+                <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span><span>p</span><span>e</span><span>r</span>
+              </div>
+              <p class="text-slate-500 font-medium max-w-md leading-relaxed">
+                데이터의 흐름을 이해하고 시각적인 즐거움으로 치환합니다.
+                단순한 코더가 아닌 제품의 가치를 높이는 엔지니어가 되고자 합니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 border-t border-slate-100 pt-8">
+            <div class="flex flex-col"><span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Location</span><span class="font-bold text-slate-800">Seoul, Korea</span></div>
+            <div class="flex flex-col"><span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Email</span><span class="font-bold text-slate-800">contact@taeksoo.dev</span></div>
+            <div class="flex flex-col"><span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Education</span><span class="font-bold text-slate-800">CS Major</span></div>
+            <div class="flex flex-col"><span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Focus</span><span class="font-bold text-slate-800">UX/UI, Perf.</span></div>
+          </div>
+        </div>
+
+        <div class="reveal-item md:col-span-4 bento-card rounded-[2.5rem] p-8 bg-blue-600 text-white flex flex-col justify-between relative overflow-hidden">
+          <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight">Expertise in <br> Modern Web.</h3>
+          <div class="flex flex-wrap gap-2 mt-6">
+            <span class="px-3 py-1 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-wider">React</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-wider">Next.js</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-wider">TS</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-wider">Firebase</span>
+          </div>
+          <i class="fa-solid fa-layer-group absolute -bottom-6 -right-6 text-9xl opacity-10"></i>
+        </div>
+
+        <div class="reveal-item md:col-span-4 bento-card rounded-[2.5rem] p-8 flex items-center justify-around">
+          <a href="https://github.com/taeksoolee" target="_blank" class="flex flex-col items-center gap-2 group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center group-hover:bg-blue-50 group-hover:text-blue-600 transition-all text-2xl"><i class="fa-brands fa-github"></i></div>
+            <span class="text-[10px] font-black uppercase opacity-40">Github</span>
+          </a>
+          <a href="#" class="flex flex-col items-center gap-2 group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center group-hover:bg-blue-50 group-hover:text-blue-600 transition-all text-2xl"><i class="fa-solid fa-file-invoice"></i></div>
+            <span class="text-[10px] font-black uppercase opacity-40">Notion</span>
+          </a>
+          <a href="#" class="flex flex-col items-center gap-2 group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center group-hover:bg-blue-50 group-hover:text-blue-600 transition-all text-2xl"><i class="fa-brands fa-linkedin-in"></i></div>
+            <span class="text-[10px] font-black uppercase opacity-40">Linkedin</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="scroll-mt-28 space-y-16">
+      <div class="reveal-item flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <h2 class="text-5xl md:text-7xl font-sora font-extrabold tracking-tighter text-slate-900">Works Library<span class="text-blue-600">.</span></h2>
+        <p class="text-slate-400 font-bold uppercase tracking-[0.3em] text-[10px] pb-2">Crafting solutions since 2022</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="reveal-item group flex flex-col space-y-6">
+          <div class="aspect-video bg-slate-200 rounded-[3rem] overflow-hidden relative border border-slate-100">
+            <div class="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/20 transition-all duration-500 z-10"></div>
+            <img src="/images/evcaro-thumb.png" alt="Evcaro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a href="https://evcaro-abbc1.web.app" target="_blank" class="absolute right-8 bottom-8 w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl shadow-2xl opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-4 transition-all duration-500 z-20">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <div class="px-4 space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="text-blue-600 font-bold font-sora tracking-tighter text-xl italic">01.</span>
+              <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">Evcaro</h3>
+              <span class="badge badge-outline border-slate-200 font-bold text-[10px] opacity-50">Web App</span>
+            </div>
+            <p class="text-slate-500 font-medium leading-relaxed max-w-lg">전기차 지원금 조회 앱. 산재된 공공 데이터를 통합하여 사용자 맞춤형 보조금 정보를 실시간으로 제공합니다.</p>
+          </div>
+        </div>
+
+        <div class="reveal-item group flex flex-col space-y-6 lg:mt-24">
+          <div class="aspect-video bg-slate-200 rounded-[3rem] overflow-hidden relative border border-slate-100">
+            <div class="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/20 transition-all duration-500 z-10"></div>
+            <img src="/images/jumpfit-thumb.png" alt="JumpFit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a href="https://jumpfit-frontend.vercel.app" target="_blank" class="absolute right-8 bottom-8 w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl shadow-2xl opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-4 transition-all duration-500 z-20">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <div class="px-4 space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="text-blue-600 font-bold font-sora tracking-tighter text-xl italic">02.</span>
+              <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">JumpFit</h3>
+              <span class="badge badge-outline border-slate-200 font-bold text-[10px] opacity-50">SaaS</span>
+            </div>
+            <p class="text-slate-500 font-medium leading-relaxed max-w-lg">피트니스 센터 통합 예약관리 솔루션. 복잡한 일정 관리 시스템을 직관적인 UI로 해결한 B2B 프로젝트입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-white py-32 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      <div class="space-y-4 text-center md:text-left">
+        <h2 class="text-5xl md:text-7xl font-sora font-extrabold tracking-tighter leading-none">Let's build <br> something <span class="text-blue-500 underline decoration-4 underline-offset-8">epic</span>.</h2>
+        <p class="text-slate-400 font-medium pt-4">© 2025 Taeksoo Lee. Powered by Persistence.</p>
+      </div>
+      <div class="flex gap-8">
+        <a href="#" class="w-20 h-20 rounded-full border border-slate-700 flex items-center justify-center text-3xl hover:bg-white hover:text-slate-900 transition-all"><i class="fa-solid fa-paper-plane"></i></a>
+        <a href="https://github.com/taeksoolee" class="w-20 h-20 rounded-full border border-slate-700 flex items-center justify-center text-3xl hover:bg-white hover:text-slate-900 transition-all"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. 스포트라이트 좌표 업데이트
+    const spotlight = document.getElementById('spotlight');
+    window.addEventListener('mousemove', e => {
+      spotlight.style.setProperty('--x', `${e.clientX}px`);
+      spotlight.style.setProperty('--y', `${e.clientY}px`);
+    });
+
+    // 2. 텍스트 바운드 애니메이션
+    const animationText = document.querySelector('#animationText');
+    const spans = animationText.querySelectorAll('span');
+    const triggerAnimation = () => {
+      spans.forEach((span, index) => {
+        span.classList.remove('bound');
+        setTimeout(() => span.classList.add('bound'), index * 80);
+      });
+    };
+    setInterval(triggerAnimation, 6000);
+    window.onload = triggerAnimation;
+  </script>
+</body>
+
+</html>
