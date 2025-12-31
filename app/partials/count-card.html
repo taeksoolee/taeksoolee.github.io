@@ -1,0 +1,10 @@
+<div x-data="{ count: $persist(0) }">
+  <div class="card">
+    <h2>Count App</h2>
+    <div>
+      <span x-text="count"></span>
+    </div>
+    <button class="btn" @click="count++">Add</button>
+    <button class="btn" @click="count = 0">Reset</button>
+  </div>
+</div>

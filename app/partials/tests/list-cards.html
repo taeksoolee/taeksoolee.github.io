@@ -1,0 +1,48 @@
+<div x-data="{
+  getTests: () => $supabase.from('test_table').select('*').order('created_at', { ascending: false }).then(res => res.data),
+  createTest: ({ memo }) => $supabase.from('test_table').insert({ memo }),
+  deleteTest: (id) => $supabase.from('test_table').delete().eq('id', id),
+}">
+  <div x-data="{
+    tests: $asyncData('tests', getTests),
+  }" x-init="tests.fetch">
+    <h2>Tests Data Fetch App</h2>
+
+    <div hx-get="/app/partials/tests/create-form.html" hx-trigger="load">
+      <div>Loading tests create form...</div>
+    </div>
+
+    <div>
+      <div>
+        <button class="btn" @click <button class="btn" @click="tests.fetch">Refetch</button>
+      </div>
+      <template x-if="tests.isLoading">
+        <p>Loading...</p>
+      </template>
+      <template x-if="tests.isFetched">
+        <div>
+          <template x-for="item in tests.data" :key="item.id">
+            <div class="card" style="width: 200px;" x-data="{
+              async deleteItem() {
+                const response = await this.deleteTest(item.id);
+                if (response.error) {
+                  console.error('Error deleting test:', response.error);
+                  return;
+                }
+                this.tests.fetch.bind(this)();
+              }
+            }">
+              <button class="btn" @click="deleteItem">X</button>
+              <p>ID: <span x-text="item.id"></span></p>
+              <p>Memo: <span x-text="item.memo"></span></p>
+              <p>Created At: <span x-text="dateFns.formatDistanceToNow(new Date(item.created_at))"></span></p>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+    <template x-if="!(tests.isFetched && !tests.isLoading)">
+      <p>No data fetched yet.</p>
+    </template>
+  </div>
+</div>

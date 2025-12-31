@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>app | home</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/app/style.css">
+
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
+
+  <!-- utilities -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/4.1.0/cdn.min.js" integrity="sha512-bz58Sg3BAWMEMPTH0B8+pK/+5Qfqq6b2Ho2G4ld12x4fiUVqpY8jSbN/73qpBQYFLU4QnKVL5knUm4uqcJGLVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/4.1.0/locale/ko/cdn.min.js" integrity="sha512-5ut5yZsOKbiolGNe7FDEDlt4mCcZOSuplffE51qU/P6hGc/410F08SdZLp6g/vReQCK3/J4TjULdSCsJ5V2F8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- supabase -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    window.SUPABASE_OPTIONS = {
+      supabaseUrl: 'https://yxdtikalmyikijxgddjx.supabase.co',
+      supabaseKey: 'sb_publishable_2ghN88A9dnJ4AMbBaywnxw_jUdqaPyS',
+    };
+  </script>
+
+  <!-- alpine -->
+  <script defer src="/app/lib/alpine-htmx-plugin.js"></script>
+  <script defer src="/app/lib/alpine-form-data-plugin.js"></script>
+  <script defer src="/app/lib/alpine-log-plugin.js"></script>
+  <script defer src="/app/lib/alpine-async-data-plugin.js"></script>
+  <script defer src="/app/lib/alpine-supabase-plugin.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- htmx -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+</head>
+
+<body hx-boost="true" hx-history="false">
+  <a href="/app/index.html">Go to Root</a>
+  <header class="app-header">
+    <h1>App</h1>
+  </header>
+  <div x-cloak x-data="{
+    inited: false,
+  }" x-init="async function () {
+    await $store.supabaseAuth.checkAuth();
+    this.inited = true;
+  }">
+    <template x-if="inited">
+      <div>
+        <div>
+          <template x-if="!$store.supabaseAuth.isAuthenticated">
+            <div class="container" x-htmx-init>
+              <div hx-get="/app/partials/login-form.html" hx-trigger="alpineReady">
+                <div>Loading login form...</div>
+              </div>
+            </div>
+          </template>
+          <template x-if="$store.supabaseAuth.isAuthenticated">
+            <h3>Home Page</h3>
+          </template>
+        </div>
+      </div>
+    </template>
+  </div>
+</body>
+
+</html>

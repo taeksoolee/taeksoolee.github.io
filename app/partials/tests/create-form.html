@@ -1,0 +1,25 @@
+<div hx-boost="false" x-data="{
+  formData: $formData(['memo']),
+  async handleSubmit() {
+    const response = await this.createTest(this.formData);
+
+    if (response.error) {
+      console.error('Error creating test:', response.error);
+      return;
+    }
+    
+    this.formData.memo = '';
+
+    // TODO: 사후처리 어떻게 할건지 고민해야함.
+    if (this.tests?.fetch) {
+      this.tests.fetch.bind(this)();
+    }
+  }
+}">
+  <form @submit.prevent="handleSubmit">
+    <div class="text-field">
+      <input name="memo" x-model="formData.memo" placeholder="input memo" required />
+      <button class="btn">Create</button>
+    </div>
+  </form>
+</div>

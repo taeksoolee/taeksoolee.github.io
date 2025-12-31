@@ -1,0 +1,29 @@
+<div hx-boost="false" class="card" x-data="{
+  formData: $formData(['email', 'password']),
+  error: {
+    message: '',
+  },
+  async handleSubmit() {
+    const response = await $store.supabaseAuth.login(this.formData.email, this.formData.password);
+    if (response.error) {
+      this.error.message = response.error.message;
+    }
+  }
+}">
+  <h2>LoginForm</h2>
+
+  <form @submit.prevent="handleSubmit">
+    <div class="text-field">
+      <input type="email" name="email" x-model="formData.email" placeholder="Email">
+    </div>
+    <div class="text-field">
+      <input type="password" name="password" x-model="formData.password" placeholder="Password">
+    </div>
+    <div>
+      <p x-text="error.message" style="color: red;"></p>
+    </div>
+    <div>
+      <button class="btn" x-bind:disabled="$store.supabaseAuth.isLoading">Login</button>
+    </div>
+  </form>
+</div>

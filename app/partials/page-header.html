@@ -1,0 +1,12 @@
+<div class="page-header">
+  <div>
+    <span x-text="'User Email: ' + $store.supabaseAuth.user?.email"></span>
+  </div>
+  <div x-data="{
+    logout() {
+      $store.supabaseAuth.logout();
+    }
+  }">
+    <button x-bind:disabled="$store.supabaseAuth.isLoading" @click="logout">Logout</button>
+  </div>
+</div>
