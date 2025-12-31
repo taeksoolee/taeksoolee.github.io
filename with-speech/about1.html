@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>고품질 무료 음성 제어 리더</title>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      padding: 20px;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fdfdfd;
+    }
+
+    #content {
+      padding: 30px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 15px;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-panel {
+      background: #4a90e2;
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .controls {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-mic {
+      background: #ff5252;
+      color: white;
+    }
+
+    .btn-action {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .manual-container {
+      padding: 25px;
+      background: #f1f3f5;
+      border-radius: 15px;
+    }
+
+    .cmd-tag {
+      background: #fff;
+      color: #4a90e2;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #4a90e2;
+      font-weight: bold;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>🎙️ 무료 고품질 음성 제어 리더</h2>
+
+  <div class="status-panel">
+    상태: <span id="status">마이크를 켜주세요</span> | 인식: <span id="recognized">-</span>
+  </div>
+
+  <div id="content">
+    동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세.
+    무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세.
+    남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세.
+    가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세.
+  </div>
+
+  <div class="controls">
+    <button class="btn-mic" onclick="startListening()">🎤 마이크 켜기</button>
+    <button class="btn-action" onclick="handleAction('restart')">처음부터</button>
+    <button class="btn-action" onclick="stopSpeaking()">멈춤</button>
+  </div>
+
+  <div class="manual-container">
+    <h3>📖 이용 가이드 (무료 버전)</h3>
+    <table style="width:100%; border-spacing: 0 10px;">
+      <tr>
+        <td><span class="cmd-tag">"처음부터"</span></td>
+        <td>맨 앞으로 돌아가 낭독 시작</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"멈춰"</span> / <span class="cmd-tag">"그만"</span></td>
+        <td>읽기 일시 정지</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"재생"</span> / <span class="cmd-tag">"다시 시작"</span></td>
+        <td>멈춘 지점부터 다시 읽기</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"이전"</span> / <span class="cmd-tag">"뒤로"</span></td>
+        <td>약 5초 전으로 되돌리기</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const contentDiv = document.getElementById('content');
+    const statusText = document.getElementById('status');
+    const recognizedText = document.getElementById('recognized');
+    const words = contentDiv.innerText.trim().split(/\s+/);
+
+    let currentWordIndex = 0;
+    let isCommandProcessing = false;
+    let synth = window.speechSynthesis;
+    let selectedVoice = null;
+
+    // [중요] 브라우저에서 제공하는 가장 자연스러운 목소리 찾기
+    function loadVoices() {
+      const voices = synth.getVoices();
+      // 1순위: Edge/Chrome의 신경망 한국어(Natural), 2순위: 구글 한국어, 3순위: 기본 한국어
+      selectedVoice = voices.find(v => v.name.includes('Natural') && v.lang.includes('ko')) ||
+        voices.find(v => v.lang.includes('ko-KR') && v.name.includes('Google')) ||
+        voices.find(v => v.lang.includes('ko-KR'));
+    }
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    // STT 설정
+    const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'ko-KR';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onresult = (event) => {
+      let transcript = Array.from(event.results).map(res => res[0].transcript).join('');
+      recognizedText.innerText = transcript;
+      if (isCommandProcessing) return;
+
+      if (transcript.includes("처음부터")) handleAction('restart');
+      else if (transcript.includes("멈춰") || transcript.includes("그만")) handleAction('stop');
+      else if (transcript.includes("재생") || transcript.includes("다시 시작")) handleAction('resume');
+      else if (transcript.includes("이전") || transcript.includes("뒤로")) handleAction('back');
+    };
+
+    function handleAction(action) {
+      isCommandProcessing = true;
+      if (action === 'restart') {
+        currentWordIndex = 0;
+        speakFrom(0);
+      } else if (action === 'stop') {
+        stopSpeaking();
+      } else if (action === 'resume') {
+        speakFrom(currentWordIndex);
+      } else if (action === 'back') {
+        stopSpeaking();
+        currentWordIndex = Math.max(0, currentWordIndex - 10);
+        setTimeout(() => speakFrom(currentWordIndex), 300);
+      }
+
+      recognition.stop();
+      setTimeout(() => {
+        isCommandProcessing = false;
+      }, 1000);
+    }
+
+    recognition.onend = () => recognition.start();
+
+    function startListening() {
+      recognition.start();
+      statusText.innerText = "명령 대기 중...";
+      loadVoices();
+    }
+
+    function speakFrom(index) {
+      synth.cancel();
+      const text = words.slice(index).join(' ');
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      if (selectedVoice) utterance.voice = selectedVoice; // 가장 좋은 목소리 적용
+      utterance.lang = 'ko-KR';
+      utterance.rate = 0.9; // 낭독에 적합한 속도
+
+      utterance.onboundary = (event) => {
+        if (event.name === 'word') {
+          const spoken = event.utterance.text.substring(0, event.charIndex);
+          currentWordIndex = index + spoken.trim().split(/\s+/).length - 1;
+        }
+      };
+
+      utterance.onstart = () => statusText.innerText = "자연스럽게 읽는 중...";
+      synth.speak(utterance);
+    }
+
+    function stopSpeaking() {
+      synth.cancel();
+      statusText.innerText = "정지됨";
+    }
+  </script>
+</body>
+
+</html>

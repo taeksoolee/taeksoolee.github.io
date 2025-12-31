@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>고품질 음성 제어 스마트 리더</title>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      padding: 20px;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #333;
+      background-color: #f4f7f6;
+    }
+
+    #content {
+      padding: 30px;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      font-size: 1.2em;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-panel {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #d1d9e6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .controls {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 24px;
+      cursor: pointer;
+      border-radius: 30px;
+      border: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-mic {
+      background-color: #FF5252;
+      color: white;
+    }
+
+    .btn-play {
+      background-color: #4A90E2;
+      color: white;
+    }
+
+    .btn-stop {
+      background-color: #546E7A;
+      color: white;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* 가이드 섹션 */
+    .manual-container {
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .manual-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #2C3E50;
+      border-left: 5px solid #4A90E2;
+      padding-left: 10px;
+    }
+
+    .manual-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .manual-table td {
+      padding: 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cmd-tag {
+      background: #E3F2FD;
+      color: #1976D2;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    .tip {
+      font-size: 0.85em;
+      color: #78909C;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>🎙️ 고품질 음성 제어 스마트 리더</h2>
+
+  <div class="status-panel">
+    <div><strong>상태:</strong> <span id="status" style="color:#4A90E2;">마이크 대기 중</span></div>
+    <div><strong>인식된 말:</strong> <span id="recognized" style="color:#FF5252;">-</span></div>
+  </div>
+
+  <div id="content">
+    동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세.
+    무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세.
+    남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세.
+    가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세.
+  </div>
+
+  <div class="controls">
+    <button class="btn-mic" onclick="startListening()">🎤 음성 제어 시작</button>
+    <button class="btn-play" onclick="handleAction('restart')">🔄 처음부터</button>
+    <button class="btn-stop" onclick="handleAction('stop')">⏹ 중단</button>
+  </div>
+
+  <div class="manual-container">
+    <div class="manual-title">📖 이용 가이드</div>
+    <table class="manual-table">
+      <tr>
+        <td><span class="cmd-tag">"처음부터"</span></td>
+        <td>가장 첫 문장으로 돌아가 낭독을 시작합니다.</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"멈춰"</span> 또는 <span class="cmd-tag">"그만"</span></td>
+        <td>읽기를 즉시 중단하고 현재 위치를 저장합니다.</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"다시 시작"</span> 또는 <span class="cmd-tag">"재생"</span></td>
+        <td>멈췄던 지점부터 자연스럽게 이어 읽습니다.</td>
+      </tr>
+      <tr>
+        <td><span class="cmd-tag">"이전"</span> 또는 <span class="cmd-tag">"뒤로"</span></td>
+        <td>약 5초 전(10단어 전)으로 돌아가 다시 읽습니다.</td>
+      </tr>
+    </table>
+    <p class="tip">※ 스피커 소리가 마이크로 들어가면 인식이 안 될 수 있으니 이어폰 사용을 권장합니다.</p>
+  </div>
+
+  <script>
+    const contentDiv = document.getElementById('content');
+    const statusText = document.getElementById('status');
+    const recognizedText = document.getElementById('recognized');
+
+    // 텍스트를 단어 단위로 쪼개어 관리
+    const words = contentDiv.innerText.trim().split(/\s+/);
+    let currentWordIndex = 0;
+    let isCommandProcessing = false;
+
+    // 1. 음성 인식(STT) 설정
+    const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'ko-KR';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
+      }
+      recognizedText.innerText = transcript;
+
+      if (isCommandProcessing) return;
+
+      if (transcript.includes("처음부터")) handleAction('restart');
+      else if (transcript.includes("멈춰") || transcript.includes("그만")) handleAction('stop');
+      else if (transcript.includes("다시 시작") || transcript.includes("재생")) handleAction('resume');
+      else if (transcript.includes("이전") || transcript.includes("뒤로")) handleAction('back');
+    };
+
+    function handleAction(action) {
+      isCommandProcessing = true;
+      if (action === 'restart') {
+        currentWordIndex = 0;
+        speakFrom(0);
+      } else if (action === 'stop') {
+        stopSpeaking();
+      } else if (action === 'resume') {
+        speakFrom(currentWordIndex);
+      } else if (action === 'back') {
+        stopSpeaking();
+        currentWordIndex = Math.max(0, currentWordIndex - 10);
+        setTimeout(() => speakFrom(currentWordIndex), 300);
+      }
+
+      recognition.stop();
+      setTimeout(() => {
+        isCommandProcessing = false;
+      }, 1000);
+    }
+
+    recognition.onend = () => {
+      try {
+        recognition.start();
+      } catch (e) {}
+    };
+
+    function startListening() {
+      try {
+        recognition.start();
+        statusText.innerText = "명령 대기 중...";
+      } catch (e) {}
+    }
+
+    // 2. 음성 합성(TTS) 강화 함수
+    function speakFrom(index) {
+      window.speechSynthesis.cancel();
+
+      const textToSpeak = words.slice(index).join(' ');
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+      // 목소리 강화 설정
+      utterance.lang = 'ko-KR';
+      utterance.rate = 0.85; // 약간 천천히 읽어 낭독의 느낌을 살림
+      utterance.pitch = 1.0; // 표준 음높이
+      utterance.volume = 1.0; // 볼륨 최대
+
+      // 한국어 고유의 끊어 읽기를 위해 마침표 뒤에 미세한 휴지기(Pause) 느낌 부여
+      // (기본 API에서 지원하지 않으므로 속도 조절로 최적화)
+
+      utterance.onboundary = (event) => {
+        if (event.name === 'word') {
+          const spoken = event.utterance.text.substring(0, event.charIndex);
+          currentWordIndex = index + spoken.trim().split(/\s+/).length - 1;
+        }
+      };
+
+      utterance.onstart = () => {
+        statusText.innerText = "낭독 중...";
+      };
+      utterance.onend = () => {
+        statusText.innerText = "명령 대기 중";
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopSpeaking() {
+      window.speechSynthesis.cancel();
+      statusText.innerText = "일시 정지됨";
+    }
+  </script>
+</body>
+
+</html>
