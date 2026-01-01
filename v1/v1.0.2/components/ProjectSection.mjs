@@ -49,14 +49,14 @@ export class ProjectSection extends LitElement {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          ${this.projects.map(project => html`
+          ${this.projects.map((project, index) => html`
             <project-card
               title="${project.title}"
               description="${project.description}"
               image="${project.image}"
               link="${project.link}"
               type="${project.type}"
-              index="${`${project.index}`.padStart(2, '0') + '.'}"
+              index="${`${index+1}`.padStart(2, '0') + '.'}"
               category="${project.category}"
               techstack='${project.techstack.join(",")}'
               infra='${project.infra.join(",")}'
