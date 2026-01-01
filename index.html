@@ -1,176 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" data-theme="corporate">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taeksoo Lee Home</title>
-  <link rel="icon" type="image/x-icon" href="/images/my-profile-img.png">
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Taeksoo Lee | Portfolio</title>
 
-  <!-- tailwindcss -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/script.js"></script>
-  <script type="module">
-    import tailwindConfig from '/tailwind.config.js';
-    tailwind.config = tailwindConfig;
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
-    const animationText = document.querySelector('#animationText');
-
-    setInterval(() => {
-      [...animationText.children].forEach((child) => {
-        child.classList.remove('bound');
-        setTimeout(() => {
-          child.classList.add('bound');
-        }, 1000);
-      });
-    }, 5000);
-  </script>
   <style>
     :root {
-      --std-delay: 0.1;
+      scroll-behavior: smooth;
     }
 
+    body {
+      font-family: "Pretendard Variable", sans-serif;
+      background-color: #f8fafc;
+      /* 연한 블루 그레이 배경 */
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    .font-sora {
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* 2. CSS Scroll-driven Animations (No Library) */
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .reveal-item {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 30%;
+    }
+
+    /* 3. 테두리 빛 효과 (Sense Detail) */
+    .bento-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .bento-card:hover {
+      border-color: rgba(37, 99, 235, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.1);
+      transform: translateY(-5px);
+    }
+
+    /* 4. 애니메이션 텍스트 */
     .bound {
-      animation-name: bounding;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      /* animation-iteration-count: infinite; */
+      display: inline-block;
+      animation: bounding 1s ease-in-out;
     }
 
     @keyframes bounding {
-      0% {
-        transform: translateY(0px);
-        
-        color: black;
-      }
-      20% {
-        transform: translateY(-12px);
-        color: orangered;
+
+      0%,
+      100% {
+        transform: translateY(0);
+        color: inherit;
       }
 
-      100% {
-        transform: translateY(0px);
-        color: black;
+      30% {
+        transform: translateY(-10px);
+        color: #2563eb;
       }
     }
   </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "lib/": "./lib/"
+      }
+    }
+  </script>
+
+  <script type="module" src="/v1/v1.0.2/index.mjs"></script>
 </head>
+
 <body>
-  <div id="app">
-    <main class="hidden bg-slate-100 min-h-screen">
-      <nav class="drop-shadow-lg h-[64px] bg-white p-2 text-center">
-        <h1 class="text-5xl">🏠</h1>
-      </nav>
+  <spot-light></spot-light>
 
-      <div class="my-8">
-        <section class="mx-4 mb-12">
-          <h2 class="text-lg mb-4">💁‍♂️ 내 프로필</h2>
-          <div class="shadow-md bg-white text-sm text-gray-600 p-4 flex flex-col justify-between">
-            <div>
-              <div class="flex algin-center gap-2 mb-4">
-                <img src="/images/my-profile-img.png" alt="Taeksoolee Emogi" width="32" class="rounded-full" />
-                <strong class="text-2xl">이택수</strong>
-              </div>
+  <app-header></app-header>
 
-              <div id="animationText" class="flex my-4">
-                <!-- <div>Frontend Developer</div> -->
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 1s);">F</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 2s);">r</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 3s);">o</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 4s);">n</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 5s);">t</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 6s);">e</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 7s);">n</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 8s);">d</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 0s);"></div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 9s);">D</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 10s);">e</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 11s);">v</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 12s);">e</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 13s);">l</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 14s);">o</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 15s);">p</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 16s);">e</div>
-                <div class="w-4 h-4 font-bold bound" style="animation-delay: calc(var(--std-delay) * 17s);">r</div>
-                
-              </div>
-            </div>
+  <main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
 
-            <div class="flex flex-col lg:flex-row lg:justify-between">
-              <ul class="flex flex-row lg:flex-col flex-wrap justify-start lg:justify-end">
-                <li class="inline-block m-2">
-                  <a href="https://taeksoolee.notion.site/Taeksoolee-s-Resume-929470d4925e46318fa55904d1288a9a?pvs=4" class="mb-4 text-sky-600 hover:text-sky-800 hover:underline " onclick="e.preventdefault();">
-                    <i class="fa-solid fa-user"></i>. Notion Profile
-                  </a>
-                </li>
-                <li class="inline-block m-2">
-                  <a href="https://github.com/taeksoolee" class="mb-4 text-sky-600 hover:text-sky-800 hover:underline" onclick="e.preventdefault();">
-                    <i class="fa-brands fa-github"></i>. My Github
-                  </a>
-                </li>
-                <li class="inline-block m-2">
-                  <a href="/profile-card" class="mb-4 text-sky-600 hover:text-sky-800 hover:underline" onclick="e.preventdefault();">
-                    <i class="fa-regular fa-address-card"></i>. My Card
-                  </a>
-                </li>
-              </ul>
-            
-              <img src="https://ghchart.rshah.org/taeksoolee" class="hidden sm:block" />
-            </div>
-          </div>
-        </section>
-        <section class="mx-4 mb-12">
-          <h2 class="text-lg mb-4">🚀 내 프로젝트</h2>
-          <ul>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="https://evcaro-abbc1.web.app">Evcaro</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">전기차 지원금 조회 앱</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="https://jumpfit-frontend.vercel.app">JumpFit</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">점핑 다이어트 예약관리 앱</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 cursor-pointer hover:bg-sky-100 text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click();">
-              <a href="https://taeksoolee.github.io/blog">Blog</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">개인 공부를 위한 블로그</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="https://taeksoolee.github.io/data-anywhere">Data Anywhere</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">URL 공유로 데이터를 이동할 수 있는 앱</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="http://ts-lee.com/simple-chat">Simple Chat</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">Firebase 인증 및 rtdb를 사용한 간단한 채팅 앱</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="/cursor-eyes/">Cursor Eyes</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">마우스 커서에 따라 시선이 이동하는 캐릭터</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="/digital-clock/">Digital Clock</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">전자 시계</desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="http://ts-lee.com/">ts-lee.com</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm"></desc>
-            </ll>
-            <ll class="flex justify-between bg-white p-4 shadow-md mb-1 hover:bg-sky-100 cursor-pointer text-sky-600 hover:text-sky-300 visited:text-sky-400" onclick="this.querySelector('a').click()">
-              <a href="/pokemon">pokemon</a>
-              <desc class="hidden md:inline-block text-slate-400 text-sm">
-                pokeapi를 이용한 간단한 포켓몬 정보
-              </desc>
-            </ll>
-          </ul>
-        </section>
+    <hero-banner-section></hero-banner-section>
 
-        <section>
+    <div class="space-y-8">
+      <profile-section></profile-section>
+    </div>
 
-        </section>
-      </div>
-    </main>
-    
-  </div>
-  <script src="/script.js"></script>
+    <div class="space-y-16">
+      <project-section></project-section>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+
 </body>
+
 </html>
