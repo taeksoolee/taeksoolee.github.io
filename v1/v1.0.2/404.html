@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Page Not Found</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/my-profile-img.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: "Pretendard Variable", sans-serif;
+      background-color: #f8fafc;
+      overflow: hidden;
+    }
+
+    .font-sora {
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* 배경에 깔리는 거대한 텍스트 */
+    .bg-text {
+      position: absolute;
+      font-size: 40vw;
+      font-weight: 900;
+      color: rgba(37, 99, 235, 0.03);
+      user-select: none;
+      z-index: -1;
+      line-height: 1;
+    }
+
+    /* 마우스 스포트라이트 (포트폴리오와 동일) */
+    .spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(600px circle at var(--x) var(--y), rgba(37, 99, 235, 0.07), transparent 40%);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* 404 숫자 글리치 애니메이션 */
+    .glitch {
+      animation: glitch 3s infinite;
+    }
+
+    @keyframes glitch {
+      0% {
+        transform: translate(0);
+      }
+
+      2% {
+        transform: translate(-2px, 2px);
+      }
+
+      4% {
+        transform: translate(2px, -2px);
+      }
+
+      6% {
+        transform: translate(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="flex items-center justify-center h-screen">
+  <div class="spotlight" id="spotlight"></div>
+  <div class="bg-text font-sora">404</div>
+
+  <main class="text-center space-y-8 px-6 relative z-20">
+    <div class="space-y-2">
+      <p class="text-blue-600 font-sora font-extrabold text-xl tracking-widest uppercase">Error Code: 404</p>
+      <h1 class="text-7xl md:text-9xl font-sora font-extrabold text-slate-900 tracking-tighter glitch">
+        Lost in <span class="text-blue-600 italic">Space?</span>
+      </h1>
+    </div>
+
+    <div class="space-y-4">
+      <p class="text-slate-500 text-lg md:text-xl font-medium">
+        죄송합니다. 요청하신 페이지가 존재하지 않거나 이동되었습니다. <br class="hidden md:block">
+        아래 버튼을 클릭하여 다시 안전한 곳으로 돌아가세요.
+      </p>
+
+      <div class="inline-block px-4 py-2 bg-slate-100 rounded-lg font-mono text-sm text-slate-400">
+        const status = <span class="text-blue-500">"PAGE_NOT_FOUND"</span>;
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+      <a href="/" class="btn bg-blue-600 hover:bg-blue-700 border-none text-white px-10 rounded-2xl h-14 min-h-[3.5rem] font-bold shadow-xl shadow-blue-200 transition-all hover:scale-105 flex items-center justify-center">
+        <i class="fa-solid fa-house-chimney mr-2"></i> 메인으로 돌아가기
+      </a>
+      <button onclick="history.back()" class="btn btn-ghost text-slate-400 hover:text-blue-600 font-bold px-10 rounded-2xl">
+        이전 페이지
+      </button>
+    </div>
+  </main>
+
+  <script>
+    const spotlight = document.getElementById('spotlight');
+    window.addEventListener('mousemove', e => {
+      spotlight.style.setProperty('--x', `${e.clientX}px`);
+      spotlight.style.setProperty('--y', `${e.clientY}px`);
+    });
+  </script>
+</body>
+
+</html>
