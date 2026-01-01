@@ -9,12 +9,21 @@ export class ProjectSection extends LitElement {
     super();
     this.projects = [
       {
+        title: 'My Blog',
+        description: '개인 기술 블로그. 최신 웹 개발 트렌드와 프로젝트 경험을 공유하는 공간입니다. ai를 이용해 글을 작성합니다.',
+        image: '/images/projects/blog-thumb-1.png',
+        link: 'https://blog.taeksoolee.com',
+        type: 'Blog',
+        category: 'Blog',
+        techstack: ['astro', 'tailwindcss', 'htmx', 'cloudflare pages', 'cloudflare d1' ],
+        infra: [ 'cloudflare' ],
+      },
+      {
         title: 'Evcaro',
         description: '전기차 지원금 조회 앱. 산재된 공공 데이터를 통합하여 사용자 맞춤형 보조금 정보를 실시간으로 제공합니다.',
         image: '/images/projects/evcaro-thumb-1.png',
         link: 'https://evcaro.taeksoolee.com',
         type: 'Web App',
-        index: '01.',
         category: 'Web App',
         techstack: ['react', 'styled-compoentnts', 'firebase', 'google spreadsheet' ],
         infra: ['firebase hosting', 'firebase realtimedb' ],
@@ -24,7 +33,6 @@ export class ProjectSection extends LitElement {
         image: '/images/projects/jumpfit-thumb-2.png',
         link: 'https://jumpfit.taeksoolee.com',
         type: 'SaaS',
-        index: '02.',
         category: 'SaaS',
         techstack: ['react', 'tailwindcss', 'nextjs', 'django', 'docker' ],
         infra: ['vercel', 'render.io' ],
@@ -48,7 +56,7 @@ export class ProjectSection extends LitElement {
               image="${project.image}"
               link="${project.link}"
               type="${project.type}"
-              index="${project.index}"
+              index="${`${project.index}`.padStart(2, '0') + '.'}"
               category="${project.category}"
               techstack='${project.techstack.join(",")}'
               infra='${project.infra.join(",")}'
