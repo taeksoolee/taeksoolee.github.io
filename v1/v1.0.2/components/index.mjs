@@ -1,8 +1,8 @@
 import './ui/index.mjs';
 
-import './_AppHeader.mjs';
-import './_AppFoooter.mjs';
-import './_HeroBannerSection.mjs';
-import './_ProfileSection.mjs';
-import './_ProjectSection.mjs';
-import './_SpotLight.mjs';
+import './AppHeader.mjs';
+import './AppFoooter.mjs';
+import './HeroBannerSection.mjs';
+import './ProfileSection.mjs';
+import './ProjectSection.mjs';
+import './SpotLight.mjs';
