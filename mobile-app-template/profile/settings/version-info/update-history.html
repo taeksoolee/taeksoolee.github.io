@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update History</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">업데이트 기록</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="mb-5">
+      <div class="is-flex is-align-items-center mb-2 px-1">
+        <span class="tag is-link is-rounded has-text-weight-bold mr-2">New</span>
+        <span class="is-size-7 has-text-weight-bold has-text-grey">v1.0.2 · 2026.01.07</span>
+      </div>
+      <div class="box p-4" style="border-radius: 12px; border: none;">
+        <div class="content is-size-7">
+          <p class="has-text-weight-bold mb-2">보안 강화 및 안정성 개선</p>
+          <ul class="ml-4" style="list-style-type: disc;">
+            <li>로그인 기기 관리 기능이 추가되었습니다.</li>
+            <li>비밀번호 변경 시 유효성 검사 로직이 강화되었습니다.</li>
+            <li>일부 기기에서 발생하던 화면 잘림 현상을 수정했습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="is-flex is-align-items-center mb-2 px-1">
+        <span class="tag is-light is-rounded has-text-weight-bold mr-2">v1.0.1</span>
+        <span class="is-size-7 has-text-weight-bold has-text-grey">2025.12.15</span>
+      </div>
+      <div class="box p-4" style="border-radius: 12px; border: none;">
+        <div class="content is-size-7">
+          <p class="has-text-weight-bold mb-2">다크 모드 지원</p>
+          <ul class="ml-4" style="list-style-type: disc;">
+            <li>눈의 피로를 덜어주는 다크 모드 테마가 추가되었습니다.</li>
+            <li>설정 메뉴 내 알림 ON/OFF 스위치가 개선되었습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="is-flex is-align-items-center mb-2 px-1">
+        <span class="tag is-light is-rounded has-text-weight-bold mr-2">v1.0.0</span>
+        <span class="is-size-7 has-text-weight-bold has-text-grey">2025.11.01</span>
+      </div>
+      <div class="box p-4" style="border-radius: 12px; border: none;">
+        <div class="content is-size-7">
+          <p class="has-text-weight-bold mb-2">Bulma App 정식 런칭</p>
+          <ul class="ml-4" style="list-style-type: disc;">
+            <li>기본 설정 및 프로필 관리 기능을 제공합니다.</li>
+            <li>이메일 인증을 통한 안전한 회원가입 시스템을 구축했습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-4 pb-6 has-text-centered">
+      <p class="is-size-7 has-text-grey-light">이전 업데이트 기록은 홈페이지에서 확인하실 수 있습니다.</p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

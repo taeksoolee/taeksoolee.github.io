@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmarks</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">북마크 목록</strong>
+      </a>
+      <div class="navbar-item">
+        <a class="button is-white is-small has-text-grey" href="home/bookmarks/edit-bookmarks.html">편집</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4">
+        <figure class="image is-64x64 mr-3">
+          <img src="https://picsum.photos/200?random=1" style="border-radius: 8px; object-fit: cover; height: 100%;">
+        </figure>
+        <div style="flex-grow: 1;">
+          <div class="is-flex is-justify-content-space-between is-align-items-start">
+            <p class="is-size-6 has-text-weight-bold mb-1 line-clamp-1">고효율 리액트 컴포넌트 설계하기</p>
+            <span class="icon has-text-link ml-2"><i class="fa-solid fa-bookmark"></i></span>
+          </div>
+          <p class="is-size-7 has-text-grey line-clamp-2">대규모 프로젝트에서 성능을 유지하는 컴포넌트 구조와 최적화 전략...</p>
+          <p class="is-size-7 has-text-grey-light mt-1">2026.01.05 저장</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4">
+        <figure class="image is-64x64 mr-3">
+          <img src="https://picsum.photos/200?random=2" style="border-radius: 8px; object-fit: cover; height: 100%;">
+        </figure>
+        <div style="flex-grow: 1;">
+          <div class="is-flex is-justify-content-space-between is-align-items-start">
+            <p class="is-size-6 has-text-weight-bold mb-1 line-clamp-1">Bulma CSS 활용 팁 10선</p>
+            <span class="icon has-text-link ml-2"><i class="fa-solid fa-bookmark"></i></span>
+          </div>
+          <p class="is-size-7 has-text-grey line-clamp-2">클래스 조합만으로 세련된 모바일 UI를 완성하는 유용한 팁들을 소개합니다.</p>
+          <p class="is-size-7 has-text-grey-light mt-1">2025.12.28 저장</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4">
+        <div class="is-flex is-justify-content-space-between is-align-items-start mb-2">
+          <p class="is-size-6 has-text-weight-bold line-clamp-1">2026 웹 디자인 어워드 후보작 분석</p>
+          <span class="icon has-text-link ml-2"><i class="fa-solid fa-bookmark"></i></span>
+        </div>
+        <p class="is-size-7 has-text-grey line-clamp-2">올해 가장 혁신적인 UI/UX를 보여준 웹사이트들의 공통적인 특징은 무엇일까요?</p>
+        <div class="is-flex is-justify-content-space-between is-align-items-center mt-2">
+          <p class="is-size-7 has-text-grey-light">2025.12.20 저장</p>
+          <span class="tag is-light is-rounded">디자인</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="has-text-centered py-6 pb-6">
+      <p class="is-size-7 has-text-grey-light">북마크는 최대 100개까지 보관됩니다.</p>
+    </div>
+
+  </div>
+
+  <style>
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+
+</body>
+
+</html>

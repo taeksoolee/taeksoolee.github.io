@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Source Licenses</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">오픈소스 라이선스</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="notification is-white mb-5 is-size-7 has-text-grey" style="border-radius: 12px; border: 1px solid #eee;">
+      본 서비스는 아래의 오픈소스 소프트웨어를 사용하고 있습니다. 각 소프트웨어의 라이선스 규정을 준수합니다.
+    </div>
+
+    <div class="box mb-4" style="border-radius: 12px; border: none;">
+      <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+        <strong class="is-size-6">Bulma</strong>
+        <span class="tag is-light">MIT License</span>
+      </div>
+      <div class="content is-size-7 has-text-grey" style="max-height: 100px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 6px;">
+        Copyright (c) 2024 Jeremy Thomas.<br><br>
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files...
+      </div>
+    </div>
+
+    <div class="box mb-4" style="border-radius: 12px; border: none;">
+      <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+        <strong class="is-size-6">Font Awesome Free</strong>
+        <span class="tag is-light">CC BY 4.0 / SIL OFL 1.1</span>
+      </div>
+      <div class="content is-size-7 has-text-grey" style="max-height: 100px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 6px;">
+        Font Awesome Free is free, open source, and GPL friendly. You can use it for commercial projects, open source projects, or really anything you want.
+      </div>
+    </div>
+
+    <div class="box mb-4" style="border-radius: 12px; border: none;">
+      <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+        <strong class="is-size-6">Google Fonts (Pretendard)</strong>
+        <span class="tag is-light">SIL Open Font License</span>
+      </div>
+      <div class="content is-size-7 has-text-grey" style="max-height: 100px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 6px;">
+        Copyright (c) 2021, kilhwan-gil (https://github.com/orioncactus/pretendard)
+      </div>
+    </div>
+
+    <div class="py-6 has-text-centered">
+      <p class="is-size-7 has-text-grey-light">이외에 사용된 모든 라이브러리는<br>각 저작권자의 규정을 따릅니다.</p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

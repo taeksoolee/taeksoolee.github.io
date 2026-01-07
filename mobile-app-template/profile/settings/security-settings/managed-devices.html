@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Managed Devices</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">로그인 기기 관리</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">현재 사용 중인 기기</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: 1px solid #485fc7;">
+      <div class="is-flex is-align-items-center p-4">
+        <div class="mr-4 has-text-link">
+          <i class="fa-solid fa-mobile-screen fa-2x"></i>
+        </div>
+        <div style="flex-grow: 1;">
+          <div class="is-flex is-align-items-center">
+            <strong class="is-size-6">iPhone 15 Pro</strong>
+            <span class="tag is-link is-light is-rounded ml-2" style="font-size: 0.65rem;">현재 기기</span>
+          </div>
+          <p class="is-size-7 has-text-grey mt-1">App 버전 1.0.2 · 서울, 대한민국</p>
+          <p class="is-size-7 has-text-grey-light">최근 활동: 방금 전</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">로그인된 다른 기기 (2)</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+
+      <div class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="mr-4 has-text-grey-light">
+          <i class="fa-solid fa-desktop fa-2x"></i>
+        </div>
+        <div style="flex-grow: 1;">
+          <strong class="is-size-6">Windows PC</strong>
+          <p class="is-size-7 has-text-grey mt-1">Chrome 브라우저 · 경기, 대한민국</p>
+          <p class="is-size-7 has-text-grey-light">로그인: 2026.01.05</p>
+        </div>
+        <button class="button is-small is-white has-text-danger">로그아웃</button>
+      </div>
+
+      <div class="is-flex is-align-items-center p-4">
+        <div class="mr-4 has-text-grey-light">
+          <i class="fa-solid fa-tablet-screen-button fa-2x"></i>
+        </div>
+        <div style="flex-grow: 1;">
+          <strong class="is-size-6">iPad Pro 12.9</strong>
+          <p class="is-size-7 has-text-grey mt-1">App 버전 1.0.1 · 서울, 대한민국</p>
+          <p class="is-size-7 has-text-grey-light">로그인: 2025.12.28</p>
+        </div>
+        <button class="button is-small is-white has-text-danger">로그아웃</button>
+      </div>
+
+    </div>
+
+    <div class="notification is-white has-text-centered" style="border-radius: 12px; border: 1px solid #eee;">
+      <p class="is-size-7 has-text-grey mb-3">모든 기기에서 로그아웃하고 싶으신가요?</p>
+      <button class="button is-danger is-outlined is-small is-fullwidth has-text-weight-bold" style="border-radius: 8px;">
+        현재 기기 제외 모두 로그아웃
+      </button>
+    </div>
+
+    <div class="px-2 pb-6">
+      <p class="is-size-7 has-text-grey-light">
+        <i class="fa-solid fa-circle-exclamation mr-1"></i>
+        본인이 사용하지 않는 기기가 있다면 즉시 로그아웃하고 비밀번호를 변경해 주세요.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recently Viewed</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">최근 본 콘텐츠</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-white is-small has-text-danger">전체 삭제</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">오늘</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+
+      <a class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div style="flex-grow: 1;">
+          <p class="is-size-6 has-text-weight-bold mb-1 has-text-dark line-clamp-1">모바일 웹앱 성능 최적화 가이드</p>
+          <p class="is-size-7 has-text-grey">방금 전 · 기술 블로그</p>
+        </div>
+        <figure class="image is-48x48 ml-3">
+          <img src="https://picsum.photos/100?random=11" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+      </a>
+
+      <a class="is-flex is-align-items-center p-4">
+        <div style="flex-grow: 1;">
+          <p class="is-size-6 has-text-weight-bold mb-1 has-text-dark line-clamp-1">2026 디자인 트렌드 리포트</p>
+          <p class="is-size-7 has-text-grey">2시간 전 · 디자인 매거진</p>
+        </div>
+        <figure class="image is-48x48 ml-3">
+          <img src="https://picsum.photos/100?random=12" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+      </a>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">어제</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+
+      <a class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div style="flex-grow: 1;">
+          <p class="is-size-6 has-text-weight-bold mb-1 has-text-dark line-clamp-1">브루마 클래스 완벽 정리 (Cheat Sheet)</p>
+          <p class="is-size-7 has-text-grey">오후 04:30 · 튜토리얼</p>
+        </div>
+        <figure class="image is-48x48 ml-3">
+          <img src="https://picsum.photos/100?random=13" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+      </a>
+
+      <a class="is-flex is-align-items-center p-4">
+        <div style="flex-grow: 1;">
+          <p class="is-size-6 has-text-weight-bold mb-1 has-text-dark line-clamp-1">프론트엔드 개발자의 커리어 로드맵</p>
+          <p class="is-size-7 has-text-grey">오전 11:20 · 커리어 상담</p>
+        </div>
+        <figure class="image is-48x48 ml-3">
+          <img src="https://picsum.photos/100?random=14" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+      </a>
+    </div>
+
+    <div class="has-text-centered py-4 pb-6">
+      <p class="is-size-7 has-text-grey-light">최근 본 콘텐츠는 최대 30일까지 보관됩니다.</p>
+    </div>
+
+  </div>
+
+  <style>
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+
+</body>
+
+</html>

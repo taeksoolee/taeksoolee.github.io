@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+        <strong class="ml-2 is-size-6">프로필 수정</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-link is-inverted has-text-weight-bold">완료</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4" style="margin-top: 52px;">
+
+    <div class="has-text-centered py-6">
+      <div class="is-inline-block" style="position: relative;">
+        <figure class="image is-128x128">
+          <img class="is-rounded shadow" src="https://i.pravatar.cc/200?img=12" style="border: 3px solid white;">
+        </figure>
+        <button class="button is-link is-rounded" style="position: absolute; bottom: 5px; right: 5px; width: 36px; height: 36px;">
+          <i class="fa-solid fa-pen is-size-7"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="box is-shadowless" style="border-radius: 12px;">
+
+      <div class="field mb-5">
+        <label class="label is-size-7 has-text-grey">닉네임</label>
+        <div class="control">
+          <input class="input is-shadowless" type="text" placeholder="닉네임을 입력하세요" value="사용자님" style="border-top:none; border-left:none; border-right:none; border-radius:0; padding-left:0;">
+        </div>
+        <p class="help has-text-grey-light">사람들이 나를 부르는 이름입니다.</p>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7 has-text-grey">한 줄 소개</label>
+        <div class="control">
+          <textarea class="textarea is-shadowless is-size-6" placeholder="자신을 한 줄로 표현해보세요." rows="2" style="border-radius: 8px;">프론트엔드 개발자 | 브루마 러버</textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label is-size-7 has-text-grey">링크 (SNS/블로그)</label>
+        <div class="control has-icons-left">
+          <input class="input is-shadowless" type="url" placeholder="https://example.com" value="https://bulma.io" style="border-top:none; border-left:none; border-right:none; border-radius:0; padding-left:35px;">
+          <span class="icon is-small is-left">
+            <i class="fa-solid fa-link"></i>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="notification is-warning is-light mt-5" style="border-radius: 12px;">
+      <button class="delete"></button>
+      <p class="is-size-7">
+        <i class="fa-solid fa-circle-info mr-1"></i>
+        닉네임은 30일에 한 번만 변경할 수 있습니다.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

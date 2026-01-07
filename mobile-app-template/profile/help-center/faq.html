@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - Help Center</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">자주 묻는 질문</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="field mb-5">
+      <div class="control has-icons-left">
+        <input class="input is-rounded is-medium" type="text" placeholder="궁금한 내용을 검색해보세요">
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="is-flex is-overflow-x-auto mb-5 pb-2" style="gap: 8px; -webkit-overflow-scrolling: touch;">
+      <span class="tag is-link is-medium is-rounded px-4">전체</span>
+      <span class="tag is-white is-medium is-rounded px-4">계정</span>
+      <span class="tag is-white is-medium is-rounded px-4">결제</span>
+      <span class="tag is-white is-medium is-rounded px-4">이용방법</span>
+      <span class="tag is-white is-medium is-rounded px-4">오류</span>
+    </div>
+
+    <div class="faq-list">
+
+      <div class="card mb-3 is-shadowless" style="border-radius: 12px; border: 1px solid #eee;">
+        <header class="card-header is-shadowless" style="cursor: pointer;">
+          <p class="card-header-title is-size-7 pr-0">
+            <span class="has-text-link mr-2">Q.</span> 비밀번호는 어떻게 변경하나요?
+          </p>
+          <button class="card-header-icon">
+            <span class="icon is-small has-text-grey-light"><i class="fas fa-angle-down"></i></span>
+          </button>
+        </header>
+        <div class="card-content py-3 has-background-white-bis" style="border-top: 1px solid #eee; border-radius: 0 0 12px 12px;">
+          <div class="content is-size-7 has-text-grey-dark">
+            [내 정보] > [설정] > [보안 및 비밀번호] 메뉴에서 언제든지 비밀번호를 변경하실 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3 is-shadowless" style="border-radius: 12px; border: 1px solid #eee;">
+        <header class="card-header is-shadowless" style="cursor: pointer;">
+          <p class="card-header-title is-size-7 pr-0">
+            <span class="has-text-link mr-2">Q.</span> 계정을 탈퇴하고 싶어요.
+          </p>
+          <button class="card-header-icon">
+            <span class="icon is-small has-text-grey-light"><i class="fas fa-angle-down"></i></span>
+          </button>
+        </header>
+      </div>
+
+      <div class="card mb-3 is-shadowless" style="border-radius: 12px; border: 1px solid #eee;">
+        <header class="card-header is-shadowless" style="cursor: pointer;">
+          <p class="card-header-title is-size-7 pr-0">
+            <span class="has-text-link mr-2">Q.</span> 푸시 알림이 오지 않습니다.
+          </p>
+          <button class="card-header-icon">
+            <span class="icon is-small has-text-grey-light"><i class="fas fa-angle-down"></i></span>
+          </button>
+        </header>
+      </div>
+
+    </div>
+
+    <div class="has-text-centered py-6">
+      <p class="is-size-7 has-text-grey mb-3">찾으시는 답변이 없으신가요?</p>
+      <a href="profile/help-center/faq/contacts-us.html" class="button is-link is-outlined is-small is-rounded px-5">
+        1:1 문의하기
+      </a>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

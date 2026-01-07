@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulma Profile Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+
+  <script>
+    function logout() {
+      // TODO: 로그아웃 로직 추가
+      location.href = './login.html';
+    }
+  </script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-link has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-4 w-100">
+      <a class="navbar-item p-0">
+        <strong class="has-text-white is-size-5">내 정보</strong>
+      </a>
+      <div class="is-flex">
+        <a class="navbar-item has-text-white" href="profile/settings.html"><i class="fa-solid fa-gear"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4" style="margin-bottom: 60px;">
+
+    <div class="box mb-4" style="border-radius: 12px;">
+      <article class="media is-align-items-center">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img class="is-rounded" src="https://i.pravatar.cc/128?img=12" alt="Image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong class="is-size-5">사용자님</strong> <small class="has-text-grey">@user_bulma</small>
+              <br>
+              <span class="is-size-7 has-text-grey-dark">프론트엔드 개발자 | 브루마 러버</span>
+            </p>
+          </div>
+        </div>
+      </article>
+      <a class="button is-link is-outlined is-fullwidth is-small mt-4" style="border-radius: 8px;" href="./profile/edit-profile.html">
+        프로필 수정
+      </a>
+    </div>
+
+    <nav class="level is-mobile box py-4 mb-4" style="border-radius: 12px;">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading has-text-grey">게시물</p>
+          <p class="title is-6">42</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading has-text-grey">팔로워</p>
+          <p class="title is-6">1.2k</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading has-text-grey">팔로잉</p>
+          <p class="title is-6">350</p>
+        </div>
+      </div>
+    </nav>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden;">
+      <p class="px-4 pt-4 pb-2 is-size-7 has-text-weight-bold has-text-grey-light">내 활동</p>
+      <aside class="menu">
+        <ul class="menu-list is-size-6">
+          <li><a class="px-4 py-3" href="profile/liked-posts.html"><span class="icon mr-3"><i class="fa-regular fa-heart"></i></span>좋아요 한 글</a></li>
+          <li><a class="px-4 py-3" href="home/bookmarks.html?back=profile.html"><span class="icon mr-3"><i class="fa-regular fa-bookmark"></i></span>북마크 목록</a></li>
+          <li><a class="px-4 py-3" href="profile/recently-viewed.html"><span class="icon mr-3"><i class="fa-solid fa-clock-rotate-left"></i></span>최근 본 콘텐츠</a></li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden;">
+      <p class="px-4 pt-4 pb-2 is-size-7 has-text-weight-bold has-text-grey-light">설정 및 지원</p>
+      <aside class="menu">
+        <ul class="menu-list is-size-6">
+          <li><a class="px-4 py-3" href="profile/help-center.html"><span class="icon mr-3"><i class="fa-solid fa-circle-question"></i></span>자주 묻는 질문</a></li>
+          <li><a class="px-4 py-3" href="profile/announcements.html"><span class="icon mr-3"><i class="fa-solid fa-bullhorn"></i></span>공지사항</a></li>
+          <li><a class="px-4 py-3 has-text-danger" onclick="logout();"><span class="icon mr-3"><i class="fa-solid fa-right-from-bracket"></i></span>로그아웃</a></li>
+        </ul>
+      </aside>
+    </div>
+
+  </div>
+
+  <nav class="level is-mobile has-background-white is-marginless p-2" style="position: fixed; bottom: 0; width: 100%; border-top: 1px solid #dbdbdb; z-index: 10;">
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="home.html">
+        <p><i class="fa-solid fa-house is-size-5"></i></p>
+        <p class="is-size-7">홈</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="notification.html">
+        <p><i class="fa-solid fa-calendar is-size-5"></i></p>
+        <p class="is-size-7">일정</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="create.html?back=profile.html">
+        <p><i class="fa-solid fa-circle-plus is-size-3 has-text-link"></i></p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="message.html">
+        <p><i class="fa-solid fa-message is-size-5"></i></p>
+        <p class="is-size-7">메시지</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-link" href="profile.html">
+        <p><i class="fa-solid fa-user is-size-5"></i></p>
+        <p class="is-size-7">내정보</p>
+      </a>
+    </div>
+  </nav>
+
+</body>
+
+</html>

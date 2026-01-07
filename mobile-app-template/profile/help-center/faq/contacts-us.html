@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">1:1 문의하기</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-link is-small is-rounded has-text-weight-bold">접수</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="notification is-white mb-5" style="border-radius: 12px; border: 1px solid #eee;">
+      <p class="is-size-7 has-text-grey-dark">
+        <i class="fa-solid fa-circle-info has-text-link mr-1"></i>
+        문의하신 내용은 확인 후 <strong>마이페이지 > 문의 내역</strong> 또는 가입하신 <strong>이메일</strong>로 답변을 보내드립니다.
+      </p>
+    </div>
+
+    <div class="box p-5" style="border-radius: 12px; border: none;">
+
+      <div class="field mb-5">
+        <label class="label is-size-7">문의 카테고리</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select>
+              <option>선택해 주세요</option>
+              <option>서비스 이용 문의</option>
+              <option>계정/인증 문의</option>
+              <option>오류 제보</option>
+              <option>결제/환불 문의</option>
+              <option>기타</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">제목</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="제목을 입력해 주세요">
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">문의 내용</label>
+        <div class="control">
+          <textarea class="textarea is-size-7" placeholder="문의하실 내용을 상세히 적어주시면 정확한 답변에 도움이 됩니다." rows="8" style="border-radius: 8px;"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label is-size-7">이미지 첨부 (최대 3장)</label>
+        <div class="is-flex" style="gap: 10px;">
+          <div class="has-background-white-ter is-flex is-justify-content-center is-align-items-center" style="width: 70px; height: 70px; border-radius: 8px; border: 1px dashed #dbdbdb; cursor: pointer;">
+            <i class="fa-solid fa-camera has-text-grey-light is-size-4"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="px-2 pb-6">
+      <p class="is-size-7 has-text-grey-light">
+        비방, 욕설, 광고 성격의 문의는 답변이 제한될 수 있으며, 임의로 삭제될 수 있습니다.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

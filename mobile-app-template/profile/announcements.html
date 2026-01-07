@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">공지사항</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+
+      <a class="p-4 is-block" style="border-bottom: 1px solid #f5f5f5;" href="profile/announcements/notice-detail.html">
+        <div class="is-flex is-align-items-center mb-1">
+          <span class="tag is-danger is-light is-small has-text-weight-bold mr-2">필독</span>
+          <span class="is-size-7 has-text-grey">2026.01.07</span>
+        </div>
+        <p class="is-size-6 has-text-weight-bold has-text-dark line-clamp-1">서비스 이용약관 개정 안내</p>
+      </a>
+
+      <a class="p-4 is-block" style="border-bottom: 1px solid #f5f5f5;" href="profile/announcements/notice-detail.html">
+        <div class="is-flex is-align-items-center mb-1">
+          <span class="tag is-warning is-light is-small has-text-weight-bold mr-2">점검</span>
+          <span class="is-size-7 has-text-grey">2026.01.05</span>
+        </div>
+        <p class="is-size-6 has-text-weight-bold has-text-dark line-clamp-1">시스템 정기 점검 안내 (01/10)</p>
+      </a>
+
+      <a class="p-4 is-block" style="border-bottom: 1px solid #f5f5f5;" href="profile/announcements/notice-detail.html">
+        <div class="is-flex is-align-items-center mb-1">
+          <span class="tag is-light is-small has-text-weight-bold mr-2">안내</span>
+          <span class="is-size-7 has-text-grey">2025.12.30</span>
+        </div>
+        <p class="is-size-6 has-text-weight-medium has-text-dark line-clamp-1">신규 기능 '로그인 기기 관리' 업데이트</p>
+      </a>
+
+      <a class="p-4 is-block" href="profile/announcements/notice-detail.html">
+        <div class="is-flex is-align-items-center mb-1">
+          <span class="tag is-light is-small has-text-weight-bold mr-2">안내</span>
+          <span class="is-size-7 has-text-grey">2025.12.24</span>
+        </div>
+        <p class="is-size-6 has-text-weight-medium has-text-dark line-clamp-1">크리스마스 기념 이벤트 당첨자 발표</p>
+      </a>
+
+    </div>
+
+    <div class="has-text-centered py-4 pb-6">
+      <p class="is-size-7 has-text-grey-light">최근 1년 이내의 공지사항만 표시됩니다.</p>
+    </div>
+
+  </div>
+
+  <style>
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 클릭 피드백 */
+    a.p-4:active {
+      background-color: #f9f9f9;
+    }
+  </style>
+
+</body>
+
+</html>

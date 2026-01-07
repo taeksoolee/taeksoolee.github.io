@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light" style="overflow: hidden;">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 화면 전체를 사용하여 중앙 정렬 */
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  </style>
+
+  <script src="js/utils.js" async></script>
+
+  <script>
+    function login() {
+      // TODO: 로그인 로직 추가
+      location.href = './home.html';
+    }
+  </script>
+</head>
+
+<body class="has-background-light">
+
+  <div class="container p-5">
+
+    <div class="has-text-centered mb-6">
+      <span class="icon is-large has-text-link mb-3">
+        <i class="fa-solid fa-rocket fa-3x"></i>
+      </span>
+      <h1 class="title is-4">Bulma App</h1>
+      <p class="subtitle is-7 has-text-grey mt-1">다시 만나서 반가워요!</p>
+    </div>
+
+    <div class="box p-5 mb-5" style="border-radius: 16px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <div class="field mb-4">
+        <label class="label is-size-7">이메일</label>
+        <div class="control has-icons-left">
+          <input class="input is-medium" type="email" placeholder="example@email.com" style="border-radius: 8px;">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">비밀번호</label>
+        <div class="control has-icons-left">
+          <input class="input is-medium" type="password" placeholder="••••••••" style="border-radius: 8px;">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+      </div>
+
+      <button class="button is-link is-fullwidth is-medium has-text-weight-bold" style="border-radius: 12px;" onclick="login()">
+        로그인
+      </button>
+    </div>
+
+    <div class="is-flex is-justify-content-center is-size-7 mb-6">
+      <a class="has-text-grey" href="login/find-password.html">비밀번호 찾기</a>
+      <span class="mx-3 has-text-grey-lighter">|</span>
+      <a class="has-text-link has-text-weight-bold" href="login/signup.html">회원가입</a>
+    </div>
+
+    <div class="is-flex is-align-items-center mb-5">
+      <div style="flex-grow: 1; height: 1px; background-color: #dbdbdb;"></div>
+      <span class="mx-3 is-size-7 has-text-grey-light">간편 로그인</span>
+      <div style="flex-grow: 1; height: 1px; background-color: #dbdbdb;"></div>
+    </div>
+
+    <div class="buttons is-centered">
+      <button class="button is-white is-rounded shadow-sm px-5" onclick="login()">
+        <span class="icon"><i class="fa-brands fa-google has-text-danger"></i></span>
+      </button>
+      <button class="button is-white is-rounded shadow-sm px-5" onclick="login()">
+        <span class="icon"><i class="fa-solid fa-comment has-text-warning"></i></span>
+      </button>
+      <button class="button is-white is-rounded shadow-sm px-5" onclick="login()">
+        <span class="icon"><i class="fa-brands fa-apple has-text-dark"></i></span>
+      </button>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

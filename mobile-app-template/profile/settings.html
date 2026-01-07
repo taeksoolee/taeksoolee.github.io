@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulma Settings</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">설정</strong>
+      </a>
+
+      <div class="navbar-item">
+        <button class="button is-link is-light is-small is-rounded has-text-weight-bold">완료</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">계정 관리</p>
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0;" href="profile/settings/account-info.html">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-link mr-3"><i class="fas fa-user-circle"></i></span>
+          <span class="is-size-6">개인정보 수정</span>
+        </div>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" href="profile/settings/security-settings.html">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-link mr-3"><i class="fas fa-shield-alt"></i></span>
+          <span class="is-size-6">보안 및 비밀번호</span>
+        </div>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">앱 설정</p>
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0;">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-grey mr-3"><i class="fas fa-bell"></i></span>
+          <span class="is-size-6">푸시 알림</span>
+        </div>
+        <span class="tag is-success is-light is-rounded">켜짐</span>
+      </div>
+      <div class="is-flex is-justify-content-space-between is-align-items-center p-4">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-grey mr-3"><i class="fas fa-eye"></i></span>
+          <span class="is-size-6">다크 모드</span>
+        </div>
+        <span class="tag is-light is-rounded">꺼짐</span>
+      </div>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">지원</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0;" href="profile/settings/terms-of-service.html">
+        <span class="is-size-6">서비스 이용약관</span>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" href="profile/settings/version-info.html">
+        <span class="is-size-6">버전 정보</span>
+        <span class="is-size-7 has-text-grey">v1.0.2</span>
+      </a>
+    </div>
+
+    <div class="has-text-centered mt-6 pb-5">
+      <button class="button is-ghost has-text-grey-light is-size-7">회원 탈퇴</button>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

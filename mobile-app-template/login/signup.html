@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">회원가입</strong>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container p-5">
+
+    <div class="mt-4 mb-6">
+      <h2 class="title is-4 mb-2">새로운 시작,</h2>
+      <p class="is-size-7 has-text-grey">Bulma App의 회원이 되어 다양한 기능을 만나보세요.</p>
+    </div>
+
+    <div class="box p-5 mb-5" style="border-radius: 16px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+
+      <div class="field mb-4">
+        <label class="label is-size-7">이메일 주소</label>
+        <div class="control has-icons-left is-flex">
+          <input class="input is-medium mr-2" type="email" placeholder="example@email.com" style="border-radius: 8px; flex-grow: 1;">
+          <button class="button is-link is-light is-medium" style="border-radius: 8px;">중복확인</button>
+          <span class="icon is-small is-left" style="height: 48px;">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4">
+        <label class="label is-size-7">비밀번호</label>
+        <div class="control has-icons-left">
+          <input class="input is-medium" type="password" placeholder="8자 이상 입력 (문자/숫자 조합)" style="border-radius: 8px;">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">성명</label>
+        <div class="control has-icons-left">
+          <input class="input is-medium" type="text" placeholder="실명을 입력해 주세요" style="border-radius: 8px;">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-6">
+        <div class="control">
+          <label class="checkbox is-size-7">
+            <input type="checkbox">
+            <a class="has-text-link">서비스 이용약관</a> 및 <a class="has-text-link">개인정보 처리방침</a>에 동의합니다.
+          </label>
+        </div>
+      </div>
+
+      <a href="signup/welcome.html">
+        <button class="button is-link is-fullwidth is-medium has-text-weight-bold" style="border-radius: 12px;">
+          가입하기
+        </button>
+      </a>
+    </div>
+
+    <div class="has-text-centered mb-6">
+      <p class="is-size-7 has-text-grey">
+        이미 계정이 있으신가요? <a class="has-text-link has-text-weight-bold ml-1" onclick="smartBack()">로그인</a>
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Activity</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">보안 활동</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-white is-small"><i class="fa-solid fa-filter has-text-grey"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">오늘</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="mr-3 mt-1">
+          <span class="icon has-text-info"><i class="fa-solid fa-right-to-bracket"></i></span>
+        </div>
+        <div>
+          <p class="is-size-6 has-text-weight-medium">새로운 로그인</p>
+          <p class="is-size-7 has-text-grey mt-1">iPhone 15 Pro · 서울, 대한민국</p>
+          <p class="is-size-7 has-text-grey-light">오전 10:24</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">2026년 1월 5일</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="mr-3 mt-1">
+          <span class="icon has-text-warning"><i class="fa-solid fa-key"></i></span>
+        </div>
+        <div>
+          <p class="is-size-6 has-text-weight-medium">비밀번호 변경 완료</p>
+          <p class="is-size-7 has-text-grey mt-1">사용자에 의해 비밀번호가 정상적으로 변경되었습니다.</p>
+          <p class="is-size-7 has-text-grey-light">오후 04:15</p>
+        </div>
+      </div>
+      <div class="is-flex p-4">
+        <div class="mr-3 mt-1">
+          <span class="icon has-text-success"><i class="fa-solid fa-shield-check"></i></span>
+        </div>
+        <div>
+          <p class="is-size-6 has-text-weight-medium">2단계 인증 활성화</p>
+          <p class="is-size-7 has-text-grey mt-1">계정 보안 강화를 위해 2단계 인증이 설정되었습니다.</p>
+          <p class="is-size-7 has-text-grey-light">오전 11:30</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">2025년 12월 28일</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4">
+        <div class="mr-3 mt-1">
+          <span class="icon has-text-grey-light"><i class="fa-solid fa-desktop"></i></span>
+        </div>
+        <div>
+          <p class="is-size-6 has-text-weight-medium">웹(Web) 로그인</p>
+          <p class="is-size-7 has-text-grey mt-1">Windows PC · Chrome 브라우저</p>
+          <p class="is-size-7 has-text-grey-light">오후 02:05</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="has-text-centered py-4 pb-6">
+      <p class="is-size-7 has-text-grey-light">최근 90일간의 보안 활동만 표시됩니다.</p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

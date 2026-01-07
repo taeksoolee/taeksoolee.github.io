@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Information</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">개인정보 관리</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-link is-light is-small is-rounded has-text-weight-bold">변경사항 저장</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">가입 정보</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <label class="label is-size-7 has-text-grey-light mb-1">아이디</label>
+        <div class="is-size-6 has-text-weight-medium">bulma_user_2026</div>
+      </div>
+      <div class="p-4">
+        <label class="label is-size-7 has-text-grey-light mb-1">이메일 주소</label>
+        <div class="is-flex is-justify-content-space-between is-align-items-center">
+          <span class="is-size-6 has-text-weight-medium">user@example.com</span>
+          <span class="tag is-success is-light">인증됨</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">연락처 및 실명</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="field">
+          <label class="label is-size-7">성명</label>
+          <div class="control">
+            <input class="input is-shadowless" type="text" value="홍길동" style="border:none; padding-left:0; height:auto;">
+          </div>
+        </div>
+      </div>
+      <div class="p-4">
+        <div class="field">
+          <label class="label is-size-7">휴대폰 번호</label>
+          <div class="control is-flex is-align-items-center">
+            <input class="input is-shadowless" type="tel" value="010-1234-5678" style="border:none; padding-left:0; height:auto;">
+            <button class="button is-small is-white has-text-link">재인증</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

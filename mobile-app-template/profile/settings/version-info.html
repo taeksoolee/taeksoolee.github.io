@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version Information</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">버전 정보</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="has-text-centered py-6">
+      <div class="is-inline-block p-4 mb-4 has-background-white shadow-sm" style="border-radius: 20px;">
+        <span class="icon is-large has-text-link">
+          <i class="fa-solid fa-rocket fa-3x"></i>
+        </span>
+      </div>
+      <h2 class="title is-5 mb-1">Bulma App</h2>
+      <p class="is-size-7 has-text-grey">현재 버전 v1.0.2</p>
+      <div class="mt-4">
+        <span class="tag is-success is-light is-rounded has-text-weight-bold px-4">최신 버전을 사용 중입니다</span>
+      </div>
+    </div>
+
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;" href="profile/settings/version-info/update-history.html">
+        <span class="is-size-6">업데이트 기록</span>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;" href="profile/settings/version-info/open-source-licenses.html">
+        <span class="is-size-6">오픈소스 라이선스</span>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+      <div class="is-flex is-justify-content-space-between is-align-items-center p-4">
+        <span class="is-size-6">베타 테스터 참여</span>
+        <div class="field mb-0">
+          <input id="betaSwitch" type="checkbox" name="betaSwitch" class="switch is-rounded is-small" style="cursor: pointer;">
+          <label for="betaSwitch"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="has-text-centered py-4 pb-6">
+      <p class="is-size-7 has-text-grey-light">
+        Copyright © 2026 Bulma App Co.<br>
+        All rights reserved.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

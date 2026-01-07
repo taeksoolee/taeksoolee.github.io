@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">고객센터 문의</strong>
+      </a>
+      <div class="navbar-item">
+        <button class="button is-link is-small is-rounded has-text-weight-bold">보내기</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="notification is-info is-light mb-5" style="border-radius: 12px;">
+      <p class="is-size-7">
+        <strong>무엇을 도와드릴까요?</strong><br>
+        문의하신 내용은 확인 후 영업일 기준 1~3일 이내에 답변해 드립니다.
+      </p>
+    </div>
+
+    <div class="box p-5" style="border-radius: 12px; border: none;">
+
+      <div class="field mb-5">
+        <label class="label is-size-7">문의 유형</label>
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select>
+              <option>문의 유형을 선택해 주세요</option>
+              <option>계정 및 로그인</option>
+              <option>결제 및 환불</option>
+              <option>기능 오류 제보</option>
+              <option>기타 문의</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">제목</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="제목을 입력해 주세요">
+        </div>
+      </div>
+
+      <div class="field mb-5">
+        <label class="label is-size-7">문의 내용</label>
+        <div class="control">
+          <textarea class="textarea is-size-7" placeholder="상세한 내용을 입력해 주시면 더 정확한 답변이 가능합니다." rows="6"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label is-size-7">첨부 파일 (선택)</label>
+        <div class="file is-small has-name is-fullwidth">
+          <label class="file-label">
+            <input class="file-input" type="file" name="resume">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                파일 업로드
+              </span>
+            </span>
+            <span class="file-name">
+              선택된 파일 없음
+            </span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="has-text-centered py-4 px-2">
+      <p class="is-size-7 has-text-grey">
+        빠른 답변이 필요하신가요? <br>
+        <a class="has-text-link" href="profile/help-center/faq.html"><strong>자주 묻는 질문(FAQ)</strong></a>에서 확인해 보세요.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

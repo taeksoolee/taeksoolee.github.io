@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-white has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Room</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 1. 채팅창 기본 디자인 */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      padding-bottom: 80px;
+      /* 입력바 높이 확보 */
+    }
+
+    .message-bubble {
+      max-width: 75%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 18px;
+      margin-bottom: 0.5rem;
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .message-received {
+      align-self: flex-start;
+      background-color: #f0f0f0;
+      color: #333;
+      border-bottom-left-radius: 4px;
+    }
+
+    .message-sent {
+      align-self: flex-end;
+      background-color: #3273dc;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .time-stamp {
+      font-size: 0.7rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .sent-time {
+      align-self: flex-end;
+      margin-right: 5px;
+    }
+
+    .received-time {
+      align-self: flex-start;
+      margin-left: 5px;
+    }
+
+    /* 2. 하단 입력바 고정 */
+    .chat-input-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: white;
+      padding: 0.75rem;
+      border-top: 1px solid #dbdbdb;
+      z-index: 10;
+    }
+
+    /* 3. 우측 드로어(Drawer) 스타일 */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      /* 초기 숨김 상태 */
+      width: 280px;
+      height: 100%;
+      background: white;
+      z-index: 1000;
+      transition: right 0.3s ease-out;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer.is-active {
+      right: 0;
+      /* 열림 상태 */
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .drawer-overlay.is-active {
+      display: block;
+    }
+
+    .drawer-footer {
+      margin-top: auto;
+      border-top: 1px solid #f0f0f0;
+      padding: 1rem;
+    }
+  </style>
+
+  <script src="js/utils.js" async></script>
+
+  <script>
+    /**
+     * 드로어 토글 (열기/닫기)
+     */
+    function toggleDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      drawer.classList.toggle('is-active');
+      overlay.classList.toggle('is-active');
+    }
+
+    function exitChatRoom() {
+      smartBack();
+    }
+  </script>
+</head>
+
+<body class="has-background-white">
+
+  <div id="drawerOverlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+
+  <div id="sideDrawer" class="drawer">
+    <div class="p-5 border-bottom">
+      <p class="subtitle is-6 has-text-weight-bold mb-4">채팅방 멤버</p>
+      <div class="is-flex is-align-items-center mb-4">
+        <figure class="image is-32x32 mr-3">
+          <img class="is-rounded" src="https://i.pravatar.cc/100?img=1" alt="User">
+        </figure>
+        <span class="is-size-6 has-text-weight-medium">김철수</span>
+        <span class="tag is-info is-light ml-2">나</span>
+      </div>
+      <div class="is-flex is-align-items-center">
+        <figure class="image is-32x32 mr-3">
+          <img class="is-rounded" src="https://i.pravatar.cc/100?img=5" alt="User">
+        </figure>
+        <span class="is-size-6">이영희</span>
+      </div>
+    </div>
+
+    <div class="menu p-5">
+      <p class="menu-label">옵션</p>
+      <ul class="menu-list">
+        <li><a><span class="icon mr-2"><i class="fas fa-bell"></i></span>알림 설정</a></li>
+        <li><a><span class="icon mr-2"><i class="fas fa-images"></i></span>사진/동영상</a></li>
+        <li><a><span class="icon mr-2"><i class="fas fa-file-alt"></i></span>파일</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a class="is-flex is-align-items-center has-text-grey" onclick="exitChatRoom()">
+        <span class="icon mr-2"><i class="fas fa-sign-out-alt"></i></span>
+        <span class="is-size-7 has-text-weight-bold">채팅방 나가기</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">김철수</strong>
+      </a>
+
+      <div class="navbar-item">
+        <button class="button is-white" onclick="toggleDrawer()">
+          <span class="icon has-text-grey">
+            <i class="fa-solid fa-bars"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="chat-container">
+    <div class="is-flex is-align-items-flex-end mb-1">
+      <figure class="image is-32x32 mr-2">
+        <img class="is-rounded" src="https://i.pravatar.cc/100?img=1">
+      </figure>
+      <div class="message-bubble message-received">
+        안녕하세요! 내일 미팅 시간 확인차 연락드렸습니다.
+      </div>
+    </div>
+    <span class="time-stamp received-time">오후 2:30</span>
+
+    <div class="message-bubble message-sent">
+      네, 철수님! 오후 3시 그대로 진행하시나요?
+    </div>
+    <span class="time-stamp sent-time">오후 2:31</span>
+  </div>
+
+  <div class="chat-input-bar">
+    <div class="field has-addons">
+      <div class="control">
+        <button class="button is-white has-text-grey">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+      <div class="control is-expanded">
+        <input class="input is-rounded is-light" type="text" placeholder="메시지 입력">
+      </div>
+      <div class="control">
+        <button class="button is-link is-rounded">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

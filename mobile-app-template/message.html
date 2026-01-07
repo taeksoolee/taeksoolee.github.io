@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulma Messages</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-link has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-4 w-100">
+      <a class="navbar-item p-0">
+        <strong class="has-text-white is-size-5">메시지</strong>
+      </a>
+      <div class="is-flex">
+        <a class="navbar-item has-text-white" href="message/new-chat.html"><i class="fa-solid fa-comment-medical"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4" style="margin-bottom: 60px;">
+
+    <div class="field mb-4">
+      <p class="control has-icons-left">
+        <input class="input is-rounded" type="text" placeholder="대화방 검색">
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </p>
+    </div>
+
+    <div class="box p-0" style="border-radius: 12px; overflow: hidden;">
+
+      <a class="media is-align-items-center p-4 m-0" style="border-bottom: 1px solid #f0f0f0;" href="message/chat-room.html">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=1" alt="User">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="mb-0">
+              <strong class="is-size-6">김철수</strong>
+              <small class="has-text-grey is-pull-right is-size-7">오후 2:30</small>
+              <br>
+              <span class="is-size-7 has-text-grey-dark">네, 알겠습니다. 내일 뵙겠습니다!</span>
+            </p>
+          </div>
+        </div>
+        <div class="media-right">
+          <span class="tag is-link is-rounded">2</span>
+        </div>
+      </a>
+
+      <a class="media is-align-items-center p-4 m-0" style="border-bottom: 1px solid #f0f0f0;" href="message/chat-room.html">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=5" alt="User">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="mb-0">
+              <strong class="is-size-6">디자인 팀</strong>
+              <small class="has-text-grey is-pull-right is-size-7">오전 11:15</small>
+              <br>
+              <span class="is-size-7 has-text-grey">새로운 시안 확인 부탁드려요.</span>
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <a class="media is-align-items-center p-4 m-0" style="border-bottom: 1px solid #f0f0f0;" href="message/chat-room.html">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=8" alt="User">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="mb-0">
+              <strong class="is-size-6">이영희</strong>
+              <small class="has-text-grey is-pull-right is-size-7">어제</small>
+              <br>
+              <span class="is-size-7 has-text-grey">이미지 파일 전송되었습니다.</span>
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <a class="media is-align-items-center p-4 m-0" href="message/chat-room.html">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=10" alt="User">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="mb-0">
+              <strong class="is-size-6">박지민</strong>
+              <small class="has-text-grey is-pull-right is-size-7">화요일</small>
+              <br>
+              <span class="is-size-7 has-text-grey">오늘 점심은 뭐 드시나요?</span>
+            </p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <nav class="level is-mobile has-background-white is-marginless p-2" style="position: fixed; bottom: 0; width: 100%; border-top: 1px solid #dbdbdb; z-index: 10;">
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="home.html">
+        <p><i class="fa-solid fa-house is-size-5"></i></p>
+        <p class="is-size-7">홈</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="notification.html">
+        <p><i class="fa-solid fa-calendar is-size-5"></i></p>
+        <p class="is-size-7">일정</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="create.html?back=message.html">
+        <p><i class="fa-solid fa-circle-plus is-size-3 has-text-link"></i></p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-link" href="message.html">
+        <p><i class="fa-solid fa-message is-size-5"></i></p>
+        <p class="is-size-7">메시지</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="profile.html">
+        <p><i class="fa-solid fa-user is-size-5"></i></p>
+        <p class="is-size-7">내정보</p>
+      </a>
+    </div>
+  </nav>
+
+</body>
+
+</html>

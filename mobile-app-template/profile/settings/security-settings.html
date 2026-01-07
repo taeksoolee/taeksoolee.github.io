@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Settings</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">보안 및 비밀번호</strong>
+      </a>
+      <div class="navbar-item"></div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">비밀번호 설정</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;" href="profile/settings/security-settings/change-password.html">
+        <div>
+          <p class="is-size-6">비밀번호 변경</p>
+          <p class="is-size-7 has-text-grey-light">마지막 변경: 90일 전</p>
+        </div>
+        <i class="fas fa-chevron-right has-text-grey-light is-size-7"></i>
+      </a>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">로그인 보호</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-info mr-3"><i class="fas fa-shield-halved"></i></span>
+          <span class="is-size-6">2단계 인증</span>
+        </div>
+        <span class="tag is-danger is-light is-rounded">미설정</span>
+      </div>
+      <div class="is-flex is-justify-content-space-between is-align-items-center p-4" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-info mr-3"><i class="fas fa-fingerprint"></i></span>
+          <span class="is-size-6">생체 인식 로그인</span>
+        </div>
+        <span class="tag is-success is-light is-rounded">사용 중</span>
+      </div>
+      <a class="is-flex is-justify-content-space-between is-align-items-center p-4" href="profile/settings/security-settings/managed-devices.html">
+        <div class="is-flex is-align-items-center">
+          <span class="icon has-text-info mr-3"><i class="fas fa-mobile-screen"></i></span>
+          <span class="is-size-6">로그인 기기 관리</span>
+        </div>
+        <div class="is-flex is-align-items-center">
+          <span class="tag is-rounded is-white has-text-grey">2대</span>
+          <i class="fas fa-chevron-right has-text-grey-light is-size-7 ml-2"></i>
+        </div>
+      </a>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">보안 활동</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4 is-size-7" style="border-bottom: 1px solid #f5f5f5;">
+        <div class="is-flex is-justify-content-space-between mb-1">
+          <span class="has-text-weight-bold">새로운 기기 로그인</span>
+          <span class="has-text-grey-light">어제</span>
+        </div>
+        <p class="has-text-grey">iPhone 15 Pro · 서울, 대한민국</p>
+      </div>
+      <a class="p-4 is-block has-text-centered is-size-7 has-text-link" href="profile/settings/security-settings/security-activity.html">
+        모든 보안 활동 보기
+      </a>
+    </div>
+
+    <div class="content px-2">
+      <p class="is-size-7 has-text-grey">
+        <i class="fa-solid fa-circle-info mr-1"></i>
+        의심스러운 활동이 감지되면 즉시 비밀번호를 변경하고 모든 기기에서 로그아웃하세요.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

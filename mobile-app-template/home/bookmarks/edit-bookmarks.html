@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Bookmarks</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* 하단 고정 액션바 스타일 */
+    .bottom-action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      z-index: 20;
+    }
+
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 체크박스 커스텀 정렬 */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      cursor: pointer;
+    }
+  </style>
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+        <strong class="ml-1 is-size-6">편집</strong>
+      </a>
+      <div class="navbar-item">
+        <label class="checkbox is-size-7 has-text-grey">
+          <input type="checkbox" onclick="toggleAll(this)" class="mr-1"> 전체 선택
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4" style="margin-bottom: 80px;">
+
+    <div class="box p-0 mb-3" style="border-radius: 12px; overflow: hidden; border: none;">
+      <label class="checkbox-container">
+        <input type="checkbox" name="bookmark-item" class="mr-3" checked>
+        <figure class="image is-48x48 mr-3">
+          <img src="https://picsum.photos/100?random=1" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+        <div style="flex-grow: 1;">
+          <p class="is-size-7 has-text-weight-bold has-text-dark line-clamp-1">고효율 리액트 컴포넌트 설계하기</p>
+          <p class="is-size-7 has-text-grey-light">2026.01.05</p>
+        </div>
+      </label>
+    </div>
+
+    <div class="box p-0 mb-3" style="border-radius: 12px; overflow: hidden; border: none;">
+      <label class="checkbox-container">
+        <input type="checkbox" name="bookmark-item" class="mr-3">
+        <figure class="image is-48x48 mr-3">
+          <img src="https://picsum.photos/100?random=2" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+        <div style="flex-grow: 1;">
+          <p class="is-size-7 has-text-weight-bold has-text-dark line-clamp-1">Bulma CSS 활용 팁 10선</p>
+          <p class="is-size-7 has-text-grey-light">2025.12.28</p>
+        </div>
+      </label>
+    </div>
+
+    <div class="box p-0 mb-3" style="border-radius: 12px; overflow: hidden; border: none;">
+      <label class="checkbox-container">
+        <input type="checkbox" name="bookmark-item" class="mr-3">
+        <figure class="image is-48x48 mr-3">
+          <img src="https://picsum.photos/100?random=3" style="border-radius: 6px; object-fit: cover;">
+        </figure>
+        <div style="flex-grow: 1;">
+          <p class="is-size-7 has-text-weight-bold has-text-dark line-clamp-1">2026 웹 디자인 어워드 후보작</p>
+          <p class="is-size-7 has-text-grey-light">2025.12.20</p>
+        </div>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="bottom-action-bar">
+    <div class="columns is-mobile is-gapless">
+      <div class="column">
+        <button class="button is-white is-fullwidth has-text-grey is-size-7">
+          <span class="icon mr-1"><i class="fa-solid fa-folder-plus"></i></span>
+          폴더 이동
+        </button>
+      </div>
+      <div class="column">
+        <button class="button is-white is-fullwidth has-text-danger is-size-7">
+          <span class="icon mr-1"><i class="fa-solid fa-trash-can"></i></span>
+          삭제 (1)
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

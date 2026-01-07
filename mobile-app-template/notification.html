@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulma Notifications</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-link has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-4 w-100">
+      <a class="navbar-item p-0">
+        <strong class="has-text-white is-size-5">알림</strong>
+      </a>
+      <div class="is-flex">
+        <a class="navbar-item has-text-white is-size-7">모두 읽음</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container is-fluid p-4" style="margin-bottom: 60px;">
+
+    <div class="tags mb-4">
+      <span class="tag is-link is-rounded">전체</span>
+      <span class="tag is-white is-rounded">활동</span>
+      <span class="tag is-white is-rounded">시스템</span>
+    </div>
+
+    <div class="box p-0" style="border-radius: 12px; overflow: hidden; border: none;">
+
+      <div class="media p-4 m-0 has-background-white-bis" style="border-bottom: 1px solid #f0f0f0;">
+        <div class="media-left">
+          <span class="icon is-medium has-text-link">
+            <i class="fas fa-comment-dots fa-lg"></i>
+          </span>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="is-size-7 mb-1"><strong>김철수</strong>님이 내 게시물에 댓글을 남겼습니다.</p>
+            <p class="is-size-7 has-text-grey">"정말 유용한 정보네요! 감사합니다."</p>
+            <p class="is-size-7 has-text-grey-light mt-1">5분 전</p>
+          </div>
+        </div>
+        <div class="media-right">
+          <span class="tag is-link is-rounded is-small" style="width: 8px; height: 8px; padding: 0;"></span>
+        </div>
+      </div>
+
+      <div class="media p-4 m-0 has-background-white" style="border-bottom: 1px solid #f0f0f0;">
+        <div class="media-left">
+          <span class="icon is-medium has-text-danger">
+            <i class="fas fa-heart fa-lg"></i>
+          </span>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="is-size-7 mb-0"><strong>이영희</strong>님 외 5명이 좋아합니다.</p>
+            <p class="is-size-7 has-text-grey-light mt-1">2시간 전</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="level is-mobile has-background-white is-marginless p-2" style="position: fixed; bottom: 0; width: 100%; border-top: 1px solid #dbdbdb; z-index: 10;">
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="home.html">
+        <p><i class="fa-solid fa-house is-size-5"></i></p>
+        <p class="is-size-7">홈</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-link" href="notification.html">
+        <p><i class="fa-solid fa-calendar is-size-5"></i></p>
+        <p class="is-size-7">일정</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="create.html?back=notification.html">
+        <p><i class="fa-solid fa-circle-plus is-size-3 has-text-link"></i></p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="message.html">
+        <p><i class="fa-solid fa-message is-size-5"></i></p>
+        <p class="is-size-7">메시지</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="profile.html">
+        <p><i class="fa-solid fa-user is-size-5"></i></p>
+        <p class="is-size-7">내정보</p>
+      </a>
+    </div>
+  </nav>
+
+</body>
+
+</html>

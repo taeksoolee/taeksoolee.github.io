@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Chat</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">대화 상대 선택</strong>
+      </a>
+
+      <div class="navbar-item">
+        <button class="button is-link is-small is-rounded has-text-weight-bold">만들기</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="field mb-5">
+      <p class="control has-icons-left">
+        <input class="input is-rounded" type="text" placeholder="이름으로 검색">
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </p>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">즐겨찾기</p>
+    <div class="box p-0 mb-5" style="border-radius: 12px; overflow: hidden; border: none;">
+      <label class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0; cursor: pointer;">
+        <div class="is-flex is-align-items-center is-flex-grow-1">
+          <figure class="image is-32x32 mr-3">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=11" alt="User">
+          </figure>
+          <span class="is-size-6 has-text-weight-medium">강해린</span>
+        </div>
+        <input type="checkbox" class="checkbox" style="transform: scale(1.2);">
+      </label>
+      <label class="is-flex is-align-items-center p-4" style="cursor: pointer;">
+        <div class="is-flex is-align-items-center is-flex-grow-1">
+          <figure class="image is-32x32 mr-3">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=12" alt="User">
+          </figure>
+          <span class="is-size-6 has-text-weight-medium">김민지</span>
+        </div>
+        <input type="checkbox" class="checkbox" style="transform: scale(1.2);">
+      </label>
+    </div>
+
+    <p class="is-size-7 has-text-weight-bold has-text-grey mb-2 px-1">모든 연락처</p>
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <label class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0; cursor: pointer;">
+        <div class="is-flex is-align-items-center is-flex-grow-1">
+          <figure class="image is-32x32 mr-3">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=20" alt="User">
+          </figure>
+          <span class="is-size-6">박세은</span>
+        </div>
+        <input type="checkbox" class="checkbox" style="transform: scale(1.2);">
+      </label>
+
+      <label class="is-flex is-align-items-center p-4" style="border-bottom: 1px solid #f0f0f0; cursor: pointer;">
+        <div class="is-flex is-align-items-center is-flex-grow-1">
+          <figure class="image is-32x32 mr-3">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=21" alt="User">
+          </figure>
+          <span class="is-size-6">최다니엘</span>
+        </div>
+        <input type="checkbox" class="checkbox" style="transform: scale(1.2);">
+      </label>
+
+      <label class="is-flex is-align-items-center p-4" style="cursor: pointer;">
+        <div class="is-flex is-align-items-center is-flex-grow-1">
+          <figure class="image is-32x32 mr-3">
+            <img class="is-rounded" src="https://i.pravatar.cc/100?img=25" alt="User">
+          </figure>
+          <span class="is-size-6">한소희</span>
+        </div>
+        <input type="checkbox" class="checkbox" style="transform: scale(1.2);">
+      </label>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="is-flex is-flex-direction-column">
+
+  <nav class="navbar is-fixed-top is-white has-shadow" role="navigation">
+    <div class="navbar-brand is-flex is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()">
+        <span class="icon has-text-dark"><i class="fa-solid fa-chevron-left"></i></span>
+      </a>
+      <div class="navbar-item is-flex-grow-1 pl-0">
+        <div class="field w-100">
+          <p class="control has-icons-left">
+            <input class="input is-rounded is-light is-borderless has-background-white-ter" type="text" placeholder="검색어를 입력하세요" autofocus>
+            <span class="icon is-small is-left has-text-grey">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section is-flex-grow-1 p-4">
+    <div class="is-fluid">
+
+      <nav class="level is-mobile mb-2 px-1">
+        <div class="level-left">
+          <p class="heading has-text-weight-bold has-text-grey-light">최근 검색어</p>
+        </div>
+        <div class="level-right">
+          <button class="button is-ghost is-small p-0 has-text-grey-light">모두 삭제</button>
+        </div>
+      </nav>
+
+      <div class="box is-paddingless is-shadowless mb-5" style="border-radius: 16px; overflow: hidden;">
+        <aside class="menu">
+          <ul class="menu-list">
+            <li>
+              <a class="py-4 px-5 is-flex is-justify-content-space-between is-align-items-center">
+                <span class="has-text-grey-dark">
+                  <span class="icon is-small mr-3 has-text-grey-lighter"><i class="fa-regular fa-clock"></i></span>
+                  브루마 전문가 가이드
+                </span>
+                <button class="delete is-small"></button>
+              </a>
+            </li>
+            <li>
+              <a class="py-4 px-5 is-flex is-justify-content-space-between is-align-items-center">
+                <span class="has-text-grey-dark">
+                  <span class="icon is-small mr-3 has-text-grey-lighter"><i class="fa-regular fa-clock"></i></span>
+                  No-build 프로젝트 설정
+                </span>
+                <button class="delete is-small"></button>
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+
+      <p class="heading has-text-weight-bold has-text-grey-light mb-3 px-1">추천 태그</p>
+      <div class="box is-shadowless p-5 has-background-white" style="border-radius: 16px;">
+        <div class="tags are-medium">
+          <span class="tag is-link is-light is-rounded">#Dashboard</span>
+          <span class="tag is-link is-light is-rounded">#Bulma_Expert</span>
+          <span class="tag is-link is-light is-rounded">#Mobile_UI</span>
+          <span class="tag is-link is-light is-rounded">#Frontend</span>
+          <span class="tag is-link is-light is-rounded">#CSS_Helper</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <nav class="level is-mobile has-background-white is-marginless p-2" style="position: fixed; bottom: 0; width: 100%; border-top: 1px solid #dbdbdb; z-index: 10;">
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="home.html">
+        <p><span class="icon is-medium"><i class="fa-solid fa-house"></i></span></p>
+        <p class="is-size-7">홈</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="notification.html">
+        <p><span class="icon is-medium"><i class="fa-solid fa-calendar"></i></span></p>
+        <p class="is-size-7">일정</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="create.html">
+        <p><span class="icon is-large has-text-link"><i class="fa-solid fa-circle-plus fa-2xl"></i></span></p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="message.html">
+        <p><span class="icon is-medium"><i class="fa-solid fa-message"></i></span></p>
+        <p class="is-size-7">메시지</p>
+      </a>
+    </div>
+    <div class="level-item has-text-centered">
+      <a class="has-text-grey" href="profile.html">
+        <p><span class="icon is-medium"><i class="fa-solid fa-user"></i></span></p>
+        <p class="is-size-7">내정보</p>
+      </a>
+    </div>
+  </nav>
+
+</body>
+
+</html>

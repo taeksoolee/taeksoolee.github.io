@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light has-navbar-fixed-top">
+
+<head>
+  <base href="/mobile-app-template/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liked Posts</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="js/utils.js" async></script>
+</head>
+
+<body class="has-background-light">
+
+  <nav class="navbar is-fixed-top is-white has-shadow">
+    <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center px-2 w-100">
+      <a class="navbar-item" onclick="smartBack()" style="cursor: pointer;">
+        <span class="icon is-medium has-text-dark">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <strong class="ml-1 is-size-6">좋아요 한 글</strong>
+      </a>
+      <div class="navbar-item">
+        <span class="tag is-rounded is-white has-text-grey">총 42개</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container p-4">
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4">
+        <div class="is-flex is-justify-content-space-between is-align-items-start mb-2">
+          <div class="is-flex is-align-items-center">
+            <figure class="image is-24x24 mr-2">
+              <img class="is-rounded" src="https://i.pravatar.cc/100?img=5">
+            </figure>
+            <strong class="is-size-7">디자인워크</strong>
+          </div>
+          <span class="icon has-text-danger"><i class="fa-solid fa-heart"></i></span>
+        </div>
+        <p class="is-size-6 has-text-weight-bold mb-1">브루마(Bulma) CSS로 모바일 웹앱 만들기</p>
+        <p class="is-size-7 has-text-grey line-clamp-2">
+          자바스크립트 없이도 훌륭한 레이아웃을 만들 수 있는 브루마의 매력에 빠져보세요...
+        </p>
+      </div>
+    </div>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="is-flex p-4">
+        <div style="flex-grow: 1;" class="pr-3">
+          <div class="is-flex is-align-items-center mb-2">
+            <figure class="image is-24x24 mr-2">
+              <img class="is-rounded" src="https://i.pravatar.cc/100?img=8">
+            </figure>
+            <strong class="is-size-7">코딩로그</strong>
+          </div>
+          <p class="is-size-6 has-text-weight-bold mb-1">2026년 프론트엔드 트렌드</p>
+          <p class="is-size-7 has-text-grey line-clamp-2">서버 컴포넌트와 최적화된 CSS 라이브러리의 조합이...</p>
+        </div>
+        <figure class="image is-64x64">
+          <img src="https://picsum.photos/200" style="border-radius: 8px; object-fit: cover; height: 100%;">
+        </figure>
+      </div>
+      <div class="px-4 pb-3 is-flex is-justify-content-end">
+        <span class="icon has-text-danger"><i class="fa-solid fa-heart"></i></span>
+      </div>
+    </div>
+
+    <div class="box p-0 mb-4" style="border-radius: 12px; overflow: hidden; border: none;">
+      <div class="p-4">
+        <div class="is-flex is-justify-content-space-between is-align-items-start mb-2">
+          <div class="is-flex is-align-items-center">
+            <figure class="image is-24x24 mr-2">
+              <img class="is-rounded" src="https://i.pravatar.cc/100?img=10">
+            </figure>
+            <strong class="is-size-7">UI매거진</strong>
+          </div>
+          <span class="icon has-text-danger"><i class="fa-solid fa-heart"></i></span>
+        </div>
+        <p class="is-size-6 has-text-weight-bold mb-1">사용자 경험을 높이는 5가지 팁</p>
+        <p class="is-size-7 has-text-grey line-clamp-2">모바일 우선 디자인에서 가장 중요한 것은 엄지손가락의 범위입니다.</p>
+      </div>
+    </div>
+
+    <div class="has-text-centered py-6 pb-6">
+      <p class="is-size-7 has-text-grey-light">최근 6개월간 좋아요 한 글을 표시합니다.</p>
+    </div>
+
+  </div>
+
+  <style>
+    /* 두 줄 이상일 때 생략 처리하는 스타일 */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+
+</body>
+
+</html>
