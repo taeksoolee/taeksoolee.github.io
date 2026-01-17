@@ -34,8 +34,8 @@ export class ProjectSection extends LitElement {
         link: 'https://jumpfit.taeksoolee.com',
         type: 'SaaS',
         category: 'SaaS',
-        techstack: ['react', 'tailwindcss', 'nextjs', 'django', 'docker' ],
-        infra: ['vercel', 'render.io' ],
+        techstack: ['react', 'tailwindcss', 'nextjs', 'django', 'drf', 'docker', 'postgres' ],
+        infra: ['vercel', 'render.io', 'neon' ],
       }
     ]
   }

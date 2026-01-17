@@ -1,0 +1,22 @@
+{
+  "name": "background-remover-app",
+  "version": "1.0.0",
+  "description": "AI 배경 제거 웹 애플리케이션",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -c-1 -o"
+  },
+  "devDependencies": {
+    "@huggingface/transformers": "^3.8.0",
+    "alpinejs": "^3.15.2",
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "ai",
+    "background-removal",
+    "transformers.js",
+    "alpine.js"
+  ],
+  "author": "",
+  "license": "ISC"
+}

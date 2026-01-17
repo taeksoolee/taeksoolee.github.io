@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 배경 제거 (누끼따기)</title>
+  <style>
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --primary-color: #4f46e5;
+      --border-color: #444;
+      --card-bg: #2a2a2a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: calc(100vh - 4rem);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    #drop-zone {
+      border: 3px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 4rem 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    #drop-zone.dragover {
+      border-color: var(--primary-color);
+      background-color: rgba(79, 70, 229, 0.1);
+    }
+
+    .status-text {
+      margin-top: 1rem;
+      font-size: 1rem;
+      min-height: 1.5rem;
+      color: #ccc;
+    }
+
+    .loader {
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .image-results {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .image-box {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .image-box h3 {
+      margin-top: 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #888;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" x-data="imageProcessor()" x-init="init()">
+    <h1>AI 배경 제거</h1>
+
+    <template x-if="!isLoaded">
+      <div>
+        <p class="status-text" x-text="status"></p>
+      </div>
+    </template>
+    <template x-if="isLoaded">
+      <div>
+        <p class="status-text" x-text="status"></p>
+
+        <input type="file" id="file-input" @change="handleFileSelect" accept="image/*" class="hidden">
+
+        <div x-show="originalImageUrl === null" id="drop-zone" @click="document.getElementById('file-input').click()" @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @drop.prevent="handleFileDrop" :class="{ 'dragover': isDragging }">
+          <p>클릭하여 이미지 업로드 또는 드래그 앤 드롭</p>
+        </div>
+
+
+
+        <div x-show="isLoading" class="loader"></div>
+        <button x-show="originalImage && !isLoading && resultImageUrl === null" @click="handleRemovalBgBtn()" style="margin-top: 1rem; padding: 0.5rem 1rem; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">
+          배경 제거 시작
+        </button>
+        <button x-show="originalImage && !isLoading" @click="resetImages()" style="margin-top: 1rem; margin-left: 1rem; padding: 0.5rem 1rem; background-color: #888; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          이미지 재업로드
+        </button>
+
+        <div class="image-results">
+          <div x-show="originalImage" class="image-box">
+            <h3>원본 이미지</h3>
+            <img :src="originalImageUrl" alt="Original Image">
+          </div>
+          <div x-show="resultImage" class="image-box">
+            <h3>배경 제거된 이미지</h3>
+            <img :src="resultImageUrl" alt="Background Removed Image">
+          </div>
+        </div>
+
+        <footer>
+          Powered by
+          <template x-for="(item, index) in powereds" :key="item.name">
+            <span>
+              <span x-show="index !== 0"> & </span>
+              <a :href="item.url" target="_blank" style="color: var(--primary-color);" x-text="item.name"></a>
+            </span>
+          </template>
+        </footer>
+      </div>
+    </template>
+  </div>
+
+  <script src="./app.mjs" type="module"></script>
+
+</body>
+
+</html>
