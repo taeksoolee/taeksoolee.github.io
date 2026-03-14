@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Signature Romantic 💖🍬🍭</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Great+Vibes&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #ffffff;
+      --bg-bottom: #fee3ec;
+      /* 더 러블리한 핑크 배경 */
+      --accent: #ff3c78;
+      /* 더 쨍한 핑크 포인트 */
+      --text-gray: #3a3a3a;
+      /* 더 선명한 텍스트 */
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      font-family: 'Playfair Display', serif;
+    }
+
+    #ui {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+      width: 100%;
+    }
+
+    .luxury-label {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      /* 약간 더 크게 */
+      color: var(--accent);
+      margin-bottom: -5px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(255, 60, 120, 0.3);
+      /* 은은한 네온 효과 */
+    }
+
+    h1 {
+      font-size: 4.2rem;
+      margin: 0;
+      color: var(--text-gray);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: -1px;
+    }
+
+    .luxury-line {
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin: 25px auto;
+      opacity: 0.6;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #6a6a6a;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    canvas {
+      display: block;
+      filter: contrast(1.05) saturate(1.1);
+      /* 더 쨍하게 */
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      opacity: 0.6;
+      font-family: sans-serif;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="ui">
+    <div class="luxury-label">Sweetest Impression</div>
+    <h1>Romantic Candy</h1>
+    <div class="luxury-line"></div>
+    <p>A Special Gift for You</p>
+  </div>
+  <div class="hint">Gently Drag to See the Sparkle</div>
+
+  <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // --- Masterpiece Setup ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    document.body.appendChild(renderer.domElement);
+
+    // --- Professional Studio Lighting (더 밝게) ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.PointLight(0xffffff, 80); // 강도 증가
+    keyLight.position.set(10, 15, 10);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.PointLight(0xffdbe9, 50); // 강도 증가
+    fillLight.position.set(-10, 5, 5);
+    scene.add(fillLight);
+
+    // --- Romantic Sparkles (더 선명한 핑크) ---
+    function createSparkles() {
+      const geo = new THREE.BufferGeometry();
+      const count = 500; // 개수 약간 증가
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 45;
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({ size: 0.15, color: 0xff4d8d, transparent: true, opacity: 0.6 });
+      return new THREE.Points(geo, mat);
+    }
+    scene.add(createSparkles());
+
+    // --- Signature Romantic Lollipop (수정됨: 쨍하고 명확한 구조) ---
+    function createRomanticLollipop() {
+      const group = new THREE.Group();
+
+      // 1. 단단한 중심 허브 (더 두껍고 불투명하게)
+      const hubGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.8, 64); // 두께 증가
+      const hubMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        transmission: 0.2, // 투명도 감소 (앞뒤 확실히 가름)
+        thickness: 1.0,   // 두께 증가
+        roughness: 0.05,
+        clearcoat: 1.0
+      });
+      const hub = new THREE.Mesh(hubGeo, hubMat);
+      hub.rotation.x = Math.PI / 2;
+      group.add(hub);
+
+      // 2. 쨍한 러블리 핑크 팔레트 (새로운 구성)
+      const ROMANTIC_PALETTE = [
+        0xff00ff, // Pure Magenta (매우 쨍함)
+        0xff69b4, // Hot Pink
+        0xffffff, // Pure White
+        0xff80ed, // Medium Orchid
+        0xff1493, // Deep Pink
+        0xffb6c1  // Light Pink
+      ];
+
+      const ropeRadius = 0.18; // 굵기 약간 감소
+      const loops = 4.2;
+      const segments = 150;
+
+      ROMANTIC_PALETTE.forEach((color, idx) => {
+        const points = [];
+        const offset = (idx / ROMANTIC_PALETTE.length) * Math.PI * 2;
+
+        for (let i = 0; i <= segments; i++) {
+          const t = i / segments;
+          const angle = t * Math.PI * 2 * loops + offset;
+          const r = t * 1.25;
+          points.push(new THREE.Vector3(Math.cos(angle) * r, Math.sin(angle) * r, 0));
+        }
+
+        const curve = new THREE.CatmullRomCurve3(points);
+        const tubeGeo = new THREE.TubeGeometry(curve, 100, ropeRadius, 12, false);
+
+        // 재질 수정: 투명도 없애고 자체 발광 강화 (쨍한 느낌)
+        const tubeMat = new THREE.MeshPhysicalMaterial({
+          color: color,
+          roughness: 0.01,
+          transmission: 0.05, // 투명도 거의 제거
+          clearcoat: 1.0,
+          emissive: color,
+          emissiveIntensity: 0.5 // 자체 발광 강화
+        });
+
+        const spiralFront = new THREE.Mesh(tubeGeo, tubeMat);
+        spiralFront.position.z = 0.4; // 간격 증가
+        group.add(spiralFront);
+
+        const spiralBack = spiralFront.clone();
+        spiralBack.position.z = -0.4; // 간격 증가
+        group.add(spiralBack);
+      });
+
+      // 3. 우아한 진주 스틱
+      const stickGeo = new THREE.CylinderGeometry(0.1, 0.08, 5.0, 16);
+      const stickMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.2 });
+      const stick = new THREE.Mesh(stickGeo, stickMat);
+      stick.position.y = -3.2;
+      group.add(stick);
+
+      return group;
+    }
+
+    // --- Translucent Blossom Heart (쨍한 핑크) ---
+    function createBlossomHeart() {
+      const heart = new THREE.Shape();
+      heart.moveTo(0, 0);
+      heart.bezierCurveTo(0, -0.3, -0.6, -0.3, -0.6, 0);
+      heart.bezierCurveTo(-0.6, 0.3, 0, 0.6, 0, 1);
+      heart.bezierCurveTo(0, 0.6, 0.6, 0.3, 0.6, 0);
+      heart.bezierCurveTo(0.6, -0.3, 0, -0.3, 0, 0);
+
+      const geo = new THREE.ExtrudeGeometry(heart, { depth: 0.3, bevelEnabled: true, bevelSize: 0.1, bevelThickness: 0.1 });
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: 0xff3c78, // 쨍한 핑크
+        transmission: 0.85,
+        thickness: 1,
+        roughness: 0.05,
+        clearcoat: 1,
+        emissive: 0xff3c78,
+        emissiveIntensity: 0.2
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.rotation.x = Math.PI;
+      mesh.scale.set(0.8, 0.8, 0.8);
+      return mesh;
+    }
+
+    const objects = [];
+    const container = new THREE.Group();
+    scene.add(container);
+
+    // 오브젝트 개수 감소 (40 -> 25)
+    for (let i = 0; i < 25; i++) {
+      const type = Math.random();
+      // 롤리팝 비중 높임 (70% 롤리팝, 30% 하트)
+      const obj = type < 0.7 ? createRomanticLollipop() : createBlossomHeart();
+
+      obj.position.set(
+        (Math.random() - 0.5) * 35,
+        (Math.random() - 0.5) * 35,
+        (Math.random() - 0.5) * 20
+      );
+
+      const scale = Math.random() * 0.4 + 0.8;
+      obj.scale.set(scale, scale, scale);
+
+      container.add(obj);
+      objects.push({
+        mesh: obj,
+        rotSpeed: (Math.random() - 0.5) * 0.01,
+        offset: Math.random() * Math.PI * 2
+      });
+    }
+
+    camera.position.z = 25; // 카메라 위치 약간 더 멀게
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.5;
+    controls.enableZoom = false;
+
+    function animate(time) {
+      requestAnimationFrame(animate);
+
+      objects.forEach((item) => {
+        const { mesh, rotSpeed, offset } = item;
+        mesh.rotation.x += rotSpeed;
+        mesh.rotation.y += rotSpeed * 0.6;
+        mesh.position.y += Math.sin(time * 0.001 + offset) * 0.015;
+      });
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate(0);
+  </script>
+</body>
+
+</html>
