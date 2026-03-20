@@ -1,71 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="/images/my-profile-img.png">
   <title>이택수 이력서</title>
-  <link rel="stylesheet" href="/resume/style.css">
+  <link rel="icon" type="image/x-icon" href="/images/my-profile-img.png">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
-  <h1>안녕하세요. 이택수 입니다.</h1>
-  <section>
-    <div>
-      <img width="100" height="100" alt="증명 사진" src="./assets/images/my-profile-img.png"/>
-    </div>
-    <a href="/">프로필 카드</a>
-  </section>
-  
-  <section>
-    <h2>🏢 CAREER</h2>
-    <div>
-      <strong>NextCore Technoligy</strong>(2020.04 ~ 2021.12)
-      <a href="https://next-core.co.kr/">링크</a>
-      <ul>
-        <li>
-          3D 안전관리 플랫폼 개발
-          <a href="https://www.youtube.com/watch?v=LzQGx4Sy5xk">(소개영상 첨부)</a>
-          <ul>
-            Used.
-            <li class="chip">Three.JS</li>
-            <li class="chip">amcharts4</li>
-            <!-- <li class="chip"></li>
-            <li class="chip"></li> -->
-          </ul>
-        </li>
-        <li>
-          Factory Management System
-        </li>
-        <li>
-          Smart Home System
-        </li>
-        <li>
-          MUSE App
-        </li>
-      </ul>
-      <div>
-        <b>Used.</b>
+  <!-- orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="page">
+
+    <!-- ── 헤더 ── -->
+    <header class="r-header">
+      <div class="r-profile">
+        <div class="r-avatar">
+          <img src="./assets/images/my-profile-img.png" alt="이택수" onerror="this.style.display='none'">
+          <span class="r-avatar-init">T</span>
+        </div>
+        <div class="r-profile-text">
+          <h1 class="r-name">이택수 <span class="r-name-en">Taeksoo Lee</span></h1>
+          <p class="r-title">Frontend Developer</p>
+          <div class="r-contact">
+            <a href="https://github.com/taeksoolee" target="_blank">
+              <i class="fa-brands fa-github"></i> taeksoolee
+            </a>
+            <a href="/" >
+              <i class="fa-solid fa-house"></i> Portfolio
+            </a>
+          </div>
+        </div>
       </div>
-      <p></p>
-    </div>
-    <div>
-      <strong>HAEZOOM</strong> (2022.02 ~ )
-    </div>
-  </section>
+    </header>
 
-  <div>
-    <h2>📝 INTRODUCE</h2>
-    <div>
+    <main class="r-main">
 
-    </div>
+      <!-- ── 소개 ── -->
+      <section class="r-section">
+        <h2 class="r-section-title"><i class="fa-solid fa-user"></i> About</h2>
+        <p class="r-bio">
+          Three.js, GSAP, Web Components 등 최신 웹 기술을 활용하는 프론트엔드 개발자입니다.
+          복잡한 데이터를 직관적인 인터페이스로 시각화하고, 사용자 경험 중심의 UI를 구현하는 것을 즐깁니다.
+        </p>
+      </section>
+
+      <!-- ── 경력 ── -->
+      <section class="r-section">
+        <h2 class="r-section-title"><i class="fa-solid fa-briefcase"></i> Career</h2>
+
+        <div class="r-timeline">
+
+          <div class="r-tl-item">
+            <div class="r-tl-dot"></div>
+            <div class="r-tl-content">
+              <div class="r-tl-header">
+                <span class="r-company">HAEZOOM</span>
+                <span class="r-period">2022.02 ~</span>
+              </div>
+              <p class="r-role">Frontend Developer</p>
+              <ul class="r-works">
+                <li>태양광 발전량 예측 시스템 프론트엔드 개발</li>
+                <li>사내 공통 UI 컴포넌트 라이브러리 구축 및 유지보수</li>
+                <li>대시보드 데이터 시각화 (차트, 지도 연동)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="r-tl-item">
+            <div class="r-tl-dot"></div>
+            <div class="r-tl-content">
+              <div class="r-tl-header">
+                <span class="r-company">NextCore Technology</span>
+                <span class="r-period">2020.06 ~ 2021.12</span>
+              </div>
+              <p class="r-role">Frontend Developer</p>
+              <ul class="r-works">
+                <li>
+                  3D 안전관리 플랫폼 개발
+                  <a href="https://www.youtube.com/watch?v=LzQGx4Sy5xk" target="_blank" class="r-link">
+                    소개 영상 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </li>
+                <li>Factory Management System</li>
+                <li>Smart Home System / MUSE App</li>
+              </ul>
+              <div class="r-chips">
+                <span class="chip">Three.JS</span>
+                <span class="chip">amcharts4</span>
+                <span class="chip">Vue.js</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── 교육 ── -->
+      <section class="r-section">
+        <h2 class="r-section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+        <div class="r-timeline">
+          <div class="r-tl-item">
+            <div class="r-tl-dot"></div>
+            <div class="r-tl-content">
+              <div class="r-tl-header">
+                <span class="r-company">국비지원 교육 itwill</span>
+                <span class="r-period">2019.10 ~ 2020.04</span>
+              </div>
+              <p class="r-role">웹 프론트엔드 / 자바 개발 과정</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 기술 ── -->
+      <section class="r-section">
+        <h2 class="r-section-title"><i class="fa-solid fa-code"></i> Tech Stack</h2>
+        <div class="r-skills">
+          <div class="r-skill-group">
+            <span class="r-skill-label">Frontend</span>
+            <div class="r-chips">
+              <span class="chip">JavaScript (ES6+)</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">Vue.js</span>
+              <span class="chip">React</span>
+              <span class="chip">Lit Web Components</span>
+            </div>
+          </div>
+          <div class="r-skill-group">
+            <span class="r-skill-label">3D / Animation</span>
+            <div class="r-chips">
+              <span class="chip">Three.js</span>
+              <span class="chip">GSAP</span>
+              <span class="chip">Canvas API</span>
+              <span class="chip">WebGL</span>
+            </div>
+          </div>
+          <div class="r-skill-group">
+            <span class="r-skill-label">Tools</span>
+            <div class="r-chips">
+              <span class="chip">Vite</span>
+              <span class="chip">Git</span>
+              <span class="chip">Tailwind CSS</span>
+              <span class="chip">Figma</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
   </div>
 
-  <hr />
-  <ul>
-    <li>1. 국비지원 교육 itwill ( 2019.10 ~ 2020.04 )</li>
-    <li>2. 넥스트코어 테크놀로지 재직 ( 2020.06 ~ 2021.12 )</li>
-    <li>3. 해줌 ( 2022.02 ~ )</li>
-  </ul>
 </body>
 </html>
