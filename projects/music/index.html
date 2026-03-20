@@ -3,34 +3,520 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music</title>
+  <title>Music Synth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" integrity="sha512-jduERlz7En1IUZR54bqzpNI64AbffZWR//KJgF71SJ8D8/liKFZ+s1RxmUmB+bhCnIfzebdZsULwOrbVB5f3nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07071a;
+      --surface:  rgba(255,255,255,0.04);
+      --border:   rgba(255,255,255,0.08);
+      --primary:  #2563eb;
+      --sky:      #0ea5e9;
+      --text:     #f8fafc;
+      --muted:    #94a3b8;
+    }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 32px 16px;
+      overflow-x: hidden;
+    }
+
+    /* ambient orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      top: -15%; left: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+    }
+    .orb-2 {
+      bottom: -15%; right: -10%;
+      width: 55vw; height: 55vw;
+      background: radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 70%);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    /* header */
+    .header { text-align: center; }
+    .header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .ctrl-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ctrl-select, .ctrl-range {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      padding: 6px 12px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ctrl-select:focus, .ctrl-range:focus { border-color: rgba(37,99,235,0.5); }
+    .ctrl-range { padding: 4px 12px; width: 120px; accent-color: var(--primary); }
+
+    /* visualizer */
+    .visualizer-wrap {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    #visualizer {
+      display: block;
+      width: 100%;
+      height: 80px;
+    }
+
+    /* piano */
+    .piano-wrap {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px 20px;
+      width: 100%;
+    }
+    .octave-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #334155;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .piano {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      height: 160px;
+      user-select: none;
+    }
+
+    /* white keys */
+    .key-white {
+      position: relative;
+      width: 52px;
+      height: 160px;
+      background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+      border: 1px solid #94a3b8;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      cursor: pointer;
+      transition: background 0.06s, transform 0.06s, box-shadow 0.06s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      margin: 0 2px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 -2px 4px rgba(0,0,0,0.1);
+      z-index: 1;
+    }
+    .key-white:hover {
+      background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.35), inset 0 -2px 4px rgba(0,0,0,0.1);
+    }
+    .key-white.active {
+      background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
+      transform: scaleY(0.97) translateY(2px);
+      box-shadow: 0 2px 8px rgba(37,99,235,0.5), inset 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .key-white .note-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      pointer-events: none;
+    }
+    .key-white.active .note-label { color: #1e3a8a; }
+
+    /* black keys */
+    .key-black {
+      position: absolute;
+      width: 32px;
+      height: 96px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 0 0 5px 5px;
+      cursor: pointer;
+      transition: background 0.06s, transform 0.06s, box-shadow 0.06s;
+      z-index: 2;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.7), inset 0 -2px 3px rgba(255,255,255,0.04);
+      top: 0;
+    }
+    .key-black:hover {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e293b 100%);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.5);
+    }
+    .key-black.active {
+      background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+      transform: scaleY(0.97) translateY(2px);
+      box-shadow: 0 2px 10px rgba(37,99,235,0.8);
+    }
+
+    /* sequence */
+    .sequence-wrap {
+      width: 100%;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .seq-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .seq-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .seq-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: all 0.18s;
+    }
+    .btn:hover { border-color: rgba(37,99,235,0.5); background: rgba(37,99,235,0.12); color: #93c5fd; }
+    .btn.primary { background: var(--primary); border-color: var(--primary); }
+    .btn.primary:hover { background: #1d4ed8; }
+    .btn.danger { border-color: rgba(239,68,68,0.3); }
+    .btn.danger:hover { border-color: rgba(239,68,68,0.6); background: rgba(239,68,68,0.1); color: #fca5a5; }
+
+    .seq-steps {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .step {
+      width: 36px; height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .step.has-note {
+      background: rgba(37,99,235,0.2);
+      border-color: rgba(37,99,235,0.5);
+      color: #93c5fd;
+    }
+    .step.playing {
+      background: #2563eb;
+      border-color: #60a5fa;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(37,99,235,0.6);
+    }
+
+    .kbd-hint {
+      text-align: center;
+      font-size: 11px;
+      color: #334155;
+    }
+  </style>
 </head>
 <body>
-  <div>
-    <button>Run</button>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="wrap">
+    <div class="header">
+      <h1>Music Synth</h1>
+      <p>Click keys or use keyboard (A–K for white, W/E/T/Y/U for black)</p>
+    </div>
+
+    <!-- controls -->
+    <div class="controls">
+      <div class="ctrl-group">
+        <span class="ctrl-label">Waveform</span>
+        <select class="ctrl-select" id="waveform">
+          <option value="sine">Sine</option>
+          <option value="triangle">Triangle</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Attack</span>
+        <input type="range" class="ctrl-range" id="attack" min="0.01" max="0.5" step="0.01" value="0.05">
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Release</span>
+        <input type="range" class="ctrl-range" id="release" min="0.1" max="2" step="0.05" value="0.5">
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Volume</span>
+        <input type="range" class="ctrl-range" id="volume" min="-30" max="0" step="1" value="-10">
+      </div>
+    </div>
+
+    <!-- visualizer -->
+    <div class="visualizer-wrap">
+      <canvas id="visualizer"></canvas>
+    </div>
+
+    <!-- piano -->
+    <div class="piano-wrap">
+      <div class="octave-label">C3 — B4 · Two Octaves</div>
+      <div class="piano" id="piano"></div>
+    </div>
+
+    <div class="kbd-hint">Keyboard: A S D F G H J K &nbsp;·&nbsp; White keys &nbsp;|&nbsp; W E &nbsp;T Y U &nbsp;· Black keys</div>
   </div>
 
   <script>
-    document.querySelector('button')
-      .addEventListener('click', function() {
-        //create a synth and connect it to the main output (your speakers)
-        const now = Tone.now();
-        const synth = new Tone.Synth().toDestination();
-    
-        //play a middle 'C' for the duration of an 8th note
-        synth.triggerAttackRelease("C4", "8n");
-        synth.triggerAttackRelease("C5", "8n");
-        synth.triggerAttackRelease("C4", "8n");
-        synth.triggerAttackRelease("C3", "8n");
-        synth.triggerAttackRelease("C2", "8n");
-        synth.triggerAttackRelease("C4", "8n");
-        synth.triggerAttackRelease("C5", "8n");
-        
-        // synth.triggerAttackRelease("C4", now);
-        // synth.triggerRelease(now + 1);
-      })
+    /* ── Tone.js setup ── */
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    synth.set({ oscillator: { type: 'sine' }, envelope: { attack: 0.05, release: 0.5 } });
 
+    /* analyser for visualizer */
+    const analyser = new Tone.Analyser('waveform', 256);
+    synth.connect(analyser);
+
+    /* controls */
+    document.getElementById('waveform').addEventListener('change', e => {
+      synth.set({ oscillator: { type: e.target.value } });
+    });
+    document.getElementById('attack').addEventListener('input', e => {
+      synth.set({ envelope: { attack: parseFloat(e.target.value) } });
+    });
+    document.getElementById('release').addEventListener('input', e => {
+      synth.set({ envelope: { release: parseFloat(e.target.value) } });
+    });
+    document.getElementById('volume').addEventListener('input', e => {
+      synth.volume.value = parseFloat(e.target.value);
+    });
+
+    /* ── Notes ── */
+    const WHITE_NOTES = ['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4'];
+    const BLACK_NOTES = { 1:'C#3', 2:'D#3', 4:'F#3', 5:'G#3', 6:'A#3', 8:'C#4', 9:'D#4', 11:'F#4', 12:'G#4', 13:'A#4' };
+    const KB_WHITE   = ['a','s','d','f','g','h','j','k','l',';'];
+    const KB_BLACK   = { 'w':'C#3','e':'D#3','t':'F#3','y':'G#3','u':'A#3', 'o':'C#4','p':'D#4' };
+
+    /* ── Build piano DOM ── */
+    const piano = document.getElementById('piano');
+    const KEY_W = 52 + 4; // width + margin*2
+
+    WHITE_NOTES.forEach((note, idx) => {
+      const el = document.createElement('div');
+      el.className = 'key-white';
+      el.dataset.note = note;
+      el.innerHTML = `<span class="note-label">${note}</span>`;
+      piano.appendChild(el);
+    });
+
+    Object.entries(BLACK_NOTES).forEach(([idx, note]) => {
+      const el = document.createElement('div');
+      el.className = 'key-black';
+      el.dataset.note = note;
+      // position: between white key idx and idx+1
+      // each white key is KEY_W px wide, black key is 32px wide
+      const offset = parseInt(idx) * KEY_W + KEY_W - 16;
+      el.style.left = offset + 'px';
+      piano.appendChild(el);
+    });
+
+    /* ── Play / Release ── */
+    function playNote(note, el) {
+      Tone.start();
+      synth.triggerAttack(note);
+      el.classList.add('active');
+    }
+    function releaseNote(note, el) {
+      synth.triggerRelease(note);
+      el.classList.remove('active');
+    }
+
+    /* mouse events */
+    let mouseDown = false;
+    document.addEventListener('mousedown', () => mouseDown = true);
+    document.addEventListener('mouseup', () => {
+      mouseDown = false;
+      document.querySelectorAll('.key-white.active, .key-black.active').forEach(k => {
+        releaseNote(k.dataset.note, k);
+      });
+    });
+
+    piano.addEventListener('mousedown', e => {
+      const key = e.target.closest('[data-note]');
+      if (key) playNote(key.dataset.note, key);
+    });
+    piano.addEventListener('mouseover', e => {
+      if (!mouseDown) return;
+      const key = e.target.closest('[data-note]');
+      if (key && !key.classList.contains('active')) playNote(key.dataset.note, key);
+    });
+    piano.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.key-white.active, .key-black.active').forEach(k => {
+        releaseNote(k.dataset.note, k);
+      });
+    });
+
+    /* touch events */
+    piano.addEventListener('touchstart', e => {
+      e.preventDefault();
+      [...e.changedTouches].forEach(t => {
+        const el = document.elementFromPoint(t.clientX, t.clientY);
+        const key = el && el.closest('[data-note]');
+        if (key) playNote(key.dataset.note, key);
+      });
+    }, { passive: false });
+    piano.addEventListener('touchend', e => {
+      e.preventDefault();
+      document.querySelectorAll('.key-white.active, .key-black.active').forEach(k => {
+        releaseNote(k.dataset.note, k);
+      });
+    }, { passive: false });
+
+    /* keyboard events */
+    const pressedKeys = new Set();
+    document.addEventListener('keydown', e => {
+      if (e.repeat) return;
+      const k = e.key.toLowerCase();
+      if (pressedKeys.has(k)) return;
+
+      let note = null, el = null;
+      if (KB_BLACK[k]) {
+        note = KB_BLACK[k];
+        el = piano.querySelector(`[data-note="${note}"]`);
+      } else {
+        const idx = KB_WHITE.indexOf(k);
+        if (idx >= 0 && idx < WHITE_NOTES.length) {
+          note = WHITE_NOTES[idx];
+          el = piano.querySelector(`[data-note="${note}"]`);
+        }
+      }
+      if (note && el) { pressedKeys.add(k); playNote(note, el); }
+    });
+    document.addEventListener('keyup', e => {
+      const k = e.key.toLowerCase();
+      pressedKeys.delete(k);
+      let note = KB_BLACK[k];
+      if (!note) {
+        const idx = KB_WHITE.indexOf(k);
+        if (idx >= 0) note = WHITE_NOTES[idx];
+      }
+      if (note) {
+        const el = piano.querySelector(`[data-note="${note}"]`);
+        if (el) releaseNote(note, el);
+      }
+    });
+
+    /* ── Visualizer ── */
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width  = canvas.offsetWidth  * devicePixelRatio;
+      canvas.height = canvas.offsetHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawVisualizer() {
+      requestAnimationFrame(drawVisualizer);
+      const W = canvas.offsetWidth, H = canvas.offsetHeight;
+      ctx.clearRect(0, 0, W, H);
+
+      const data = analyser.getValue();
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(37,99,235,0.8)';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#2563eb';
+      ctx.shadowBlur = 8;
+
+      data.forEach((v, i) => {
+        const x = (i / data.length) * W;
+        const y = ((v + 1) / 2) * H;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+    drawVisualizer();
   </script>
 </body>
 </html>
