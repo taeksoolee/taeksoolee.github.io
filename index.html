@@ -134,6 +134,128 @@
     ::-webkit-scrollbar-track { background: var(--color-bg); }
     ::-webkit-scrollbar-thumb { background: rgba(37,99,235,0.35); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(37,99,235,0.6); }
+
+    /* ── ProjectsOverlay (po-*) ── */
+    .po-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 99000;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: clamp(48px, 8vh, 120px);
+      padding-left: 16px; padding-right: 16px;
+    }
+
+    .po-panel {
+      width: 100%; max-width: 740px;
+      background: rgba(10,10,30,0.96);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px -16px rgba(0,0,0,0.8),
+                  0 0 0 1px rgba(37,99,235,0.15);
+    }
+
+    .po-search-wrap {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .po-search-icon { color: #475569; font-size: 14px; flex-shrink: 0; }
+    .po-search {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: #f1f5f9; font-size: 16px; font-family: inherit;
+    }
+    .po-search::placeholder { color: #475569; }
+    .po-kbd {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      color: #334155; padding: 2px 6px;
+      border: 1px solid #1e293b; border-radius: 5px;
+      flex-shrink: 0;
+    }
+
+    .po-cats {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .po-cat-btn {
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent; color: #64748b;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .po-cat-btn:hover { color: #93c5fd; border-color: rgba(37,99,235,0.4); background: rgba(37,99,235,0.08); }
+    .po-cat-btn.active { color: #fff; background: #2563eb; border-color: #2563eb; }
+
+    .po-count {
+      padding: 8px 20px 4px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      color: #334155; text-transform: uppercase;
+    }
+
+    .po-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 8px;
+      padding: 8px 16px 20px;
+      max-height: 54vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(37,99,235,0.3) transparent;
+    }
+
+    .po-card {
+      display: grid;
+      grid-template-areas: "icon title" "icon desc" ". cat";
+      grid-template-columns: 36px 1fr;
+      gap: 1px 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+      cursor: pointer;
+    }
+    .po-card:hover, .po-card.sel {
+      background: rgba(37,99,235,0.12);
+      border-color: rgba(37,99,235,0.4);
+      transform: translateY(-1px);
+    }
+    .po-icon {
+      grid-area: icon;
+      font-size: 20px; line-height: 1;
+      align-self: center;
+      text-align: center;
+    }
+    .po-title {
+      grid-area: title;
+      font-size: 13px; font-weight: 700;
+      color: #e2e8f0; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .po-desc {
+      grid-area: desc;
+      font-size: 11px; color: #64748b;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .po-cat-label {
+      grid-area: cat;
+      font-size: 9px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #1e40af;
+    }
+
+    .po-empty {
+      grid-column: 1 / -1;
+      text-align: center; padding: 32px;
+      color: #334155; font-size: 14px;
+    }
   </style>
 
   <script type="importmap">
