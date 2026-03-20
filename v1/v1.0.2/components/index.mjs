@@ -8,3 +8,4 @@ import './ProfileSection.mjs';
 import './StatsSection.mjs';
 import './ProjectSection.mjs';
 import './SpotLight.mjs';
+import './ProjectsOverlay.mjs';

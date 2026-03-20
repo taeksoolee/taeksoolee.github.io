@@ -8,7 +8,6 @@ export class AppHeader extends LitElement {
     const bar = this.querySelector('.scroll-bar');
     let lastY = 0;
 
-    // 스크롤 방향 감지 hide/show
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
       if (y > 100 && y > lastY) {
@@ -19,18 +18,18 @@ export class AppHeader extends LitElement {
       lastY = y;
     }, { passive: true });
 
-    // 스크롤 진행도 바
     if (bar) {
       gsap.set(bar, { scaleX: 0, transformOrigin: 'left' });
       ScrollTrigger.create({
-        onUpdate: (self) => {
-          gsap.set(bar, { scaleX: self.progress });
-        },
+        onUpdate: (self) => gsap.set(bar, { scaleX: self.progress }),
       });
     }
 
-    // 초기 fade-in
     gsap.from(header, { opacity: 0, y: -20, duration: 0.7, ease: 'power2.out', delay: 0.1 });
+  }
+
+  _openProjects() {
+    window.dispatchEvent(new CustomEvent('toggle-projects'));
   }
 
   render() {
@@ -45,15 +44,30 @@ export class AppHeader extends LitElement {
           </a>
         </div>
 
-        <div class="flex-none hidden md:block">
-          <nav>
-            <ul class="menu menu-horizontal font-bold gap-4 flex items-center">
-              <li>
-                <a href="#about" class="transition-colors hover:text-blue-400" style="color: #94a3b8;">About</a>
-              </li>
-              <li>
-                <a href="#projects" class="transition-colors hover:text-blue-400" style="color: #94a3b8;">Works</a>
-              </li>
+        <div class="flex-none flex items-center gap-2">
+
+          <!-- Projects 트리거 버튼 -->
+          <button
+            @click=${this._openProjects}
+            class="hidden md:flex items-center gap-2 font-bold text-sm transition-all duration-200 rounded-xl px-4 py-2"
+            style="color: #64748b; border: 1px solid rgba(255,255,255,0.09); background: transparent;"
+            onmouseenter="this.style.color='#93c5fd'; this.style.borderColor='rgba(37,99,235,0.45)'; this.style.background='rgba(37,99,235,0.1)';"
+            onmouseleave="this.style.color='#64748b'; this.style.borderColor='rgba(255,255,255,0.09)'; this.style.background='transparent';"
+            title="모든 프로젝트 보기 (⌘K)"
+          >
+            <i class="fa-solid fa-table-cells text-xs"></i>
+            <span>Projects</span>
+            <span class="hidden lg:inline-flex items-center gap-1 text-[10px] font-bold tracking-widest"
+              style="color: #1e293b;">
+              <span style="padding: 1px 5px; border: 1px solid #1e293b; border-radius: 4px;">⌘</span>
+              <span style="padding: 1px 5px; border: 1px solid #1e293b; border-radius: 4px;">K</span>
+            </span>
+          </button>
+
+          <nav class="hidden md:block">
+            <ul class="menu menu-horizontal font-bold gap-1 flex items-center">
+              <li><a href="#about"    class="transition-colors hover:text-blue-400" style="color: #94a3b8;">About</a></li>
+              <li><a href="#projects" class="transition-colors hover:text-blue-400" style="color: #94a3b8;">Works</a></li>
               <li>
                 <a href="https://github.com/taeksoolee" target="_blank"
                   class="btn btn-ghost btn-circle transition-colors hover:text-white"
@@ -63,6 +77,16 @@ export class AppHeader extends LitElement {
               </li>
             </ul>
           </nav>
+
+          <!-- 모바일: 그리드 아이콘만 -->
+          <button
+            @click=${this._openProjects}
+            class="md:hidden btn btn-ghost btn-circle"
+            style="color: #64748b;"
+            title="모든 프로젝트 보기">
+            <i class="fa-solid fa-table-cells text-lg"></i>
+          </button>
+
         </div>
 
         <!-- 스크롤 진행도 바 -->
