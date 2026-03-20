@@ -3,180 +3,318 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tools</title>
+  <title>Color Picker</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
   <style>
-    body {
-      padding: 10px;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07071a;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+      --primary: #2563eb;
+      --sky:     #0ea5e9;
+      --text:    #f8fafc;
+      --muted:   #94a3b8;
+      --dim:     #475569;
     }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before, body::after {
+      content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    }
+    body::before {
+      top: -15%; left: -10%; width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    }
+    body::after {
+      bottom: -15%; right: -10%; width: 55vw; height: 55vw;
+      background: radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%);
+    }
+
+    .page {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 420px;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+
+    /* header */
+    .page-header { text-align: center; }
+    .page-header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(28px, 6vw, 38px); font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-header p { margin-top: 8px; font-size: 13px; color: var(--muted); }
+
+    /* preview */
+    .preview-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 120px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    #preview-swatch {
+      width: 100%; height: 100%;
+      background: #000000;
+      transition: background 0.15s;
+    }
+    .preview-hex {
+      position: absolute;
+      bottom: 12px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Sora', sans-serif;
+      font-size: 22px; font-weight: 700;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      color: #fff; mix-blend-mode: difference;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      padding: 5px 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      transition: background 0.18s;
+      backdrop-filter: blur(4px);
+    }
+    .copy-btn:hover { background: rgba(37,99,235,0.6); }
+    .copy-btn.copied { background: rgba(34,197,94,0.6); }
+
+    /* card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--dim);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .card-title i { color: var(--primary); }
+
+    /* rgb fields */
+    .rgb-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .field label.r { color: #f87171; }
+    .field label.g { color: #4ade80; }
+    .field label.b { color: #60a5fa; }
+    .field label.hex { color: var(--muted); }
+
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: center;
+      -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    input[type="number"]:focus, input[type="text"]:focus {
+      border-color: rgba(37,99,235,0.6);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    input[aria-invalid="true"] {
+      border-color: rgba(239,68,68,0.6) !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.08) !important;
+    }
+
+    input[type="text"]#code { font-size: 16px; letter-spacing: 0.05em; }
+
+    /* native color picker */
+    .native-wrap {
+      display: flex; flex-direction: column; gap: 8px; align-items: center;
+    }
+    .native-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--dim);
+    }
+    input[type="color"] {
+      -webkit-appearance: none;
+      width: 64px; height: 64px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      padding: 4px;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    input[type="color"]:hover { border-color: rgba(37,99,235,0.6); transform: scale(1.08); }
+    input[type="color"]::-webkit-color-swatch-wrapper { border-radius: 50%; padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border-radius: 50%; border: none; }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Color Picker</h1>
-    <article>
-      <div>
-        <fieldset role="group">
-          <label>
-            Red
-            <input id="red" type="number" min="0" max="255" />
-          </label>
-          <label>
-            Green
-            <input id="green" type="number" min="0" max="255" />
-          </label>
-          <label>
-            Blue
-            <input id="blue" type="number" min="0" max="255" />
-          </label>
-          <!-- <label>Alpha</label>
-          <input id="alpha" type="number" min="0" max="255" /> -->
-        </fieldset>
-        <fieldset role="group">
-          <label>
-            Code
-            <input id="code" type="text" />
-          </label>
-        </fieldset>
+  <div class="page">
+    <div class="page-header">
+      <h1>Color Picker</h1>
+      <p>RGB ↔ Hex 색상 변환기</p>
+    </div>
+
+    <!-- preview -->
+    <div class="preview-wrap">
+      <div id="preview-swatch"></div>
+      <span class="preview-hex" id="preview-hex">#000000</span>
+      <button class="copy-btn" id="copy-btn">
+        <i class="fa-regular fa-copy"></i> Copy
+      </button>
+    </div>
+
+    <!-- RGB inputs -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-sliders"></i> RGB</div>
+      <div class="rgb-row">
+        <div class="field">
+          <label class="r" for="red">R</label>
+          <input id="red"   type="number" min="0" max="255" />
+        </div>
+        <div class="field">
+          <label class="g" for="green">G</label>
+          <input id="green" type="number" min="0" max="255" />
+        </div>
+        <div class="field">
+          <label class="b" for="blue">B</label>
+          <input id="blue"  type="number" min="0" max="255" />
+        </div>
       </div>
-      <hr />
-      <div>
-        <label>
-          Color
-          <input id="color" type="color" />
-        </label>
+
+      <div class="field">
+        <label class="hex" for="code">HEX</label>
+        <input id="code" type="text" placeholder="#000000" />
       </div>
-    </article>
-  </main>
+    </div>
+
+    <!-- native color picker -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-palette"></i> Color Wheel</div>
+      <div class="native-wrap">
+        <input id="color" type="color" />
+      </div>
+    </div>
+  </div>
 
   <script>
-    const $red = $('#red');
+    const $red   = $('#red');
     const $green = $('#green');
-    const $blue = $('#blue');
-    const $code = $('#code');
+    const $blue  = $('#blue');
+    const $code  = $('#code');
     const $color = $('#color');
+    const swatch = document.getElementById('preview-swatch');
+    const hexLabel = document.getElementById('preview-hex');
+    const copyBtn  = document.getElementById('copy-btn');
 
-    const curColor = '';
+    function updatePreview(hex) {
+      swatch.style.background = hex;
+      hexLabel.textContent = hex.toUpperCase();
+    }
+
     const setCurColor = (code) => {
       $color.val(code);
-    }
+      updatePreview(code);
+    };
 
     function handleChangeCode() {
       const code = $code.val();
       const tmp = code.split('');
-
       const prefix = tmp.splice(0, 1)[0];
-      if (prefix !== '#') {
-        $code.attr('aria-invalid', 'true');
-        return;
-      }
-
+      if (prefix !== '#') { $code.attr('aria-invalid', 'true'); return; }
       const numbers = tmp;
-      if (numbers.length !== 6) { // alpha 필요하면 8
-        $code.attr('aria-invalid', 'true');
-        return;
-      } 
-      for (const number of numbers) {
-        if (!/[0-9a-f]/.test(number)) {
-          $code.attr('aria-invalid', 'true');
-          return;
-        }
+      if (numbers.length !== 6) { $code.attr('aria-invalid', 'true'); return; }
+      for (const n of numbers) {
+        if (!/[0-9a-f]/i.test(n)) { $code.attr('aria-invalid', 'true'); return; }
       }
-
       $code.removeAttr('aria-invalid');
-
       const rgb = [];
-      while(numbers.length !== 0) {
-        const number = parseInt(numbers.splice(0, 2).join(''), 16);
-        rgb.push(number);
-      }
-
-      const [red, green, blue] = rgb;
-      $red.val(red);
-      $green.val(green);
-      $blue.val(blue);
-
+      while (numbers.length) { rgb.push(parseInt(numbers.splice(0, 2).join(''), 16)); }
+      const [r, g, b] = rgb;
+      $red.val(r); $green.val(g); $blue.val(b);
       setCurColor(code);
     }
 
-    $code.on('input', function(e) {
-      handleChangeCode();
-    });
+    $code.on('input', handleChangeCode);
 
     function handleChangeRGB() {
-      const red = parseInt($red.val());
-      const green = parseInt($green.val());
-      const blue = parseInt($blue.val());
-
-      if (Number.isNaN(red) || !(red >= 0 && red <= 255)) {
-        $red.attr('aria-invalid', 'true');
-        return;
-      }
-      if (Number.isNaN(green) || !(green >= 0 && green <= 255)) {
-        $green.attr('aria-invalid', 'true');
-        return;
-      }
-      if (Number.isNaN(blue) || !(blue >= 0 && blue <= 255)) {
-        $blue.attr('aria-invalid', 'true');
-        return;
-      }
-
-      $red.removeAttr('aria-invalid');
-      $green.removeAttr('aria-invalid');
-      $blue.removeAttr('aria-invalid');
-
-      const rgb = [red, green, blue];
-
-      let code = ['#'];
-      rgb.forEach(function(color) {
-        code.push(color.toString(16).padStart(2, '0'));
-      });
-
-      code = code.join('');
+      const r = parseInt($red.val()), g = parseInt($green.val()), b = parseInt($blue.val());
+      const invalid = (v) => Number.isNaN(v) || !(v >= 0 && v <= 255);
+      if (invalid(r)) { $red.attr('aria-invalid', 'true'); return; }
+      if (invalid(g)) { $green.attr('aria-invalid', 'true'); return; }
+      if (invalid(b)) { $blue.attr('aria-invalid', 'true'); return; }
+      $red.removeAttr('aria-invalid'); $green.removeAttr('aria-invalid'); $blue.removeAttr('aria-invalid');
+      const code = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
       $code.val(code);
-
       setCurColor(code);
     }
 
-    [$red, $green, $blue].forEach(function($el) {
-      $el.on('input', function(e) {
-        handleChangeRGB($code.val());
-      });
-    });
-
+    [$red, $green, $blue].forEach($el => $el.on('input', handleChangeRGB));
 
     function handleChangeColor() {
       $code.removeAttr('aria-invalid');
-      $red.removeAttr('aria-invalid');
-      $green.removeAttr('aria-invalid');
-      $blue.removeAttr('aria-invalid');
-
+      $red.removeAttr('aria-invalid'); $green.removeAttr('aria-invalid'); $blue.removeAttr('aria-invalid');
       const code = $color.val();
       $code.val(code);
-
-      const rgb = [];
       const numbers = code.split('').slice(1);
-      while(numbers.length !== 0) {
-        const number = parseInt(numbers.splice(0, 2).join(''), 16);
-        rgb.push(number);
-      }
-
-      const [red, green, blue] = rgb;
-      $red.val(red);
-      $green.val(green);
-      $blue.val(blue);
+      const rgb = [];
+      while (numbers.length) { rgb.push(parseInt(numbers.splice(0, 2).join(''), 16)); }
+      const [r, g, b] = rgb;
+      $red.val(r); $green.val(g); $blue.val(b);
+      updatePreview(code);
     }
+    $color.on('input', handleChangeColor);
 
-    $color.on('input', () => {
-      handleChangeColor();
-    })
+    // copy hex
+    copyBtn.addEventListener('click', () => {
+      const hex = $code.val();
+      navigator.clipboard.writeText(hex).then(() => {
+        copyBtn.classList.add('copied');
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+        }, 1800);
+      });
+    });
 
-    $(document).ready(function() {
-      const defaultValue = '#000000';
+    $(document).ready(() => {
+      const defaultValue = '#2563eb';
       $code.val(defaultValue);
       handleChangeCode();
     });
