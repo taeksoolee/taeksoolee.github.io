@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="corporate">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
@@ -8,113 +8,103 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&display=swap" rel="stylesheet">
-
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+
   <style>
     :root {
+      --color-bg: #07071a;
+      --color-surface: rgba(255, 255, 255, 0.04);
+      --color-primary: #2563eb;
+      --color-sky: #0ea5e9;
+      --color-text: #f8fafc;
+      --color-muted: #94a3b8;
+      --color-border: rgba(255, 255, 255, 0.09);
       scroll-behavior: smooth;
     }
 
     body {
       font-family: "Pretendard Variable", sans-serif;
-      background-color: #f8fafc;
-      /* 연한 블루 그레이 배경 */
+      background-color: var(--color-bg);
+      color: var(--color-text);
       overflow-x: hidden;
     }
 
-    h1,
-    h2,
-    .font-sora {
+    h1, h2, .font-sora {
       font-family: 'Sora', sans-serif;
     }
 
-    /* 2. CSS Scroll-driven Animations (No Library) */
-    @keyframes reveal {
-      from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .reveal-item {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 30%;
-    }
-
-    /* 3. 테두리 빛 효과 (Sense Detail) */
     .bento-card {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(37, 99, 235, 0.1);
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      background: var(--color-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--color-border);
+      transition: border-color 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                  box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .bento-card:hover {
-      border-color: rgba(37, 99, 235, 0.4);
-      box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.1);
-      transform: translateY(-5px);
+      border-color: rgba(37, 99, 235, 0.45);
+      box-shadow: 0 20px 60px -15px rgba(37, 99, 235, 0.18);
     }
 
-    /* 4. 애니메이션 텍스트 */
-    .bound {
-      display: inline-block;
-      animation: bounding 1s ease-in-out;
+    .gradient-text {
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    @keyframes bounding {
-
-      0%,
-      100% {
-        transform: translateY(0);
-        color: inherit;
-      }
-
-      30% {
-        transform: translateY(-10px);
-        color: #2563eb;
-      }
+    /* DaisyUI 버튼 오버라이드 */
+    .btn-primary {
+      background-color: var(--color-primary) !important;
+      border-color: var(--color-primary) !important;
+      color: #fff !important;
     }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8 !important;
+    }
+
+    /* 스크롤바 */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--color-bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(37, 99, 235, 0.6); }
   </style>
+
   <script type="importmap">
     {
       "imports": {
-        "lib/": "./lib/"
+        "lib/": "./lib/",
+        "three": "https://esm.sh/three@0.169.0"
       }
     }
   </script>
-
   <script type="module" src="/v1/v1.0.2/index.mjs"></script>
 </head>
 
 <body>
   <spot-light></spot-light>
-
   <app-header></app-header>
 
   <main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
-
     <hero-banner-section></hero-banner-section>
-
     <div class="space-y-8">
       <profile-section></profile-section>
     </div>
-
     <div class="space-y-16">
       <project-section></project-section>
     </div>
   </main>
 
   <app-footer></app-footer>
-
 </body>
 
 </html>
