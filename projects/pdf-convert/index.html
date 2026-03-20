@@ -1,73 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- CDN을 사용하는 경우 -->
+  <title>PDF Converter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
     integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07071a;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+      --primary: #2563eb;
+      --sky:     #0ea5e9;
+      --text:    #f8fafc;
+      --muted:   #94a3b8;
+    }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 16px 80px;
+      gap: 40px;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      top: -15%; left: -10%; width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    }
+    .orb-2 {
+      bottom: -15%; right: -10%; width: 55vw; height: 55vw;
+      background: radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%);
+    }
+
+    .wrap {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 760px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+
+    .header { text-align: center; }
+    .header h1 {
+      font-size: clamp(28px, 5vw, 40px); font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .header p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+    /* drop zone */
+    .drop-zone {
+      border: 2px dashed rgba(37,99,235,0.35);
+      border-radius: 20px;
+      padding: 52px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: rgba(37,99,235,0.03);
+      position: relative;
+    }
+    .drop-zone:hover, .drop-zone.over {
+      border-color: rgba(37,99,235,0.7);
+      background: rgba(37,99,235,0.07);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .drop-icon {
+      font-size: 40px; color: #2563eb; margin-bottom: 16px;
+      display: block;
+    }
+    .drop-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .drop-sub { font-size: 13px; color: var(--muted); }
+
+    /* toolbar */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .count-badge {
+      font-size: 13px; font-weight: 600; color: var(--muted);
+    }
+    .count-badge span { color: #60a5fa; }
+    .toolbar-btns { display: flex; gap: 10px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 20px; border-radius: 10px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text);
+      transition: all 0.18s;
+    }
+    .btn:hover { border-color: rgba(37,99,235,0.5); background: rgba(37,99,235,0.1); color: #93c5fd; }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+    .btn.primary {
+      background: var(--primary); border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+    }
+    .btn.primary:hover { background: #1d4ed8; box-shadow: 0 6px 24px rgba(37,99,235,0.45); }
+    .btn.ghost { border-color: rgba(239,68,68,0.3); }
+    .btn.ghost:hover { border-color: rgba(239,68,68,0.6); background: rgba(239,68,68,0.08); color: #fca5a5; }
+
+    /* preview grid */
+    #image-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .preview-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+      aspect-ratio: 3/4;
+      transition: border-color 0.2s;
+    }
+    .preview-item:hover { border-color: rgba(37,99,235,0.45); }
+    .preview-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .preview-num {
+      position: absolute; top: 8px; left: 8px;
+      background: rgba(7,7,26,0.85);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 10px; font-weight: 700;
+      color: var(--muted);
+      padding: 2px 7px;
+    }
+    .preview-remove {
+      position: absolute; top: 6px; right: 6px;
+      width: 24px; height: 24px;
+      background: rgba(239,68,68,0.85);
+      border: none; border-radius: 50%;
+      color: #fff; font-size: 10px;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.18s;
+    }
+    .preview-item:hover .preview-remove { opacity: 1; }
+
+    /* progress */
+    .progress-wrap {
+      display: none;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      gap: 12px;
+      flex-direction: column;
+    }
+    .progress-wrap.show { display: flex; }
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 13px; color: var(--muted);
+    }
+    .progress-bar-bg {
+      height: 6px; background: rgba(255,255,255,0.06);
+      border-radius: 99px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #0ea5e9);
+      border-radius: 99px;
+      transition: width 0.2s;
+      width: 0%;
+    }
+
+    /* empty state */
+    .empty-hint {
+      text-align: center;
+      padding: 40px;
+      color: #334155;
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
 
-  <div id="image-container"></div>
+  <div class="wrap">
+    <div class="header">
+      <h1>PDF Converter</h1>
+      <p>이미지를 선택하면 순서대로 PDF 한 장씩 변환됩니다</p>
+    </div>
 
-  <input id="image-input" type="file" multiple />
+    <!-- drop zone -->
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="image-input" multiple accept="image/*">
+      <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+      <div class="drop-title">이미지를 드래그하거나 클릭해서 선택</div>
+      <div class="drop-sub">PNG · JPG · WEBP · GIF — 다중 선택 가능</div>
+    </div>
 
-  <button onclick="convertImageToPDF()">Convert Image to PDF</button>
+    <!-- toolbar (hidden until images loaded) -->
+    <div class="toolbar" id="toolbar" style="display:none;">
+      <div class="count-badge">선택된 이미지: <span id="img-count">0</span>장</div>
+      <div class="toolbar-btns">
+        <button class="btn ghost" id="clear-btn">
+          <i class="fa-solid fa-trash-can"></i> 전체 삭제
+        </button>
+        <button class="btn primary" id="convert-btn">
+          <i class="fa-solid fa-file-pdf"></i> PDF 변환 & 다운로드
+        </button>
+      </div>
+    </div>
+
+    <!-- progress -->
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-label">
+        <span id="progress-text">변환 중...</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- preview -->
+    <div id="image-container">
+      <div class="empty-hint" id="empty-hint">
+        <i class="fa-regular fa-images" style="font-size:32px;display:block;margin-bottom:12px;"></i>
+        이미지를 추가하면 미리보기가 표시됩니다
+      </div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById('image-input').addEventListener('change', function (event) {
-      const imageContainer = document.getElementById('image-container');
-      imageContainer.innerHTML = ''; // 컨테이너를 비웁니다.
+    const input      = document.getElementById('image-input');
+    const container  = document.getElementById('image-container');
+    const toolbar    = document.getElementById('toolbar');
+    const countEl    = document.getElementById('img-count');
+    const convertBtn = document.getElementById('convert-btn');
+    const clearBtn   = document.getElementById('clear-btn');
+    const dropZone   = document.getElementById('drop-zone');
+    const progressW  = document.getElementById('progress-wrap');
+    const progressB  = document.getElementById('progress-bar');
+    const progressT  = document.getElementById('progress-text');
+    const progressP  = document.getElementById('progress-pct');
+    const emptyHint  = document.getElementById('empty-hint');
 
-      const files = event.target.files; // 사용자가 선택한 파일 목록
+    let fileList = [];
 
-      for (const file of files) {
-        if (file.type.startsWith('image/')) { // 파일이 이미지인지 확인
-          const img = document.createElement('img');
-          img.src = URL.createObjectURL(file); // 파일을 가리키는 URL 생성
-          img.onload = function () {
-            URL.revokeObjectURL(img.src); // 메모리 누수 방지
-          };
-          imageContainer.appendChild(img); // 이미지 컨테이너에 이미지 추가
-        }
+    function renderPreviews() {
+      container.innerHTML = '';
+      if (fileList.length === 0) {
+        container.appendChild(emptyHint);
+        toolbar.style.display = 'none';
+        return;
       }
+      toolbar.style.display = 'flex';
+      countEl.textContent = fileList.length;
+
+      fileList.forEach((file, idx) => {
+        const url  = URL.createObjectURL(file);
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `
+          <img src="${url}" onload="URL.revokeObjectURL(this.src)">
+          <span class="preview-num">${idx + 1}</span>
+          <button class="preview-remove" data-idx="${idx}" title="삭제">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        `;
+        container.appendChild(item);
+      });
+
+      container.querySelectorAll('.preview-remove').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          fileList.splice(parseInt(btn.dataset.idx), 1);
+          renderPreviews();
+        });
+      });
+    }
+
+    function addFiles(files) {
+      [...files].forEach(f => {
+        if (f.type.startsWith('image/')) fileList.push(f);
+      });
+      renderPreviews();
+    }
+
+    input.addEventListener('change', e => addFiles(e.target.files));
+
+    /* drag & drop */
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('over');
+      addFiles(e.dataTransfer.files);
     });
 
-    async function convertImageToPDF() {
-      function transformImage(image) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
+    clearBtn.addEventListener('click', () => { fileList = []; renderPreviews(); });
 
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0, image.width, image.height);
-
-        return canvas.toDataURL('image/png');
-      }
-
-      const images = [...document.querySelectorAll('img')];
+    convertBtn.addEventListener('click', async () => {
+      if (!fileList.length) return;
+      convertBtn.disabled = true;
+      clearBtn.disabled = true;
+      progressW.classList.add('show');
 
       const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [images[0].width, images[0].height]
+
+      // load all images
+      const loadImg = (file) => new Promise(resolve => {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = () => { URL.revokeObjectURL(img.src); resolve(img); };
       });
 
-      images.forEach((image, i) => {
-        const imageDataURL = transformImage(image);
-        if (i > 0) pdf.addPage();
-        pdf.addImage(imageDataURL, 'JPG', 0, 0, image.width, image.height);
+      const images = [];
+      for (let i = 0; i < fileList.length; i++) {
+        images.push(await loadImg(fileList[i]));
+        const pct = Math.round(((i + 1) / fileList.length) * 60);
+        progressB.style.width = pct + '%';
+        progressP.textContent = pct + '%';
+        progressT.textContent = `이미지 로드 중 (${i + 1}/${fileList.length})`;
+        await new Promise(r => setTimeout(r, 10));
+      }
+
+      progressT.textContent = 'PDF 생성 중...';
+
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [images[0].width, images[0].height] });
+
+      images.forEach((img, i) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL('image/png');
+        if (i > 0) pdf.addPage([img.width, img.height], img.width > img.height ? 'landscape' : 'portrait');
+        pdf.addImage(dataURL, 'PNG', 0, 0, img.width, img.height);
+
+        const pct = 60 + Math.round(((i + 1) / images.length) * 40);
+        progressB.style.width = pct + '%';
+        progressP.textContent = pct + '%';
       });
 
-      pdf.save('converted-image.pdf');
-    }
+      progressB.style.width = '100%';
+      progressP.textContent = '100%';
+      progressT.textContent = '완료! 다운로드 시작...';
+
+      await new Promise(r => setTimeout(r, 400));
+      pdf.save('converted.pdf');
+
+      setTimeout(() => {
+        progressW.classList.remove('show');
+        progressB.style.width = '0%';
+        convertBtn.disabled = false;
+        clearBtn.disabled = false;
+      }, 1000);
+    });
   </script>
 </body>
-
 </html>
