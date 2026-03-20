@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /v0/
+Disallow: /v1/
+Disallow: /app/
+Disallow: /lib/
+Disallow: /libs/
+
+Sitemap: https://taeksoolee.com/sitemap.xml
