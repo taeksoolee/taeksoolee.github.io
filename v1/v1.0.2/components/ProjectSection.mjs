@@ -7,6 +7,16 @@ export class ProjectSection extends LitElement {
     super();
     this.projects = [
       {
+        title: '3D Portfolio',
+        description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
+        image: '',
+        link: '/projects/3d-page/portfoilo/',
+        type: 'Demo',
+        category: 'Demo',
+        techstack: ['Three.js', 'GSAP', 'ScrollTrigger', 'WebGL'],
+        infra: ['GitHub Pages'],
+      },
+      {
         title: 'My Blog',
         description: '개인 기술 블로그. 최신 웹 개발 트렌드와 프로젝트 경험을 공유하는 공간입니다. ai를 이용해 글을 작성합니다.',
         image: '/images/projects/blog-thumb-1.png',

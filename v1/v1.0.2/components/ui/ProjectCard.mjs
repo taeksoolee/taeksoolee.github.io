@@ -91,9 +91,13 @@ class ProjectCard extends LitElement {
             onmouseleave="this.style.background='rgba(37,99,235,0)'">
           </div>
 
-          <img src="${this.image}"
+          ${this.image
+            ? html`<img src="${this.image}"
                alt="${this.title}"
-               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />`
+            : html`<div class="w-full h-full"
+               style="background: linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(14,165,233,0.1) 60%, rgba(37,99,235,0.06) 100%);"></div>`
+          }
 
           <!-- 링크 버튼 -->
           <a href="${this.link}"
