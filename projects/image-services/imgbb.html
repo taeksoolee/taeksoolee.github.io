@@ -4,17 +4,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ImgBB</title>
+  <title>ImgBB Uploader</title>
   <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
   <script src="//unpkg.com/alpinejs" defer></script>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/4.2.0/dexie.min.js" integrity="sha512-LuXLH9xON6/aAGYxi4Z1Dx8588Z80gY3iMmGtUlYmblUc1ulC/cGHuANXIvm8fnIWp5ShUk2MRBIWylGguXF9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07071a;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+      --primary: #2563eb;
+      --sky:     #0ea5e9;
+      --text:    #f8fafc;
+      --muted:   #94a3b8;
+      --dim:     #475569;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 60px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before, body::after {
+      content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    }
+    body::before {
+      top: -15%; left: -10%; width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    }
+    body::after {
+      bottom: -15%; right: -10%; width: 55vw; height: 55vw;
+      background: radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%);
+    }
+
+    .page {
+      position: relative; z-index: 1;
+      max-width: 680px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+
+    /* header */
+    .page-header { text-align: center; }
+    .page-header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(28px, 5vw, 40px); font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-header p {
+      margin-top: 8px; font-size: 14px; color: var(--muted);
+    }
+    .page-header .links {
+      display: flex; justify-content: center; gap: 16px; margin-top: 12px; flex-wrap: wrap;
+    }
+    .page-header .links a {
+      font-size: 12px; font-weight: 600; color: #60a5fa;
+      display: inline-flex; align-items: center; gap: 5px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .page-header .links a:hover { color: #93c5fd; }
+
+    /* card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .card-title {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title i { color: var(--primary); }
+
+    /* inputs */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--dim);
+    }
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit; font-size: 14px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]::placeholder { color: #334155; }
+    input[type="text"]:focus, input[type="file"]:focus { border-color: rgba(37,99,235,0.6); }
+    input[type="text"]:disabled, input[type="file"]:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    input[type="file"] { cursor: pointer; padding: 10px 14px; }
+    input[type="file"]::-webkit-file-upload-button {
+      background: rgba(37,99,235,0.2);
+      border: 1px solid rgba(37,99,235,0.35);
+      border-radius: 6px;
+      color: #93c5fd;
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 5px 12px; cursor: pointer;
+      transition: background 0.18s;
+      margin-right: 10px;
+    }
+    input[type="file"]::-webkit-file-upload-button:hover { background: rgba(37,99,235,0.35); }
+
+    /* buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 22px; border-radius: 10px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface); color: var(--text);
+      transition: all 0.18s; width: 100%;
+    }
+    .btn:hover { border-color: rgba(37,99,235,0.5); background: rgba(37,99,235,0.1); color: #93c5fd; }
+    .btn.primary {
+      background: var(--primary); border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+    }
+    .btn.primary:hover { background: #1d4ed8; }
+    .btn.primary[aria-busy="true"] { opacity: 0.6; pointer-events: none; }
+
+    /* divider */
+    .divider { height: 1px; background: var(--border); }
+
+    /* success dialog */
+    dialog {
+      background: rgba(10,10,30,0.98);
+      border: 1px solid rgba(37,99,235,0.3);
+      border-radius: 20px;
+      color: var(--text);
+      padding: 0;
+      max-width: 380px; width: 90%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+    dialog article { padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+    dialog h3 { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; }
+    dialog p { font-size: 14px; color: var(--muted); }
+    .success-icon { font-size: 52px; color: #22c55e; }
+
+    /* gallery */
+    .gallery-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .gallery-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .gallery-item:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-2px); }
+    .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .gallery-item-info { padding: 10px 12px; }
+    .gallery-item-title {
+      font-size: 12px; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .gallery-item-meta {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .gallery-item-size { font-size: 10px; color: var(--dim); }
+    .gallery-item-link {
+      font-size: 10px; font-weight: 600; color: #60a5fa;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 3px;
+    }
+    .gallery-item-link:hover { color: #93c5fd; }
+
+    .empty-gallery {
+      text-align: center; padding: 40px;
+      color: var(--dim); font-size: 14px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .empty-gallery i { font-size: 32px; }
+  </style>
 </head>
 
 <body>
-  <main>
-    <section class="container" x-data="{
+  <div class="page">
+    <!-- header -->
+    <div class="page-header">
+      <h1>ImgBB Uploader</h1>
+      <p>이미지를 ImgBB에 업로드하고 로컬에 이력을 보관합니다</p>
+      <div class="links">
+        <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> ImgBB
+        </a>
+        <a href="https://api.imgbb.com/" target="_blank" rel="noopener noreferrer">
+          <i class="fa-solid fa-book"></i> API Docs
+        </a>
+      </div>
+    </div>
+
+    <main x-data="{
       key: $persist(''),
       db: null,
     }" x-init="() => {
@@ -23,36 +232,30 @@
         images: '++id, title, url_viewer, url, display_url, width, height, size, time, expiration, delete_url'
       });
     }">
-      <h1>ImgBB Image Example</h1>
-      <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer">ImgBB Website</a>
-      <a href="https://api.imgbb.com/" target="_blank" rel="noopener noreferrer">ImgBB API Documentation</a>
 
-      <hr />
-      <div>
-        <input x-model="key" type="text" placeholder="API Key" />
+      <!-- API Key -->
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-key"></i> API Key</div>
+        <div class="field">
+          <label>ImgBB API Key</label>
+          <input x-model="key" type="text" placeholder="your-api-key-here" />
+        </div>
       </div>
 
-      <hr />
-      <div x-data="{
+      <!-- Upload -->
+      <div class="card" x-data="{
         filename: '',
         image: null,
         isLoading: false,
         isOpenedSuccessModal: false,
         imageFileInput: null,
       }">
+        <div class="card-title"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</div>
+
         <form name="uploadForm" @submit.prevent="async () => {
-          if (!key) {
-            alert('Please enter your API Key.');
-            return;
-          }
-          if (!filename) {
-            alert('Please enter a filename.');
-            return;
-          }
-          if (!image) {
-            alert('Please select an image file.');
-            return;
-          }
+          if (!key) { alert('Please enter your API Key.'); return; }
+          if (!filename) { alert('Please enter a filename.'); return; }
+          if (!image) { alert('Please select an image file.'); return; }
 
           isLoading = true;
           try {
@@ -61,61 +264,18 @@
             formData.append('name', filename + '.jpeg');
             formData.append('image', image);
 
-            /**
-            * @typedef {Object} ImgbbResponse
-            * @property {Object} data
-            * @property {string} data.id
-            * @property {string} data.title
-            * @property {string} data.url_viewer
-            * @property {string} data.url
-            * @property {string} data.display_url
-            * @property {number} data.width
-            * @property {number} data.height
-            * @property {number} data.size
-            * @property {number} data.time
-            * @property {number} data.expiration
-            * @property {Object} data.image
-            * @property {string} data.image.filename
-            * @property {string} data.image.name
-            * @property {string} data.image.mime
-            * @property {string} data.image.extension
-            * @property {string} data.image.url
-            * @property {Object} data.thumb
-            * @property {string} data.thumb.filename
-            * @property {string} data.thumb.name
-            * @property {string} data.thumb.mime
-            * @property {string} data.thumb.extension
-            * @property {string} data.thumb.url
-            * @property {Object} data.medium
-            * @property {string} data.medium.filename
-            * @property {string} data.medium.name
-            * @property {string} data.medium.mime
-            * @property {string} data.medium.extension
-            * @property {string} data.medium.url
-            * @property {string} data.delete_url
-            * @property {boolean} success
-            * @property {number} status
-            */
-
-            /**
-              * @type {ImgbbResponse}
-              */
             const result = await fetch('https://api.imgbb.com/1/upload', {
               method: 'POST',
               body: formData,
             }).then(response => response.json());
 
-            if (!result.success) {
-              throw new Error('Invalid API Key or Upload Error');
-            }
+            if (!result.success) throw new Error('Invalid API Key or Upload Error');
 
             filename = '';
             image = null;
             $refs.imageFileInput.value = '';
 
             await db.images.add(result.data);
-            
-            // alert('Upload successful!');
             isOpenedSuccessModal = true;
           } catch (error) {
             console.log(error);
@@ -123,59 +283,75 @@
           } finally {
             isLoading = false;
           }
-        }">
-          <label>
-            <span>FileName</span>
-            <input type="text" name="filename" x-model="filename" :disabled="isLoading" />
-          </label>
+        }" style="display:flex;flex-direction:column;gap:16px;">
 
-          <input type="file" name="image" placeholder="Select Image" @change="image = $event.target.files[0]" x-ref="imageFileInput" :disabled="isLoading" />
+          <div class="field">
+            <label>파일 이름</label>
+            <input type="text" name="filename" x-model="filename" :disabled="isLoading" placeholder="image-name" />
+          </div>
 
-          <button :aria-busy="isLoading">Upload to ImgBB</button>
+          <div class="field">
+            <label>이미지 파일</label>
+            <input type="file" name="image" accept="image/*" @change="image = $event.target.files[0]" x-ref="imageFileInput" :disabled="isLoading" />
+          </div>
+
+          <button type="submit" class="btn primary" :aria-busy="isLoading">
+            <i class="fa-solid fa-upload" x-show="!isLoading"></i>
+            <i class="fa-solid fa-spinner fa-spin" x-show="isLoading"></i>
+            <span x-text="isLoading ? '업로드 중...' : 'Upload to ImgBB'"></span>
+          </button>
         </form>
 
+        <!-- Success dialog -->
         <dialog :open="isOpenedSuccessModal">
           <article>
-            <header>
-              <!-- <button aria-label="Close" rel="prev" @click="isOpenedSuccessModal = false"></button> -->
-              <h3>Upload Successful!</h3>
-            </header>
-            <div style="width: 64px; height: 64px; margin-bottom: 1rem; text-align: center;">
-              <!-- icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 100%; height: 100%; color: green;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <p>Your image has been uploaded successfully.</p>
-            <button @click="isOpenedSuccessModal = false">Close</button>
+            <i class="fa-solid fa-circle-check success-icon"></i>
+            <h3>업로드 완료!</h3>
+            <p>이미지가 ImgBB에 성공적으로 업로드되었습니다.</p>
+            <button class="btn primary" @click="isOpenedSuccessModal = false" style="width:auto;padding:9px 28px;">
+              확인
+            </button>
           </article>
         </dialog>
       </div>
 
-      <hr />
-      <div x-data="{
-        images: [],
-      }">
-        <button @click="async () => {
-          const allImages = await db.images.toArray();
-          images = allImages;
-        }">load</button>
+      <!-- Gallery -->
+      <div class="card" x-data="{ images: [] }">
+        <div class="gallery-header">
+          <div class="card-title"><i class="fa-solid fa-images"></i> 업로드 이력</div>
+          <button class="btn" style="width:auto;padding:8px 16px;font-size:13px;"
+            @click="async () => { images = await db.images.toArray(); }">
+            <i class="fa-solid fa-rotate-right"></i> 불러오기
+          </button>
+        </div>
 
-        <!-- 캐러셀 -->
-        <div style="display: flex; overflow-x: auto; gap: 1rem; padding: 1rem 0;">
+        <template x-if="images.length === 0">
+          <div class="empty-gallery">
+            <i class="fa-regular fa-images"></i>
+            불러오기 버튼을 눌러 업로드 이력을 확인하세요
+          </div>
+        </template>
+
+        <div class="gallery-grid" x-show="images.length > 0">
           <template x-for="img in images" :key="img.id">
-            <div style="min-width: 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-              <h4 x-text="img.title"></h4>
-              <img :src="img.url" :alt="img.title" style="width: 100%; height: auto; margin-top: 0.5rem;" />
-              <p style="font-size: 0.8rem; margin-top: 0.5rem;">Size: <span x-text="(img.size / 1024).toFixed(2) + ' KB'"></span></p>
-              <a :href="img.url_viewer" target="_blank" rel="noopener noreferrer">View Image</a>
+            <div class="gallery-item">
+              <img :src="img.url" :alt="img.title" />
+              <div class="gallery-item-info">
+                <div class="gallery-item-title" x-text="img.title"></div>
+                <div class="gallery-item-meta">
+                  <span class="gallery-item-size" x-text="(img.size / 1024).toFixed(1) + ' KB'"></span>
+                  <a class="gallery-item-link" :href="img.url_viewer" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+                  </a>
+                </div>
+              </div>
             </div>
           </template>
         </div>
-
       </div>
-    </section>
-  </main>
+
+    </main>
+  </div>
 </body>
 
 </html>
