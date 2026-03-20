@@ -12,20 +12,50 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
-  <!-- GSAP -->
+  <!-- GSAP (동기 로드 → 모듈 실행 전에 사용 가능) -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script>gsap.registerPlugin(ScrollTrigger);</script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── 로딩 스크린 애니메이션 ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      const screen = document.getElementById('load-screen');
+      const numEl  = document.getElementById('load-num');
+      if (!screen || !numEl) return;
+
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: 100,
+        duration: 1.85,
+        ease: 'power2.inOut',
+        onUpdate() {
+          numEl.textContent = Math.round(obj.val);
+        },
+        onComplete() {
+          const tl = gsap.timeline({
+            onComplete() {
+              screen.remove();
+              document.body.style.overflow = '';
+            },
+          });
+          tl.to('#load-content', { opacity: 0, y: -24, duration: 0.32, ease: 'power2.in' })
+            .to(screen, { clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'power3.inOut' }, '-=0.08');
+        },
+      });
+    });
+  </script>
 
   <style>
     :root {
-      --color-bg: #07071a;
+      --color-bg:      #07071a;
       --color-surface: rgba(255, 255, 255, 0.04);
       --color-primary: #2563eb;
-      --color-sky: #0ea5e9;
-      --color-text: #f8fafc;
-      --color-muted: #94a3b8;
-      --color-border: rgba(255, 255, 255, 0.09);
+      --color-sky:     #0ea5e9;
+      --color-text:    #f8fafc;
+      --color-muted:   #94a3b8;
+      --color-border:  rgba(255, 255, 255, 0.09);
       scroll-behavior: smooth;
     }
 
@@ -36,24 +66,23 @@
       overflow-x: hidden;
     }
 
-    h1, h2, .font-sora {
-      font-family: 'Sora', sans-serif;
-    }
+    h1, h2, .font-sora { font-family: 'Sora', sans-serif; }
 
+    /* ── Bento 카드 ── */
     .bento-card {
       background: var(--color-surface);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--color-border);
       transition: border-color 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-                  box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                  box-shadow   0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
-
     .bento-card:hover {
       border-color: rgba(37, 99, 235, 0.45);
       box-shadow: 0 20px 60px -15px rgba(37, 99, 235, 0.18);
     }
 
+    /* ── 그라디언트 텍스트 ── */
     .gradient-text {
       background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
       -webkit-background-clip: text;
@@ -61,28 +90,56 @@
       background-clip: text;
     }
 
-    /* DaisyUI 버튼 오버라이드 */
+    /* ── DaisyUI 오버라이드 ── */
     .btn-primary {
       background-color: var(--color-primary) !important;
       border-color: var(--color-primary) !important;
       color: #fff !important;
     }
+    .btn-primary:hover { background-color: #1d4ed8 !important; }
 
-    .btn-primary:hover {
-      background-color: #1d4ed8 !important;
+    /* ── 앰비언트 오브 ── */
+    @keyframes orbDrift1 {
+      0%, 100% { transform: translate(0,   0)   scale(1);    }
+      33%       { transform: translate(4%,  5%)  scale(1.06); }
+      66%       { transform: translate(-3%, 3%)  scale(0.96); }
+    }
+    @keyframes orbDrift2 {
+      0%, 100% { transform: translate(0,    0)    scale(1);    }
+      33%       { transform: translate(-5%, -4%)  scale(1.04); }
+      66%       { transform: translate(4%,  -5%)  scale(0.97); }
     }
 
-    /* 스크롤바 */
-    ::-webkit-scrollbar { width: 5px; }
+    /* ── 필름 그레인 ── */
+    @keyframes grainShift {
+      0%   { transform: translate(0,   0);   }
+      20%  { transform: translate(-4%, 3%);  }
+      40%  { transform: translate(3%, -4%);  }
+      60%  { transform: translate(-3%, -3%); }
+      80%  { transform: translate(4%,  3%);  }
+      100% { transform: translate(0,   0);   }
+    }
+    .grain-overlay {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 99990;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      animation: grainShift 0.45s steps(2) infinite;
+    }
+
+    /* ── 스크롤바 ── */
+    ::-webkit-scrollbar       { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--color-bg); }
-    ::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.35); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(37, 99, 235, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(37,99,235,0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(37,99,235,0.6); }
   </style>
 
   <script type="importmap">
     {
       "imports": {
-        "lib/": "./lib/",
+        "lib/":  "./lib/",
         "three": "https://esm.sh/three@0.169.0"
       }
     }
@@ -90,21 +147,62 @@
   <script type="module" src="/v1/v1.0.2/index.mjs"></script>
 </head>
 
-<body>
+<!-- overflow: hidden → 로딩 스크린 동안 스크롤 막기 -->
+<body style="overflow: hidden;">
+
+  <!-- ── 로딩 스크린 ─────────────────────────────────────────────────── -->
+  <div id="load-screen"
+    style="position:fixed;inset:0;z-index:999999;background:#07071a;
+           display:flex;align-items:center;justify-content:center;
+           clip-path:inset(0 0 0 0);">
+    <div id="load-content" style="text-align:center;">
+      <div id="load-num"
+        style="font-family:'Sora',sans-serif;
+               font-size:clamp(96px,18vw,200px);
+               font-weight:800;color:#fff;
+               line-height:1;letter-spacing:-0.04em;">0</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.45em;
+                  color:#334155;text-transform:uppercase;margin-top:14px;">
+        Loading Experience
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 앰비언트 오브 ────────────────────────────────────────────────── -->
+  <div style="position:fixed;top:-15%;left:-10%;width:55vw;height:55vw;
+              background:radial-gradient(circle,rgba(37,99,235,0.1) 0%,transparent 70%);
+              border-radius:50%;pointer-events:none;z-index:0;
+              animation:orbDrift1 22s ease-in-out infinite;"></div>
+  <div style="position:fixed;bottom:-15%;right:-10%;width:60vw;height:60vw;
+              background:radial-gradient(circle,rgba(14,165,233,0.07) 0%,transparent 70%);
+              border-radius:50%;pointer-events:none;z-index:0;
+              animation:orbDrift2 28s ease-in-out infinite;"></div>
+
+  <!-- ── 필름 그레인 ─────────────────────────────────────────────────── -->
+  <div class="grain-overlay"></div>
+
+  <!-- ── 앱 컴포넌트 ─────────────────────────────────────────────────── -->
+  <app-cursor></app-cursor>
   <spot-light></spot-light>
   <app-header></app-header>
 
   <main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
+
     <hero-banner-section></hero-banner-section>
+
     <div class="space-y-8">
       <profile-section></profile-section>
     </div>
+
+    <stats-section></stats-section>
+
     <div class="space-y-16">
       <project-section></project-section>
     </div>
+
   </main>
 
   <app-footer></app-footer>
-</body>
 
+</body>
 </html>
