@@ -27,6 +27,16 @@ export class ProjectSection extends LitElement {
         infra: ['cloudflare workers'],
       },
       {
+        title: '3D Tetris',
+        description: 'Three.js로 만든 3D 테트리스. PeerJS(WebRTC) 데이터 채널로 1:1 멀티플레이를 붙였고, 시그널링 서버를 직접 운영합니다. 카메라 회전·줌으로 쌓인 블록을 입체로 확인할 수 있습니다.',
+        image: '/images/projects/3d-tetris-thumb.jpg',
+        link: 'https://3d-tetris.taeksoolee.com',
+        type: 'Game',
+        category: 'Game',
+        techstack: ['three.js', 'webrtc', 'peerjs', 'vite'],
+        infra: ['oracle cloud', 'cloudflare'],
+      },
+      {
         title: '3D Portfolio',
         description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
         image: '/images/projects/3d-portfolio-thumb.jpg',
