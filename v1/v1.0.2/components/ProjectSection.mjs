@@ -7,6 +7,16 @@ export class ProjectSection extends LitElement {
     super();
     this.projects = [
       {
+        title: 'AI Workflow',
+        description: 'AI 에이전트 도구 10종(Claude Code, Cursor, Copilot, Codex 등)의 규칙·스킬·MCP 설정을 .ai-workflow/ 한 곳에서 관리하는 CLI. SSoT를 두고 도구별 설정 파일을 전부 자동 생성합니다.',
+        image: '',
+        link: '/ai-workflow/',
+        type: 'CLI',
+        category: 'CLI Tool',
+        techstack: ['node.js', 'esm', 'npm package', 'mcp'],
+        infra: ['npm registry', 'GitHub Pages'],
+      },
+      {
         title: '3D Portfolio',
         description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
         image: '',
