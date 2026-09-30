@@ -16,6 +16,27 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
+  <!-- ── 인트로 1회 노출 ────────────────────────────────────────────────
+       이미 본 적이 있으면 로딩 스크린을 렌더 전에 숨긴다(깜빡임 방지).
+       ?intro 를 붙이면 언제든 다시 재생. -->
+  <script>
+    window.INTRO_SEEN_KEY = 'tsl:intro-seen:v1';
+    window.skipIntro = (() => {
+      try {
+        if (new URLSearchParams(location.search).has('intro')) return false;
+        return localStorage.getItem(window.INTRO_SEEN_KEY) === '1';
+      } catch (e) {
+        return false; // 시크릿 모드 등 localStorage 차단 → 그냥 인트로를 보여준다
+      }
+    })();
+    if (window.skipIntro) document.documentElement.classList.add('intro-skipped');
+  </script>
+  <style>
+    /* body 의 인라인 overflow:hidden 을 덮어써야 해서 !important */
+    .intro-skipped #load-screen { display: none !important; }
+    .intro-skipped body { overflow: visible !important; }
+  </style>
+
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +45,15 @@
       const screen = document.getElementById('load-screen');
       const numEl  = document.getElementById('load-num');
       if (!screen || !numEl) return;
+
+      // 이미 본 적 있으면 인트로 없이 바로 시작
+      if (window.skipIntro) {
+        screen.remove();
+        document.body.style.overflow = '';
+        return;
+      }
+
+      try { localStorage.setItem(window.INTRO_SEEN_KEY, '1'); } catch (e) {}
 
       const obj = { val: 0 };
       gsap.to(obj, {
