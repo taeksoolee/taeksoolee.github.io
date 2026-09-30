@@ -38,13 +38,13 @@ export class ProjectSection extends LitElement {
       },
       {
         title: 'Evcaro',
-        description: '전기차 지원금 조회 앱. 산재된 공공 데이터를 통합하여 사용자 맞춤형 보조금 정보를 실시간으로 제공합니다.',
+        description: '전기차 보조금 조회 PWA. 산재된 공공 데이터를 통합해 지역별 보조금·잔여대수·예상 차 가격을 제공합니다. 전체 리뉴얼을 거쳐 Next.js + PocketBase 구성으로 재구축했습니다.',
         image: '/images/projects/evcaro-thumb-2.jpg',
         link: 'https://evcaro.taeksoolee.com',
-        type: 'Web App',
-        category: 'Web App',
-        techstack: ['react', 'styled-components', 'firebase', 'google spreadsheet'],
-        infra: ['firebase hosting', 'firebase realtimedb'],
+        type: 'PWA',
+        category: 'PWA',
+        techstack: ['next.js', 'react', 'tailwindcss', 'pocketbase'],
+        infra: ['vercel', 'github actions'],
       },
       {
         title: 'JumpFit',
