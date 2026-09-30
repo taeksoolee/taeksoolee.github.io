@@ -2,6 +2,7 @@ import { LitElement, html } from 'lib/lit/index.mjs';
 
 const PROJECTS = [
   { title: 'AI Workflow',        url: '/ai-workflow/',                       cat: 'tool', desc: 'AI 에이전트 설정 통합 CLI', icon: '⚙️' },
+  { title: 'sync-tmp',           url: 'https://sync-tmp.taeksoolee.com',     cat: 'tool', desc: 'tmp/ 맥락 동기화 MCP 서버', icon: '🔁' },
   { title: 'Background Remover', url: '/projects/background-remover-app/', cat: 'app',  desc: 'AI 온디바이스 배경 제거', icon: '🖼️' },
   { title: '3D Tetris',          url: '/projects/3d-tetris/',               cat: 'game', desc: 'Three.js 3D 테트리스',    icon: '🎮' },
   { title: '3D Portfolio',       url: '/projects/3d-page/portfoilo/',        cat: 'demo', desc: '3D 스크롤 포트폴리오',   icon: '🌐' },

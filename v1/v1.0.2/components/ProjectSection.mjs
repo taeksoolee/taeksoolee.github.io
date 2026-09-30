@@ -17,6 +17,16 @@ export class ProjectSection extends LitElement {
         infra: ['npm registry', 'GitHub Pages'],
       },
       {
+        title: 'sync-tmp',
+        description: 'AI와 작업하며 tmp/ 에 쌓인 맥락(조사 노트·계획·중간 산출물)을 PC 간에 옮기는 MCP 서버. 모든 push가 출발 버전을 함께 보내 오래된 PC의 덮어쓰기를 막고, 기존 tmp/ 는 보존합니다.',
+        image: '/images/projects/sync-tmp-thumb.jpg',
+        link: 'https://sync-tmp.taeksoolee.com',
+        type: 'MCP Server',
+        category: 'MCP Server',
+        techstack: ['mcp', 'node.js', 'zod', 'npm package'],
+        infra: ['cloudflare workers'],
+      },
+      {
         title: '3D Portfolio',
         description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
         image: '/images/projects/3d-portfolio-thumb.jpg',
