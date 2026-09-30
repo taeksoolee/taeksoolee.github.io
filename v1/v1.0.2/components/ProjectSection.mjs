@@ -9,7 +9,7 @@ export class ProjectSection extends LitElement {
       {
         title: 'AI Workflow',
         description: 'AI 에이전트 도구 10종(Claude Code, Cursor, Copilot, Codex 등)의 규칙·스킬·MCP 설정을 .ai-workflow/ 한 곳에서 관리하는 CLI. SSoT를 두고 도구별 설정 파일을 전부 자동 생성합니다.',
-        image: '',
+        image: '/images/projects/docs-common-thumb.jpg',
         link: '/ai-workflow/',
         type: 'CLI',
         category: 'CLI Tool',
@@ -19,7 +19,7 @@ export class ProjectSection extends LitElement {
       {
         title: '3D Portfolio',
         description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
-        image: '',
+        image: '/images/projects/3d-portfolio-thumb.jpg',
         link: '/projects/3d-page/portfoilo/',
         type: 'Demo',
         category: 'Demo',
@@ -29,7 +29,7 @@ export class ProjectSection extends LitElement {
       {
         title: 'My Blog',
         description: '개인 기술 블로그. 최신 웹 개발 트렌드와 프로젝트 경험을 공유하는 공간입니다. ai를 이용해 글을 작성합니다.',
-        image: '/images/projects/blog-thumb-1.png',
+        image: '/images/projects/blog-thumb-2.jpg',
         link: 'https://blog.taeksoolee.com',
         type: 'Blog',
         category: 'Blog',
@@ -39,7 +39,7 @@ export class ProjectSection extends LitElement {
       {
         title: 'Evcaro',
         description: '전기차 지원금 조회 앱. 산재된 공공 데이터를 통합하여 사용자 맞춤형 보조금 정보를 실시간으로 제공합니다.',
-        image: '/images/projects/evcaro-thumb-1.png',
+        image: '/images/projects/evcaro-thumb-2.jpg',
         link: 'https://evcaro.taeksoolee.com',
         type: 'Web App',
         category: 'Web App',
@@ -49,7 +49,7 @@ export class ProjectSection extends LitElement {
       {
         title: 'JumpFit',
         description: '피트니스 센터 통합 예약관리 솔루션. 복잡한 일정 관리 시스템을 직관적인 UI로 해결한 B2B 프로젝트입니다.',
-        image: '/images/projects/jumpfit-thumb-2.png',
+        image: '/images/projects/jumpfit-thumb-3.jpg',
         link: 'https://jumpfit.taeksoolee.com',
         type: 'SaaS',
         category: 'SaaS',
