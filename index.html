@@ -216,6 +216,45 @@
     .nav-link:hover { color: #e2e8f0; }
     .nav-link:hover::after { transform: scaleX(1); }
 
+    /* ── 등장 연출 ──
+       숨김은 html.js-reveal 이 붙었을 때만. JS 가 없으면 전부 보인다. */
+    html.js-reveal .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    html.js-reveal .reveal.is-in {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.55s ease,
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* 등장할 때 테두리가 한 번 네온으로 켜졌다 잦아든다 (호버와 무관) */
+    .neon-ignite { position: relative; }
+    .neon-ignite::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.85),
+                  0 0 28px -6px rgba(56, 189, 248, 0.7);
+    }
+    html.js-reveal .reveal.is-in.neon-ignite::after {
+      animation: neonIgnite 1.15s ease-out 0.12s 1 both;
+    }
+    @keyframes neonIgnite {
+      0%   { opacity: 0; }
+      22%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .reveal { opacity: 1 !important; transform: none !important; }
+      html.js-reveal .reveal.is-in.neon-ignite::after { animation: none !important; }
+    }
+
     /* ── 스크롤바 ── */
     ::-webkit-scrollbar       { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--color-bg); }

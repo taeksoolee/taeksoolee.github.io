@@ -1,10 +1,14 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
-import { registerScrollFx, centerProgress, isNear } from './scroll-fx.mjs';
+import { registerScrollFx, centerProgress, isNear, observeReveal } from './scroll-fx.mjs';
 
 export class ProfileSection extends LitElement {
   createRenderRoot() { return this; }
 
   firstUpdated() {
+    const cards = this.querySelectorAll('.bento-card');
+    cards.forEach(c => c.classList.add('reveal', 'neon-ignite'));
+    observeReveal(cards, { stagger: 90 });
+
     const title = this.querySelector('.section-title');
     if (!title) return;
     this._offFx = registerScrollFx((y, vh) => {

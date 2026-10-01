@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
+import { observeReveal } from './scroll-fx.mjs';
 
 export class AppFooter extends LitElement {
   createRenderRoot() { return this; }
@@ -6,6 +7,12 @@ export class AppFooter extends LitElement {
   constructor() {
     super();
     this.currentYear = new Date().getFullYear();
+  }
+
+  firstUpdated() {
+    const els = [this.querySelector('.footer-cta'), this.querySelector('.footer-social')].filter(Boolean);
+    els.forEach(e => e.classList.add('reveal'));
+    observeReveal(els, { stagger: 110 });
   }
 
   render() {

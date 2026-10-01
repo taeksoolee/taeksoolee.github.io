@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
-import { registerScrollFx, centerProgress, isNear } from './scroll-fx.mjs';
+import { registerScrollFx, centerProgress, isNear, observeReveal } from './scroll-fx.mjs';
 
 export class ProjectSection extends LitElement {
   createRenderRoot() { return this; }
@@ -91,6 +91,10 @@ export class ProjectSection extends LitElement {
   }
 
   firstUpdated() {
+    const cards = this.querySelectorAll('project-card');
+    cards.forEach(c => c.classList.add('reveal', 'neon-ignite'));
+    observeReveal(cards, { stagger: 80 });
+
     const heading = this.querySelector('.section-heading');
     const sub = this.querySelector('.section-sub');
 

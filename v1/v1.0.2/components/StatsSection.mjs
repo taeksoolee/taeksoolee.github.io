@@ -1,7 +1,31 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
+import { observeReveal, countUp } from './scroll-fx.mjs';
 
 export class StatsSection extends LitElement {
   createRenderRoot() { return this; }
+
+  firstUpdated() {
+    const items = this.querySelectorAll('.stat-item');
+    items.forEach(i => i.classList.add('reveal'));
+    observeReveal(items, { stagger: 90 });
+
+    // 숫자는 처음 보일 때 한 번만 올라간다
+    const nums = this.querySelectorAll('[data-count]');
+    if (!nums.length || typeof IntersectionObserver === 'undefined') return;
+
+    const io = new IntersectionObserver((entries, obs) => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      obs.disconnect();
+      nums.forEach(el => countUp(el, Number(el.dataset.count), el.dataset.suffix || ''));
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+    io.observe(this);
+    this._io = io;
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._io) this._io.disconnect();
+  }
 
   render() {
     const stats = [
@@ -21,7 +45,8 @@ export class StatsSection extends LitElement {
 
               <!-- 숫자 -->
               <div class="font-sora font-extrabold gradient-text"
-                style="font-size: clamp(52px, 8vw, 88px); line-height: 1; letter-spacing: -0.04em;">
+                style="font-size: clamp(52px, 8vw, 88px); line-height: 1; letter-spacing: -0.04em;"
+                data-count="${s.count}" data-suffix="${s.suffix}">
                 ${s.count}${s.suffix}
               </div>
 
