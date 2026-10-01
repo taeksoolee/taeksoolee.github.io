@@ -89,10 +89,52 @@ export class ProjectSection extends LitElement {
     ];
   }
 
+  firstUpdated() {
+    // 썸네일만 프레임 안에서 천천히 흐른다. 내용을 가리지 않는다.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // 이미지가 프레임보다 세로로 12.5% 크다(2:1 프레임 + 16:9 이미지).
+    // 그 여유의 절반 안에서만 움직인다.
+    const AMP = 14;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      for (const card of this.querySelectorAll('project-card')) {
+        const img = card.querySelector('img');
+        if (!img) continue;
+        const r = card.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) continue;
+        const p = ((r.top + r.height / 2) - vh / 2) / vh;      // -1 ~ 1
+        const y = Math.max(-1, Math.min(1, p)) * AMP;
+        img.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+      }
+    };
+
+    this._onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    update();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._onScroll) {
+      window.removeEventListener('scroll', this._onScroll);
+      window.removeEventListener('resize', this._onScroll);
+    }
+  }
+
   render() {
     return html`
       <section id="projects" class="scroll-mt-28">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <h2 class="section-heading text-5xl md:text-7xl font-sora font-extrabold tracking-tighter" style="color: var(--color-text);">
             Works Library
           </h2>
@@ -101,7 +143,7 @@ export class ProjectSection extends LitElement {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-5">
           ${this.projects.map((project, index) => html`
             <project-card
               title="${project.title}"
@@ -109,7 +151,7 @@ export class ProjectSection extends LitElement {
               image="${project.image}"
               link="${project.link}"
               type="${project.type}"
-              index="${`${index + 1}`.padStart(2, '0') + '.'}"
+              index="${`${index + 1}`.padStart(2, '0')}"
               category="${project.category}"
               techstack="${project.techstack.join(',')}"
               infra="${project.infra.join(',')}"
