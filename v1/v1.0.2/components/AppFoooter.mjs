@@ -7,12 +7,20 @@ const PB_COLLECTION = 'portfolio_contacts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+// 연속 전송 쿨다운.
+// 어디까지나 UX 용이다 — 실수로 두 번 누르거나 보내고 또 보내는 걸 막는다.
+// 엔드포인트를 직접 호출하는 쪽은 이걸 거치지 않으므로 보안 대책이 아니다.
+// 남용 차단은 PocketBase 의 API 규칙과 레이트 리밋에서만 강제된다.
+const COOLDOWN_MS = 60 * 1000;
+const COOLDOWN_KEY = 'tsl:contact-sent-at';
+
 export class AppFooter extends LitElement {
   createRenderRoot() { return this; }
 
   static properties = {
     _status: { type: String, state: true },   // idle | sending | ok | error
     _error:  { type: String, state: true },
+    _cooldown: { type: Number, state: true }, // 남은 초
   };
 
   constructor() {
@@ -20,12 +28,41 @@ export class AppFooter extends LitElement {
     this.currentYear = new Date().getFullYear();
     this._status = 'idle';
     this._error = '';
+    this._cooldown = 0;
   }
 
   firstUpdated() {
     const els = [this.querySelector('.footer-cta'), this.querySelector('.footer-form')].filter(Boolean);
     els.forEach(e => e.classList.add('reveal'));
     observeReveal(els, { stagger: 110 });
+    this._resumeCooldown();   // 새로고침해도 쿨다운이 이어지도록
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._tick) clearInterval(this._tick);
+  }
+
+  _readSentAt() {
+    try { return Number(localStorage.getItem(COOLDOWN_KEY)) || 0; } catch (e) { return 0; }
+  }
+
+  _resumeCooldown() {
+    const left = COOLDOWN_MS - (Date.now() - this._readSentAt());
+    if (left <= 0) return;
+    this._startCooldown(left);
+  }
+
+  _startCooldown(ms) {
+    if (this._tick) clearInterval(this._tick);
+    const until = Date.now() + ms;
+    const update = () => {
+      const left = Math.ceil((until - Date.now()) / 1000);
+      this._cooldown = Math.max(0, left);
+      if (left <= 0) clearInterval(this._tick);
+    };
+    update();
+    this._tick = setInterval(update, 500);
   }
 
   _validate({ name, email, message }) {
@@ -42,6 +79,8 @@ export class AppFooter extends LitElement {
     e.preventDefault();
     if (this._status === 'sending') return;
 
+    if (this._cooldown > 0) return;
+
     const form = e.currentTarget;
     const data = new FormData(form);
 
@@ -49,6 +88,7 @@ export class AppFooter extends LitElement {
     if ((data.get('website') || '').toString().trim()) {
       this._status = 'ok';
       form.reset();
+      this._startCooldown(COOLDOWN_MS);
       return;
     }
 
@@ -94,6 +134,8 @@ export class AppFooter extends LitElement {
 
       this._status = 'ok';
       form.reset();
+      try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch (e3) {}
+      this._startCooldown(COOLDOWN_MS);
     } catch (e2) {
       this._status = 'error';
       if (e2.name === 'AbortError') {
@@ -133,6 +175,8 @@ export class AppFooter extends LitElement {
 
   render() {
     const sending = this._status === 'sending';
+    const cooling = this._cooldown > 0;
+    const blocked = sending || cooling;
 
     return html`
       <footer style="background: #03030d; border-top: 1px solid var(--color-border);">
@@ -165,19 +209,19 @@ export class AppFooter extends LitElement {
               <div>
                 <label class="field-label mono" for="cf-name">name</label>
                 <input class="field" id="cf-name" name="name" type="text" required maxlength="80"
-                  placeholder="이름" autocomplete="name" ?disabled=${sending}>
+                  placeholder="이름" autocomplete="name" ?disabled=${blocked}>
               </div>
               <div>
                 <label class="field-label mono" for="cf-email">email</label>
                 <input class="field" id="cf-email" name="email" type="email" required
-                  placeholder="답장받을 주소" autocomplete="email" ?disabled=${sending}>
+                  placeholder="답장받을 주소" autocomplete="email" ?disabled=${blocked}>
               </div>
             </div>
 
             <div>
               <label class="field-label mono" for="cf-message">message</label>
               <textarea class="field" id="cf-message" name="message" rows="5" required maxlength="4000"
-                placeholder="어떤 이야기든 편하게 적어주세요." ?disabled=${sending}></textarea>
+                placeholder="어떤 이야기든 편하게 적어주세요." ?disabled=${blocked}></textarea>
             </div>
 
             <div class="honeypot" aria-hidden="true">
@@ -186,15 +230,17 @@ export class AppFooter extends LitElement {
             </div>
 
             <div class="flex flex-col gap-3 pt-1">
-              <button type="submit" ?disabled=${sending}
+              <button type="submit" ?disabled=${blocked}
                 class="mono inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-[12px] font-bold uppercase tracking-[0.14em]"
                 style="color: #04121c; background: linear-gradient(135deg, #7dd3fc, var(--neon));
                        box-shadow: 0 0 22px -8px rgba(56,189,248,0.85);
                        transition: box-shadow 0.18s ease, opacity 0.18s ease;
-                       ${sending ? 'opacity:0.6; cursor:progress;' : ''}">
+                       ${blocked ? 'opacity:0.6;' : ''} ${sending ? 'cursor:progress;' : ''} ${cooling ? 'cursor:not-allowed;' : ''}">
                 ${sending
                   ? html`<i class="fa-solid fa-circle-notch fa-spin" style="font-size: 11px;"></i> sending`
-                  : html`send message <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i>`}
+                  : cooling
+                    ? html`<i class="fa-regular fa-clock" style="font-size: 11px;"></i> ${this._cooldown}s`
+                    : html`send message <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i>`}
               </button>
               <div aria-live="polite">${this._renderStatus()}</div>
             </div>
