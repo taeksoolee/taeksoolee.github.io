@@ -8,8 +8,9 @@ const PB_COLLECTION = 'portfolio_contacts';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // 연속 전송 쿨다운.
-// 이 동안 버튼은 실제 전송과 같은 'sending' 으로 보인다. 남은 초를 띄우면
-// "기다려라" 로 읽혀서, 그냥 처리 중인 것처럼 두기로 했다.
+// 전송이 끝나도 쿨다운 동안은 계속 'sending' 으로 둔다. 완료 안내와 폼
+// 초기화도 쿨다운이 끝날 때 한꺼번에 처리해서, 전체가 "보내는 중 → 완료"
+// 한 흐름으로 읽히게 한다. 남은 초를 띄우면 "기다려라" 로 읽혀서 뺐다.
 // 어디까지나 UX 용이다 — 실수로 두 번 누르거나 보내고 또 보내는 걸 막는다.
 // 엔드포인트를 직접 호출하는 쪽은 이걸 거치지 않으므로 보안 대책이 아니다.
 // 남용 차단은 PocketBase 의 API 규칙과 레이트 리밋에서만 강제된다.
@@ -55,10 +56,22 @@ export class AppFooter extends LitElement {
     this._startCooldown(left);
   }
 
+  /** 쿨다운만 건다 (새로고침으로 이어받은 경우) */
   _startCooldown(ms) {
     if (this._tick) clearTimeout(this._tick);
     this._cooldown = 1;                     // 남은 초가 아니라 단순 플래그
     this._tick = setTimeout(() => { this._cooldown = 0; }, ms);
+  }
+
+  /** 쿨다운이 끝나는 순간 완료 안내와 폼 초기화를 함께 처리한다 */
+  _finishAfterCooldown(form, ms) {
+    if (this._tick) clearTimeout(this._tick);
+    this._cooldown = 1;
+    this._tick = setTimeout(() => {
+      this._cooldown = 0;
+      this._status = 'ok';
+      if (form) form.reset();
+    }, ms);
   }
 
   _validate({ name, email, message }) {
@@ -82,9 +95,8 @@ export class AppFooter extends LitElement {
 
     // 봇이 채우는 칸 — 값이 있으면 보내지 않고 성공한 것처럼 둔다
     if ((data.get('website') || '').toString().trim()) {
-      this._status = 'ok';
-      form.reset();
-      this._startCooldown(COOLDOWN_MS);
+      this._status = 'sending';
+      this._finishAfterCooldown(form, COOLDOWN_MS);
       return;
     }
 
@@ -128,10 +140,8 @@ export class AppFooter extends LitElement {
         throw new Error(`전송에 실패했습니다. (${res.status})`);
       }
 
-      this._status = 'ok';
-      form.reset();
       try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch (e3) {}
-      this._startCooldown(COOLDOWN_MS);
+      this._finishAfterCooldown(form, COOLDOWN_MS);   // _status 는 'sending' 유지
     } catch (e2) {
       this._status = 'error';
       if (e2.name === 'AbortError') {
@@ -145,6 +155,7 @@ export class AppFooter extends LitElement {
     } finally {
       clearTimeout(timer);
     }
+    // 성공 경로는 _status 를 'sending' 으로 유지한 채 쿨다운이 끝낸다.
   }
 
   _renderStatus() {
