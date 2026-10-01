@@ -1,15 +1,33 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
 import * as THREE from 'three';
+import { registerScrollFx } from './scroll-fx.mjs';
 
 export class HeroBannerSection extends LitElement {
   createRenderRoot() { return this; }
 
   firstUpdated() {
     this._initThree();
+    this._initParallax();
+  }
+
+  _initParallax() {
+    const canvas = this.querySelector('#hero-canvas');
+    const content = this.querySelector('.hero-content');
+    const section = this.querySelector('section');
+    if (!section) return;
+
+    this._offFx = registerScrollFx((y) => {
+      const h = section.offsetHeight;
+      if (y > h) return;                       // 히어로를 지나면 멈춘다
+      // 배경이 가장 느리고, 본문이 그다음, 스크롤이 가장 빠르다
+      if (canvas)  canvas.style.transform  = `translate3d(0, ${(y * 0.34).toFixed(1)}px, 0)`;
+      if (content) content.style.transform = `translate3d(0, ${(y * 0.13).toFixed(1)}px, 0)`;
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this._offFx) this._offFx();
     if (this._animId) cancelAnimationFrame(this._animId);
     if (this._renderer) this._renderer.dispose();
     if (this._mouseCb) window.removeEventListener('mousemove', this._mouseCb);
@@ -122,19 +140,20 @@ export class HeroBannerSection extends LitElement {
     return html`
       <section class="relative flex flex-col items-center justify-center text-center space-y-10 pt-20 overflow-hidden" style="min-height: 90vh;">
 
-        <canvas id="hero-canvas" class="absolute inset-0 w-full" style="z-index: 0;"></canvas>
+        <canvas id="hero-canvas" class="absolute inset-0 w-full" style="z-index: 0; will-change: transform;"></canvas>
 
-        <div class="relative flex flex-col items-center space-y-10" style="z-index: 1;">
+        <div class="hero-content relative flex flex-col items-center space-y-10" style="z-index: 1; will-change: transform;">
 
-          <div class="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border font-bold text-xs tracking-widest uppercase"
-            style="background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.3); color: #93c5fd;">
-            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-            Currently Open to Offers
+          <div class="hero-badge neon-ring mono inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase"
+            style="background: rgba(56,189,248,0.06); color: #7dd3fc;">
+            <span class="w-1.5 h-1.5 rounded-full animate-pulse"
+              style="background: var(--neon); box-shadow: 0 0 8px var(--neon);"></span>
+            currently open to offers
           </div>
 
           <h1 class="hero-title font-sora font-extrabold tracking-tighter leading-none" style="font-size: clamp(52px, 12vw, 144px);">
             <span class="block text-white">Crafting</span>
-            <span class="block gradient-text italic">Digital Depth.</span>
+            <span class="block gradient-text italic neon-text">Digital Depth.</span>
           </h1>
 
           <p class="hero-sub max-w-2xl text-lg md:text-xl font-medium leading-relaxed" style="color: var(--color-muted);">
@@ -142,11 +161,24 @@ export class HeroBannerSection extends LitElement {
             기술적 한계를 넘어 사용자에게 닿는 완결성 있는 경험을 추구합니다.
           </p>
 
-          <div class="hero-cta flex gap-4 pt-4">
-            <a href="#projects" class="btn btn-primary btn-lg rounded-2xl px-12 shadow-2xl"
-              style="box-shadow: 0 20px 40px -10px rgba(37,99,235,0.4);">View Works</a>
-            <a href="#about" class="btn btn-ghost btn-lg font-bold hover:text-white transition-colors"
-              style="color: var(--color-muted);">Learn More</a>
+          <div class="hero-cta flex flex-wrap justify-center items-center gap-3 pt-4 mono text-[12px] tracking-[0.14em] uppercase">
+            <a href="#projects"
+              class="inline-flex items-center gap-2 rounded-lg px-7 py-3 font-bold no-underline"
+              style="color: #04121c; background: linear-gradient(135deg, #7dd3fc, var(--neon));
+                     box-shadow: 0 0 26px -6px rgba(56,189,248,0.85);
+                     transition: box-shadow 0.18s ease, transform 0.18s ease;"
+              onmouseenter="this.style.boxShadow='0 0 34px -2px rgba(56,189,248,1)';"
+              onmouseleave="this.style.boxShadow='0 0 26px -6px rgba(56,189,248,0.85)';">
+              view works
+              <i class="fa-solid fa-arrow-right" style="font-size: 10px;"></i>
+            </a>
+            <a href="#about"
+              class="neon-ring inline-flex items-center rounded-lg px-7 py-3 font-bold no-underline"
+              style="color: #94a3b8; background: rgba(56,189,248,0.04);"
+              onmouseenter="this.style.color='#e2e8f0';"
+              onmouseleave="this.style.color='#94a3b8';">
+              about me
+            </a>
           </div>
 
         </div>

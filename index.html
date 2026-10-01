@@ -111,6 +111,7 @@
       --color-text:    #f8fafc;
       --color-muted:   #94a3b8;
       --color-border:  rgba(255, 255, 255, 0.09);
+      --neon:          #38bdf8;
     }
 
     html {
@@ -176,6 +177,44 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 300px 300px;
     }
+
+    /* ── 네온 액센트 ── */
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    .neon-text {
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.40),
+                   0 0 38px rgba(37, 99, 235, 0.22);
+    }
+
+    .neon-ring {
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      box-shadow: 0 0 16px -7px rgba(56, 189, 248, 0.8),
+                  inset 0 0 20px -15px rgba(56, 189, 248, 0.9);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+    }
+    .neon-ring:hover {
+      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 22px -4px rgba(56, 189, 248, 0.85),
+                  inset 0 0 22px -10px rgba(56, 189, 248, 1);
+    }
+
+    /* 네비: 호버 시 네온 밑줄 */
+    .nav-link { position: relative; transition: color 0.18s ease; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -6px;
+      height: 1px;
+      background: var(--neon);
+      box-shadow: 0 0 8px var(--neon);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.22s ease;
+    }
+    .nav-link:hover { color: #e2e8f0; }
+    .nav-link:hover::after { transform: scaleX(1); }
 
     /* ── 스크롤바 ── */
     ::-webkit-scrollbar       { width: 5px; }

@@ -1,7 +1,22 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
+import { registerScrollFx, centerProgress, isNear } from './scroll-fx.mjs';
 
 export class ProfileSection extends LitElement {
   createRenderRoot() { return this; }
+
+  firstUpdated() {
+    const title = this.querySelector('.section-title');
+    if (!title) return;
+    this._offFx = registerScrollFx((y, vh) => {
+      if (!isNear(title, vh)) return;
+      title.style.transform = `translate3d(0, ${(centerProgress(title, vh) * -18).toFixed(1)}px, 0)`;
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._offFx) this._offFx();
+  }
 
   render() {
     return html`

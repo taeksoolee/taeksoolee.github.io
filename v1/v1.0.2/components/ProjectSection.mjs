@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
+import { registerScrollFx, centerProgress, isNear } from './scroll-fx.mjs';
 
 export class ProjectSection extends LitElement {
   createRenderRoot() { return this; }
@@ -90,45 +91,30 @@ export class ProjectSection extends LitElement {
   }
 
   firstUpdated() {
-    // 썸네일만 프레임 안에서 천천히 흐른다. 내용을 가리지 않는다.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const heading = this.querySelector('.section-heading');
+    const sub = this.querySelector('.section-sub');
 
-    // 이미지가 프레임보다 세로로 12.5% 크다(2:1 프레임 + 16:9 이미지).
-    // 그 여유의 절반 안에서만 움직인다.
-    const AMP = 14;
-    let ticking = false;
-
-    const update = () => {
-      ticking = false;
-      const vh = window.innerHeight;
+    this._offFx = registerScrollFx((y, vh) => {
+      // 썸네일: 프레임보다 세로로 12.5% 큰 이미지가 그 여유 안에서 흐른다
       for (const card of this.querySelectorAll('project-card')) {
+        if (!isNear(card, vh)) continue;
         const img = card.querySelector('img');
         if (!img) continue;
-        const r = card.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) continue;
-        const p = ((r.top + r.height / 2) - vh / 2) / vh;      // -1 ~ 1
-        const y = Math.max(-1, Math.min(1, p)) * AMP;
-        img.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+        img.style.transform = `translate3d(0, ${(centerProgress(card, vh) * 14).toFixed(1)}px, 0)`;
       }
-    };
 
-    this._onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    };
-
-    window.addEventListener('scroll', this._onScroll, { passive: true });
-    window.addEventListener('resize', this._onScroll, { passive: true });
-    update();
+      // 섹션 제목: 카드보다 느리게 흐른다
+      if (heading && isNear(heading, vh)) {
+        const p = centerProgress(heading, vh);
+        heading.style.transform = `translate3d(0, ${(p * -18).toFixed(1)}px, 0)`;
+        if (sub) sub.style.transform = `translate3d(0, ${(p * -9).toFixed(1)}px, 0)`;
+      }
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this._onScroll) {
-      window.removeEventListener('scroll', this._onScroll);
-      window.removeEventListener('resize', this._onScroll);
-    }
+    if (this._offFx) this._offFx();
   }
 
   render() {
