@@ -25,7 +25,6 @@ export class AppHeader extends LitElement {
       });
     }
 
-    gsap.from(header, { opacity: 0, y: -20, duration: 0.7, ease: 'power2.out', delay: 0.1 });
   }
 
   _openProjects() {

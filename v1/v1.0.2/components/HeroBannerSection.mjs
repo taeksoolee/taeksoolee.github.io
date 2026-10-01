@@ -1,29 +1,11 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
 import * as THREE from 'three';
 
-const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&*%!?';
-
-function scrambleChar(el, finalChar, delay = 0) {
-  if (!finalChar || finalChar.trim() === '') return;
-  setTimeout(() => {
-    let count = 0;
-    const total = 8;
-    const id = setInterval(() => {
-      el.textContent = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
-      if (++count >= total) {
-        el.textContent = finalChar;
-        clearInterval(id);
-      }
-    }, 38);
-  }, delay);
-}
-
 export class HeroBannerSection extends LitElement {
   createRenderRoot() { return this; }
 
   firstUpdated() {
     this._initThree();
-    this._initTextGSAP();
   }
 
   disconnectedCallback() {
@@ -98,17 +80,6 @@ export class HeroBannerSection extends LitElement {
     };
     window.addEventListener('resize', this._resizeCb);
 
-    // 스크롤 페이드
-    gsap.to(canvas, {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: this.querySelector('section'),
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-      },
-    });
-
     const animate = () => {
       this._animId = requestAnimationFrame(animate);
 
@@ -147,41 +118,7 @@ export class HeroBannerSection extends LitElement {
     animate();
   }
 
-  _initTextGSAP() {
-    const chars = this.querySelectorAll('.hero-char');
-    const badge = this.querySelector('.hero-badge');
-    const sub = this.querySelector('.hero-sub');
-    const cta = this.querySelector('.hero-cta');
-
-    gsap.set(chars, { opacity: 0, y: 70, rotateX: -90 });
-    gsap.set([badge, sub, cta], { opacity: 0, y: 24 });
-
-    const tl = gsap.timeline({ delay: 0.1 });
-
-    tl.to(badge, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-      .add(() => {
-        // 각 글자: fade-up 시작과 동시에 스크램블
-        chars.forEach((el, i) => {
-          const orig = el.dataset.orig || el.textContent;
-          gsap.to(el, {
-            opacity: 1, y: 0, rotateX: 0,
-            duration: 0.5, ease: 'power2.out',
-            delay: i * 0.025,
-            onStart() { scrambleChar(el, orig, 0); },
-          });
-        });
-      }, '-=0.2')
-      .to(sub, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, `+=${chars.length * 0.025 + 0.3}`)
-      .to(cta, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3');
-  }
-
   render() {
-    const toChars = (str) => str.split('').map((ch) =>
-      ch === ' '
-        ? html`<span class="hero-char inline-block" data-orig=" ">&nbsp;</span>`
-        : html`<span class="hero-char inline-block" data-orig="${ch}">${ch}</span>`
-    );
-
     return html`
       <section class="relative flex flex-col items-center justify-center text-center space-y-10 pt-20 overflow-hidden" style="min-height: 90vh;">
 
@@ -195,9 +132,9 @@ export class HeroBannerSection extends LitElement {
             Currently Open to Offers
           </div>
 
-          <h1 class="font-sora font-extrabold tracking-tighter leading-none" style="font-size: clamp(52px, 12vw, 144px); perspective: 900px;">
-            <span class="block text-white">${toChars('Crafting')}</span>
-            <span class="block gradient-text italic">${toChars('Digital Depth.')}</span>
+          <h1 class="hero-title font-sora font-extrabold tracking-tighter leading-none" style="font-size: clamp(52px, 12vw, 144px);">
+            <span class="block text-white">Crafting</span>
+            <span class="block gradient-text italic">Digital Depth.</span>
           </h1>
 
           <p class="hero-sub max-w-2xl text-lg md:text-xl font-medium leading-relaxed" style="color: var(--color-muted);">
