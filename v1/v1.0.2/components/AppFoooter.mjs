@@ -1,9 +1,11 @@
 import { LitElement, html } from 'lib/lit/index.mjs';
 import { observeReveal } from './scroll-fx.mjs';
 
-// PocketBase — 컬렉션 이름은 프로젝트명 접두사 규칙(evcaro_* 처럼)을 따른다
+// PocketBase — 문의는 프로젝트별로 나누지 않고 한 곳에 모은다.
+// 어느 서비스에서 왔는지는 service 컬럼으로 구분한다.
 const PB_URL = 'https://pocketbase.taeksoolee.com';
-const PB_COLLECTION = 'portfolio_contacts';
+const PB_COLLECTION = 'common_contact';
+const SERVICE = 'portfolio';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -101,10 +103,10 @@ export class AppFooter extends LitElement {
     }
 
     const payload = {
+      service: SERVICE,
       name: (data.get('name') || '').toString().trim(),
       email: (data.get('email') || '').toString().trim(),
       message: (data.get('message') || '').toString().trim(),
-      source: location.host,
     };
 
     const err = this._validate(payload);
