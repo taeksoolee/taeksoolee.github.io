@@ -4,7 +4,7 @@ import { observeReveal } from './scroll-fx.mjs';
 // PocketBase — 문의는 프로젝트별로 나누지 않고 한 곳에 모은다.
 // 어느 서비스에서 왔는지는 service 컬럼으로 구분한다.
 const PB_URL = 'https://pocketbase.taeksoolee.com';
-const PB_COLLECTION = 'common_contact';
+const PB_COLLECTION = 'common_contacts';
 const SERVICE = 'portfolio';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
