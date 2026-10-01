@@ -34,51 +34,9 @@ class ProjectCard extends LitElement {
     return this.infra ? this.infra.split(',') : [];
   }
 
-  firstUpdated() {
-    const card = this.querySelector('.card-tilt');
-    if (!card) return;
-
-    // 스크롤 reveal
-    gsap.from(this, {
-      opacity: 0,
-      y: 80,
-      duration: 0.85,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 88%',
-      },
-    });
-
-    // 3D tilt on hover
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
-      const y = -((e.clientY - rect.top) / rect.height - 0.5) * 9;
-      gsap.to(card, {
-        rotateY: x,
-        rotateX: y,
-        transformPerspective: 900,
-        duration: 0.35,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    });
-
-    card.addEventListener('mouseleave', () => {
-      gsap.to(card, {
-        rotateY: 0,
-        rotateX: 0,
-        duration: 0.65,
-        ease: 'power3.out',
-        overwrite: 'auto',
-      });
-    });
-  }
-
   render() {
     return html`
-      <div class="card-tilt group flex flex-col space-y-6" style="transform-style: preserve-3d; will-change: transform;">
+      <div class="card-tilt group flex flex-col space-y-6">
 
         <!-- 이미지 영역 -->
         <div class="aspect-video rounded-[2.5rem] overflow-hidden relative"

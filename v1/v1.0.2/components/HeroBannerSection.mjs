@@ -24,7 +24,6 @@ export class HeroBannerSection extends LitElement {
   firstUpdated() {
     this._initThree();
     this._initTextGSAP();
-    this._initMagnetic();
   }
 
   disconnectedCallback() {
@@ -174,21 +173,6 @@ export class HeroBannerSection extends LitElement {
       }, '-=0.2')
       .to(sub, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, `+=${chars.length * 0.025 + 0.3}`)
       .to(cta, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3');
-  }
-
-  // 마그네틱 버튼
-  _initMagnetic() {
-    this.querySelectorAll('.hero-cta a').forEach((btn) => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.32;
-        const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.32;
-        gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-      });
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
-      });
-    });
   }
 
   render() {

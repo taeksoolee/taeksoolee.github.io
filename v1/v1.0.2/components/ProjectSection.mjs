@@ -89,37 +89,6 @@ export class ProjectSection extends LitElement {
     ];
   }
 
-  firstUpdated() {
-    // 섹션 제목 reveal
-    const title = this.querySelector('.section-heading');
-    const sub = this.querySelector('.section-sub');
-
-    gsap.from(title, {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 85%',
-      },
-    });
-
-    if (sub) {
-      gsap.from(sub, {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: this,
-          start: 'top 85%',
-        },
-      });
-    }
-  }
-
   render() {
     return html`
       <section id="projects" class="scroll-mt-28">

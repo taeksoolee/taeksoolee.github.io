@@ -3,62 +3,6 @@ import { LitElement, html } from 'lib/lit/index.mjs';
 export class ProfileSection extends LitElement {
   createRenderRoot() { return this; }
 
-  firstUpdated() {
-    // 벤토 카드 stagger reveal
-    gsap.from(this.querySelectorAll('.bento-card'), {
-      opacity: 0,
-      y: 60,
-      duration: 0.85,
-      ease: 'power3.out',
-      stagger: 0.13,
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 82%',
-      },
-    });
-
-    // 스킬 태그 wave
-    gsap.from(this.querySelectorAll('.skill-tag'), {
-      opacity: 0,
-      scale: 0.65,
-      duration: 0.4,
-      ease: 'back.out(1.7)',
-      stagger: 0.055,
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 72%',
-      },
-    });
-
-    // 섹션 제목 reveal
-    gsap.from(this.querySelector('.section-title'), {
-      opacity: 0,
-      x: -40,
-      duration: 0.7,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 85%',
-      },
-    });
-
-    // "Frontend Developer" bounce
-    const spans = this.querySelectorAll('#animationText span');
-    const bounce = () => {
-      gsap.fromTo(spans,
-        { y: 0 },
-        {
-          y: -7, color: '#0ea5e9',
-          duration: 0.28, ease: 'power2.out',
-          stagger: 0.038,
-          yoyo: true, repeat: 1,
-        }
-      );
-    };
-    setTimeout(bounce, 1200);
-    setInterval(bounce, 5500);
-  }
-
   render() {
     return html`
       <section id="about" class="scroll-mt-28">

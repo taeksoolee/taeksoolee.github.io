@@ -8,33 +8,6 @@ export class AppFooter extends LitElement {
     this.currentYear = new Date().getFullYear();
   }
 
-  firstUpdated() {
-    // CTA 텍스트 reveal
-    gsap.from(this.querySelector('.footer-cta'), {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 90%',
-      },
-    });
-
-    // 소셜 링크 reveal
-    gsap.from(this.querySelector('.footer-social'), {
-      opacity: 0,
-      x: 40,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.2,
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 90%',
-      },
-    });
-  }
-
   render() {
     return html`
       <footer style="background: #03030d; border-top: 1px solid var(--color-border);">

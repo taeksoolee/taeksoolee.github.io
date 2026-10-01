@@ -3,55 +3,6 @@ import { LitElement, html } from 'lib/lit/index.mjs';
 export class StatsSection extends LitElement {
   createRenderRoot() { return this; }
 
-  firstUpdated() {
-    // 전체 섹션 reveal
-    gsap.from(this.querySelector('.stats-grid'), {
-      opacity: 0,
-      y: 40,
-      duration: 0.7,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: this,
-        start: 'top 82%',
-      },
-    });
-
-    // 숫자 카운트업 - 뷰포트 진입 시
-    ScrollTrigger.create({
-      trigger: this,
-      start: 'top 75%',
-      once: true,
-      onEnter: () => {
-        this.querySelectorAll('[data-count]').forEach((el) => {
-          const target = parseFloat(el.dataset.count);
-          const suffix = el.dataset.suffix || '';
-          const prefix = el.dataset.prefix || '';
-          const isFloat = el.dataset.float === 'true';
-          const obj = { val: 0 };
-
-          gsap.to(obj, {
-            val: target,
-            duration: 1.8,
-            ease: 'power2.out',
-            onUpdate() {
-              const v = isFloat ? obj.val.toFixed(1) : Math.round(obj.val);
-              el.textContent = prefix + v + suffix;
-            },
-          });
-        });
-
-        // 구분선 grow 애니메이션
-        gsap.from(this.querySelectorAll('.stat-divider'), {
-          scaleX: 0,
-          transformOrigin: 'left',
-          duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.1,
-        });
-      },
-    });
-  }
-
   render() {
     const stats = [
       { count: 3, suffix: '+', label: 'Years\nExperience', desc: '2022년부터 프론트엔드 개발' },
@@ -70,10 +21,8 @@ export class StatsSection extends LitElement {
 
               <!-- 숫자 -->
               <div class="font-sora font-extrabold gradient-text"
-                style="font-size: clamp(52px, 8vw, 88px); line-height: 1; letter-spacing: -0.04em;"
-                data-count="${s.count}"
-                data-suffix="${s.suffix}">
-                0${s.suffix}
+                style="font-size: clamp(52px, 8vw, 88px); line-height: 1; letter-spacing: -0.04em;">
+                ${s.count}${s.suffix}
               </div>
 
               <!-- 구분선 -->
