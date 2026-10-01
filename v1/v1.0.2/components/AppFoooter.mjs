@@ -8,10 +8,12 @@ const PB_COLLECTION = 'portfolio_contacts';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // 연속 전송 쿨다운.
+// 이 동안 버튼은 실제 전송과 같은 'sending' 으로 보인다. 남은 초를 띄우면
+// "기다려라" 로 읽혀서, 그냥 처리 중인 것처럼 두기로 했다.
 // 어디까지나 UX 용이다 — 실수로 두 번 누르거나 보내고 또 보내는 걸 막는다.
 // 엔드포인트를 직접 호출하는 쪽은 이걸 거치지 않으므로 보안 대책이 아니다.
 // 남용 차단은 PocketBase 의 API 규칙과 레이트 리밋에서만 강제된다.
-const COOLDOWN_MS = 60 * 1000;
+const COOLDOWN_MS = 10 * 1000;
 const COOLDOWN_KEY = 'tsl:contact-sent-at';
 
 export class AppFooter extends LitElement {
@@ -40,7 +42,7 @@ export class AppFooter extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this._tick) clearInterval(this._tick);
+    if (this._tick) clearTimeout(this._tick);
   }
 
   _readSentAt() {
@@ -54,15 +56,9 @@ export class AppFooter extends LitElement {
   }
 
   _startCooldown(ms) {
-    if (this._tick) clearInterval(this._tick);
-    const until = Date.now() + ms;
-    const update = () => {
-      const left = Math.ceil((until - Date.now()) / 1000);
-      this._cooldown = Math.max(0, left);
-      if (left <= 0) clearInterval(this._tick);
-    };
-    update();
-    this._tick = setInterval(update, 500);
+    if (this._tick) clearTimeout(this._tick);
+    this._cooldown = 1;                     // 남은 초가 아니라 단순 플래그
+    this._tick = setTimeout(() => { this._cooldown = 0; }, ms);
   }
 
   _validate({ name, email, message }) {
@@ -235,12 +231,10 @@ export class AppFooter extends LitElement {
                 style="color: #04121c; background: linear-gradient(135deg, #7dd3fc, var(--neon));
                        box-shadow: 0 0 22px -8px rgba(56,189,248,0.85);
                        transition: box-shadow 0.18s ease, opacity 0.18s ease;
-                       ${blocked ? 'opacity:0.6;' : ''} ${sending ? 'cursor:progress;' : ''} ${cooling ? 'cursor:not-allowed;' : ''}">
-                ${sending
+                       ${blocked ? 'opacity:0.6; cursor:progress;' : ''}">
+                ${blocked
                   ? html`<i class="fa-solid fa-circle-notch fa-spin" style="font-size: 11px;"></i> sending`
-                  : cooling
-                    ? html`<i class="fa-regular fa-clock" style="font-size: 11px;"></i> ${this._cooldown}s`
-                    : html`send message <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i>`}
+                  : html`send message <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i>`}
               </button>
               <div aria-live="polite">${this._renderStatus()}</div>
             </div>
