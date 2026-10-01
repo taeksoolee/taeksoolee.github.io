@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS 파싱 전 첫 페인트부터 어두운 캔버스로 -->
+  <meta name="color-scheme" content="dark">
   <title>Taeksoo Lee | Portfolio</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
@@ -97,6 +99,11 @@
 
   <style>
     :root {
+      /* daisyUI full.min.css 가 html 을 흰색으로 칠한다. 덮지 않으면
+         Tailwind CDN 이 CSS 를 만들기 전까지 흰 화면이 보인다. */
+      background-color: #07071a;
+      color-scheme: dark;
+
       --color-bg:      #07071a;
       --color-surface: rgba(255, 255, 255, 0.04);
       --color-primary: #2563eb;
@@ -105,6 +112,10 @@
       --color-muted:   #94a3b8;
       --color-border:  rgba(255, 255, 255, 0.09);
       scroll-behavior: smooth;
+    }
+
+    html {
+      background-color: var(--color-bg);
     }
 
     body {
