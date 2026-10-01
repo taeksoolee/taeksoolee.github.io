@@ -125,10 +125,10 @@ export class ProjectSection extends LitElement {
       <section id="projects" class="scroll-mt-28">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <h2 class="section-heading text-5xl md:text-7xl font-sora font-extrabold tracking-tighter" style="color: var(--color-text);">
-            Works Library<span class="gradient-text">.</span>
+            Works Library
           </h2>
           <p class="section-sub font-bold uppercase tracking-[0.3em] text-[10px] pb-2" style="color: var(--color-muted);">
-            Crafting solutions since 2022
+            8 Projects · Since 2022
           </p>
         </div>
 

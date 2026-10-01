@@ -64,7 +64,7 @@ export class ProfileSection extends LitElement {
       <section id="about" class="scroll-mt-28">
 
         <h2 class="section-title text-5xl md:text-7xl font-sora font-extrabold tracking-tighter mb-12" style="color: var(--color-text);">
-          About<span class="gradient-text">.</span>
+          About
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[600px]">
@@ -86,8 +86,9 @@ export class ProfileSection extends LitElement {
                   <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span><span>p</span><span>e</span><span>r</span>
                 </div>
                 <p class="font-medium max-w-md leading-relaxed" style="color: var(--color-muted);">
-                  데이터의 흐름을 이해하고 시각적인 즐거움으로 치환합니다.<br>
-                  단순한 코더가 아닌 제품의 가치를 높이는 엔지니어가 되고자 합니다.
+                  AI 에이전트로 일하다 불편한 게 보이면 도구로 만들어 씁니다.<br>
+                  aiw와 sync-tmp 둘 다 그렇게 나왔습니다.<br>
+                  프론트엔드가 주력이지만 서버와 배포까지 직접 굴립니다.
                 </p>
               </div>
             </div>
@@ -103,7 +104,7 @@ export class ProfileSection extends LitElement {
               </div>
               <div class="flex flex-col">
                 <span class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--color-muted);">Focus</span>
-                <span class="font-bold" style="color: #e2e8f0;">UX/UI, Creative</span>
+                <span class="font-bold" style="color: #e2e8f0;">웹 · 앱 · 개발 도구</span>
               </div>
             </div>
           </div>
@@ -111,14 +112,14 @@ export class ProfileSection extends LitElement {
           <!-- 스킬 카드 -->
           <div class="bento-card md:col-span-4 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden"
             style="background: rgba(37,99,235,0.85); border-color: rgba(37,99,235,0.4);">
-            <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight text-white">Expertise in<br>Modern Web.</h3>
+            <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight text-white">Stack</h3>
             <div class="flex flex-wrap gap-2 mt-6">
               <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">React</span>
               <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Next.js</span>
               <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">TypeScript</span>
               <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Three.js</span>
               <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">GSAP</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Firebase</span>
+              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Flutter</span>
             </div>
             <i class="fa-solid fa-layer-group absolute -bottom-6 -right-6 text-9xl" style="opacity: 0.1; color: #fff;"></i>
           </div>

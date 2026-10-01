@@ -9,17 +9,6 @@ export class AppFooter extends LitElement {
   }
 
   firstUpdated() {
-    // 마퀴 무한 루프
-    const marqueeInner = this.querySelector('.marquee-inner');
-    if (marqueeInner) {
-      gsap.to(marqueeInner, {
-        xPercent: -50,
-        duration: 18,
-        ease: 'none',
-        repeat: -1,
-      });
-    }
-
     // CTA 텍스트 reveal
     gsap.from(this.querySelector('.footer-cta'), {
       opacity: 0,
@@ -47,32 +36,23 @@ export class AppFooter extends LitElement {
   }
 
   render() {
-    const marqueeText = "Let's build something epic.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     return html`
       <footer style="background: #03030d; border-top: 1px solid var(--color-border);">
-
-        <!-- 마퀴 -->
-        <div class="overflow-hidden py-6" style="border-bottom: 1px solid var(--color-border);">
-          <div class="marquee-inner flex whitespace-nowrap">
-            ${Array(8).fill(null).map(() => html`
-              <span class="text-4xl md:text-5xl font-sora font-extrabold tracking-tighter px-6"
-                style="color: rgba(255,255,255,0.06);">
-                Let's build something epic.
-              </span>
-            `)}
-          </div>
-        </div>
 
         <!-- 본문 -->
         <div class="max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row justify-between items-center gap-12">
 
           <div class="footer-cta space-y-4 text-center md:text-left">
             <h2 class="text-5xl md:text-7xl font-sora font-extrabold tracking-tighter leading-none text-white">
-              Let's build<br>something
-              <span class="gradient-text underline decoration-4 underline-offset-8">epic</span>.
+              Contact
             </h2>
+            <a href="mailto:leets1490@gmail.com"
+              class="inline-block text-lg md:text-xl font-bold tracking-tight transition-colors"
+              style="color: #94a3b8;"
+              onmouseenter="this.style.color='#fff';"
+              onmouseleave="this.style.color='#94a3b8';">leets1490@gmail.com</a>
             <p class="font-medium pt-4" style="color: #475569;">
-              © ${this.currentYear} Taeksoo Lee. Powered by Persistence.
+              © ${this.currentYear} Taeksoo Lee
             </p>
           </div>
 

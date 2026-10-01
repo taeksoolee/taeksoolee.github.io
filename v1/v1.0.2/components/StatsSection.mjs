@@ -55,9 +55,9 @@ export class StatsSection extends LitElement {
   render() {
     const stats = [
       { count: 3, suffix: '+', label: 'Years\nExperience', desc: '2022년부터 프론트엔드 개발' },
-      { count: 20, suffix: '+', label: 'Projects\nShipped', desc: '기획부터 배포까지' },
-      { count: 10, suffix: '+', label: 'Tech\nStack', desc: '프레임워크 및 도구' },
-      { count: 99, suffix: '%', label: 'Passion\nLevel', desc: '항상 새로운 것을 배우는 중' },
+      { count: 8, suffix: '', label: 'Projects\nShipped', desc: '아래 Works Library에 전부' },
+      { count: 2, suffix: '', label: 'npm\nPackages', desc: 'aiw · sync-tmp-mcp' },
+      { count: 3, suffix: '', label: 'Servers\nOperated', desc: 'API · 시그널링 · 동기화' },
     ];
 
     return html`
