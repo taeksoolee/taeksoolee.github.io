@@ -67,7 +67,7 @@ export class ProfileSection extends LitElement {
           About
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[600px]">
+        <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[460px]">
 
           <!-- 메인 프로필 카드 -->
           <div class="bento-card md:col-span-8 md:row-span-2 rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden relative group">
@@ -93,7 +93,7 @@ export class ProfileSection extends LitElement {
               </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 pt-8" style="border-top: 1px solid var(--color-border);">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8 pt-6" style="border-top: 1px solid var(--color-border);">
               <div class="flex flex-col">
                 <span class="text-xs font-bold uppercase tracking-widest mb-1" style="color: var(--color-muted);">Location</span>
                 <span class="font-bold" style="color: #e2e8f0;">Seoul, Korea</span>

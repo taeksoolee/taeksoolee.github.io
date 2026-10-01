@@ -56,23 +56,41 @@
       try { localStorage.setItem(window.INTRO_SEEN_KEY, '1'); } catch (e) {}
 
       const obj = { val: 0 };
-      gsap.to(obj, {
-        val: 100,
-        duration: 1.85,
-        ease: 'power2.inOut',
-        onUpdate() {
-          numEl.textContent = Math.round(obj.val);
-        },
-        onComplete() {
-          const tl = gsap.timeline({
-            onComplete() {
-              screen.remove();
-              document.body.style.overflow = '';
-            },
-          });
-          tl.to('#load-content', { opacity: 0, y: -24, duration: 0.32, ease: 'power2.in' })
-            .to(screen, { clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'power3.inOut' }, '-=0.08');
-        },
+      const paint = () => { numEl.textContent = Math.round(obj.val); };
+
+      const wipe = () => {
+        const tl = gsap.timeline({
+          onComplete() {
+            screen.remove();
+            document.body.style.overflow = '';
+          },
+        });
+        tl.to('#load-content', { opacity: 0, y: -24, duration: 0.32, ease: 'power2.in' })
+          .to(screen, { clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'power3.inOut' }, '-=0.08');
+      };
+
+      // 숫자는 실제 로드 진행에 연동한다. 90까지 천천히 올라가다가
+      // 첫 화면에 필요한 것이 준비되면 100을 채우고 걷어낸다.
+      // 화면 밖 썸네일까지 기다리는 window load 는 쓰지 않는다 — 인트로만 길어진다.
+      const crawl = gsap.to(obj, { val: 90, duration: 1.6, ease: 'power2.out', onUpdate: paint });
+
+      // fonts.ready 는 CDN 의 모든 페이스를 기다려 3초 가까이 걸린다.
+      // 첫 화면에 실제로 쓰이는 두 페이스만 기다린다.
+      const onFonts = document.fonts
+        ? Promise.all([
+            document.fonts.load('800 1em Sora'),
+            document.fonts.load('700 1em Pretendard'),
+          ]).catch(() => {})
+        : Promise.resolve();
+      const floor   = new Promise((res) => setTimeout(res, 650));   // 깜빡임 방지 하한
+      const guard   = new Promise((res) => setTimeout(res, 3500));  // 무엇이든 멈추면 걷어낸다
+
+      Promise.race([
+        Promise.all([onFonts, floor]),
+        guard,
+      ]).then(() => {
+        crawl.kill();
+        gsap.to(obj, { val: 100, duration: 0.3, ease: 'power2.out', onUpdate: paint, onComplete: wipe });
       });
     });
   </script>
@@ -315,7 +333,7 @@
                line-height:1;letter-spacing:-0.04em;">0</div>
       <div style="font-size:10px;font-weight:700;letter-spacing:0.45em;
                   color:#334155;text-transform:uppercase;margin-top:14px;">
-        Loading Experience
+        Taeksoo.dev
       </div>
     </div>
   </div>

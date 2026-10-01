@@ -63,14 +63,6 @@ export class StatsSection extends LitElement {
     return html`
       <section class="relative overflow-hidden py-24" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
 
-        <!-- 배경 데코 텍스트 -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-          <span class="font-sora font-extrabold whitespace-nowrap"
-            style="font-size: clamp(80px, 18vw, 180px); color: rgba(255,255,255,0.018); letter-spacing: -0.04em;">
-            FRONTEND DEV
-          </span>
-        </div>
-
         <div class="stats-grid relative grid grid-cols-2 md:grid-cols-4">
           ${stats.map((s, i) => html`
             <div class="stat-item flex flex-col items-center justify-center px-6 py-12 text-center relative"
