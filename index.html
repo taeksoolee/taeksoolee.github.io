@@ -216,6 +216,20 @@
     .nav-link:hover { color: #e2e8f0; }
     .nav-link:hover::after { transform: scaleX(1); }
 
+    /* ── 로딩 레이어 안전장치 ──
+       JS 가 죽으면(예: GSAP CDN 차단) 인라인 스크립트의 3.5초 가드도 같이
+       죽는다. CSS 만으로 6.5초 뒤 가리개를 걷고 스크롤을 푼다.
+       정상 경로는 늦어도 5초 안에 끝나므로 여기까지 오지 않는다. */
+    @keyframes loadFailsafe {
+      to { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+    @keyframes scrollUnlockFailsafe {
+      /* overflow 축약형은 body 의 overflow-x: hidden 까지 덮으므로 축을 나눈다 */
+      to { overflow-y: auto; }
+    }
+    #load-screen { animation: loadFailsafe 0.6s ease 6.5s forwards; }
+    body { animation: scrollUnlockFailsafe 0.01s linear 6.5s forwards; }
+
     /* ── 등장 연출 ──
        숨김은 html.js-reveal 이 붙었을 때만. JS 가 없으면 전부 보인다. */
     html.js-reveal .reveal {
@@ -397,6 +411,70 @@
 
 <!-- overflow: hidden → 로딩 스크린 동안 스크롤 막기 -->
 <body style="overflow: hidden;">
+
+  <!-- ── JS 가 없을 때 ───────────────────────────────────────────────
+       본문은 Lit 컴포넌트로 그려지므로 JS 없이는 비어 있다.
+       가리개를 걷고 최소한의 정적 내용을 대신 보여준다. -->
+  <noscript>
+    <style>
+      #load-screen { display: none !important; }
+      body { overflow: auto !important; }
+      .ns-wrap {
+        max-width: 48rem; margin: 0 auto; padding: 4rem 1.5rem 6rem;
+        font-family: "Pretendard Variable", -apple-system, sans-serif;
+        color: #e2e8f0; line-height: 1.7;
+      }
+      .ns-wrap a { color: #7dd3fc; text-decoration: none; }
+      .ns-wrap a:hover { text-decoration: underline; }
+      .ns-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .ns-note {
+        border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+        padding: 0.9rem 1.1rem; font-size: 0.85rem; color: #94a3b8;
+        margin-bottom: 3rem; background: rgba(255,255,255,0.03);
+      }
+      .ns-h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 0.25rem; }
+      .ns-role { color: #7dd3fc; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 1.5rem; }
+      .ns-h2 { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: #94a3b8;
+               margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.09); }
+      .ns-list { list-style: none; margin: 0; padding: 0; }
+      .ns-list li { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .ns-list .d { color: #94a3b8; font-size: 0.88rem; }
+    </style>
+    <div class="ns-wrap">
+      <p class="ns-note">
+        이 페이지는 JavaScript 로 그려집니다. 브라우저에서 JavaScript 를 켜면 전체 내용을 볼 수 있습니다.
+        아래는 핵심 정보만 추린 것입니다.
+      </p>
+
+      <h1 class="ns-h1">이택수</h1>
+      <p class="ns-role">Frontend Developer</p>
+      <p>
+        AI 에이전트로 일하다 불편한 게 보이면 도구로 만들어 씁니다.<br>
+        aiw와 sync-tmp 둘 다 그렇게 나왔습니다.<br>
+        프론트엔드가 주력이지만 서버와 배포까지 직접 굴립니다.
+      </p>
+
+      <h2 class="ns-h2">Works</h2>
+      <ul class="ns-list">
+        <li><a href="/ai-workflow/">AI Workflow</a> — <span class="d">AI 에이전트 도구 10종의 규칙·스킬·MCP 설정을 한 곳에서 관리하는 CLI</span></li>
+        <li><a href="https://sync-tmp.taeksoolee.com">sync-tmp</a> — <span class="d">tmp/ 작업 맥락을 PC 간에 옮기는 MCP 서버</span></li>
+        <li><a href="https://3d-tetris.taeksoolee.com">3D Tetris</a> — <span class="d">WebRTC 멀티플레이 3D 테트리스</span></li>
+        <li><a href="https://sijangajang.taeksoolee.com">시장가장</a> — <span class="d">시장 물가 기록·비교 앱 (Flutter PWA)</span></li>
+        <li><a href="/projects/3d-page/portfoilo/">3D Portfolio</a> — <span class="d">Three.js 스크롤 포트폴리오 데모</span></li>
+        <li><a href="https://blog.taeksoolee.com">My Blog</a> — <span class="d">개인 기술 블로그</span></li>
+        <li><a href="https://evcaro.taeksoolee.com">Evcaro</a> — <span class="d">전기차 보조금 조회 PWA</span></li>
+        <li><a href="https://jumpfit.taeksoolee.com">JumpFit</a> — <span class="d">피트니스 센터 예약관리 솔루션</span></li>
+      </ul>
+
+      <h2 class="ns-h2">Links</h2>
+      <ul class="ns-list ns-mono">
+        <li><a href="https://github.com/taeksoolee">github.com/taeksoolee</a></li>
+        <li><a href="https://www.npmjs.com/~taeksoolee">npmjs.com/~taeksoolee</a></li>
+        <li><a href="https://blog.taeksoolee.com">blog.taeksoolee.com</a></li>
+        <li><a href="mailto:leets1490@gmail.com">leets1490@gmail.com</a></li>
+      </ul>
+    </div>
+  </noscript>
 
   <!-- ── 로딩 스크린 ─────────────────────────────────────────────────── -->
   <div id="load-screen"
