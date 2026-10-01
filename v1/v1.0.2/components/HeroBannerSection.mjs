@@ -138,7 +138,7 @@ export class HeroBannerSection extends LitElement {
 
   render() {
     return html`
-      <section class="relative flex flex-col items-center justify-center text-center space-y-10 pt-20 overflow-hidden" style="min-height: 90vh;">
+      <section class="relative flex flex-col items-center justify-center text-center space-y-10 overflow-hidden" style="min-height: 88vh;">
 
         <canvas id="hero-canvas" class="absolute inset-0 w-full" style="z-index: 0; will-change: transform;"></canvas>
 

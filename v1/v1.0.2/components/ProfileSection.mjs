@@ -29,10 +29,10 @@ export class ProfileSection extends LitElement {
         <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[460px]">
 
           <!-- 메인 프로필 카드 -->
-          <div class="bento-card md:col-span-8 md:row-span-2 rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden relative group">
+          <div class="bento-card md:col-span-8 md:row-span-2 rounded-xl p-10 flex flex-col justify-between overflow-hidden relative group">
             <div class="flex flex-col md:flex-row gap-10 items-start md:items-center">
               <div class="avatar flex-shrink-0">
-                <div class="w-36 h-36 rounded-[2rem] shadow-2xl overflow-hidden group-hover:rotate-2 transition-transform duration-500"
+                <div class="w-36 h-36 rounded-2xl shadow-2xl overflow-hidden group-hover:rotate-2 transition-transform duration-500"
                   style="ring: 2px solid rgba(37,99,235,0.3); box-shadow: 0 0 0 4px rgba(37,99,235,0.15);">
                   <img src="/images/my-profile-img.png" alt="이택수" class="w-full h-full object-cover" />
                 </div>
@@ -69,22 +69,22 @@ export class ProfileSection extends LitElement {
           </div>
 
           <!-- 스킬 카드 -->
-          <div class="bento-card md:col-span-4 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden"
-            style="background: rgba(37,99,235,0.85); border-color: rgba(37,99,235,0.4);">
-            <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight text-white">Stack</h3>
+          <div class="bento-card neon-ring md:col-span-4 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden"
+            style="background: rgba(56,189,248,0.05);">
+            <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight neon-text" style="color: #7dd3fc;">Stack</h3>
             <div class="flex flex-wrap gap-2 mt-6">
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">React</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Next.js</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">TypeScript</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Three.js</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">GSAP</span>
-              <span class="skill-tag px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background: rgba(255,255,255,0.18); color: #fff;">Flutter</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">React</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">Next.js</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">TypeScript</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">Three.js</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">GSAP</span>
+              <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">Flutter</span>
             </div>
-            <i class="fa-solid fa-layer-group absolute -bottom-6 -right-6 text-9xl" style="opacity: 0.1; color: #fff;"></i>
+            <i class="fa-solid fa-layer-group absolute -bottom-6 -right-6 text-9xl" style="opacity: 0.07; color: var(--neon);"></i>
           </div>
 
           <!-- 소셜 링크 카드 -->
-          <div class="bento-card md:col-span-4 rounded-[2.5rem] p-8 flex items-center justify-around">
+          <div class="bento-card md:col-span-4 rounded-xl p-8 flex items-center justify-around">
             <a href="https://github.com/taeksoolee" target="_blank" class="flex flex-col items-center gap-2 group">
               <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all text-2xl"
                 style="background: rgba(255,255,255,0.07); color: #94a3b8;"

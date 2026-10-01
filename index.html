@@ -133,13 +133,13 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--color-border);
-      transition: border-color 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-                  box-shadow   0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: border-color 0.18s ease;
     }
     .bento-card:hover {
-      border-color: rgba(37, 99, 235, 0.45);
-      box-shadow: 0 20px 60px -15px rgba(37, 99, 235, 0.18);
+      border-color: rgba(56, 189, 248, 0.4);
     }
+    /* 네온 링을 쓴 카드는 자기 테두리를 유지한다 */
+    .bento-card.neon-ring:hover { border-color: rgba(56, 189, 248, 0.7); }
 
     /* ── 그라디언트 텍스트 ── */
     .gradient-text {
