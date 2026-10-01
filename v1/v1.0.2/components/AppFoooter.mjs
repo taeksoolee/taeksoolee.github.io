@@ -115,16 +115,29 @@ export class AppFooter extends LitElement {
     this._status = 'sending';
     this._error = '';
 
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 15000);
-
-    try {
-      const res = await fetch(`${PB_URL}/api/collections/${PB_COLLECTION}/records`, {
+    // 터널이 가끔 연결을 끊는다(같은 시각 health 응답이 0.6~6.9초로 흔들림).
+    // 네트워크 실패에 한해 한 번만 다시 보낸다. HTTP 오류는 서버가 내린
+    // 판정이므로 재시도하지 않는다.
+    const post = () => {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 12000);
+      return fetch(`${PB_URL}/api/collections/${PB_COLLECTION}/records`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
         signal: ctrl.signal,
-      });
+      }).finally(() => clearTimeout(timer));
+    };
+
+    try {
+      let res;
+      try {
+        res = await post();
+      } catch (netErr) {
+        if (netErr.name === 'AbortError') throw netErr;
+        await new Promise((r) => setTimeout(r, 1200));
+        res = await post();
+      }
 
       if (!res.ok) {
         // PocketBase 원문 대신 상황에 맞는 문장을 보여준다
@@ -154,8 +167,6 @@ export class AppFooter extends LitElement {
       } else {
         this._error = e2.message || '전송에 실패했습니다.';
       }
-    } finally {
-      clearTimeout(timer);
     }
     // 성공 경로는 _status 를 'sending' 으로 유지한 채 쿨다운이 끝낸다.
   }
