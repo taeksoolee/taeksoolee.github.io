@@ -37,6 +37,16 @@ export class ProjectSection extends LitElement {
         infra: ['oracle cloud', 'cloudflare'],
       },
       {
+        title: '시장가장',
+        description: '시장에서 본 가격을 그 자리에서 기록하고 시장별로 비교하는 장보기 도구. Flutter로 만든 설치형 웹앱(PWA)이며, 가격·시장·장보기 목록을 다루는 REST API 서버를 OpenAPI 문서와 함께 직접 운영합니다. 네이티브 앱은 출시 준비 중입니다.',
+        image: '/images/projects/sijangajang-thumb.jpg',
+        link: 'https://sijangajang.taeksoolee.com',
+        type: 'Mobile App',
+        category: 'Mobile App',
+        techstack: ['flutter', 'dart', 'isar', 'pwa', 'next.js'],
+        infra: ['cloudflare'],
+      },
+      {
         title: '3D Portfolio',
         description: 'Three.js와 GSAP ScrollTrigger를 활용한 3D 스크롤 포트폴리오 페이지. 고정 캔버스 3D 배경, 글래스모피즘 카드, 네온 사이언 글로우 효과.',
         image: '/images/projects/3d-portfolio-thumb.jpg',
