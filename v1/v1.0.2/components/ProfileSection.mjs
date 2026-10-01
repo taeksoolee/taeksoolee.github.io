@@ -26,7 +26,7 @@ export class ProfileSection extends LitElement {
           About
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 h-auto md:h-[460px]">
+        <div class="grid grid-cols-1 md:grid-cols-12 md:grid-rows-[auto_auto] gap-4">
 
           <!-- 메인 프로필 카드 -->
           <div class="bento-card md:col-span-8 md:row-span-2 rounded-xl p-10 flex flex-col justify-between overflow-hidden relative group">
@@ -69,10 +69,10 @@ export class ProfileSection extends LitElement {
           </div>
 
           <!-- 스킬 카드 -->
-          <div class="bento-card neon-ring md:col-span-4 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden"
+          <div class="bento-card neon-ring md:col-span-4 rounded-xl p-6 flex flex-col gap-5 relative overflow-hidden"
             style="background: rgba(56,189,248,0.05);">
             <h3 class="font-sora font-extrabold text-2xl tracking-tight leading-tight neon-text" style="color: #7dd3fc;">Stack</h3>
-            <div class="flex flex-wrap gap-2 mt-6">
+            <div class="flex flex-wrap gap-2">
               <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">React</span>
               <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">Next.js</span>
               <span class="skill-tag mono px-2 py-[3px] rounded text-[10.5px]" style="background: rgba(255,255,255,0.055); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.08);">TypeScript</span>
@@ -83,17 +83,24 @@ export class ProfileSection extends LitElement {
             <i class="fa-solid fa-layer-group absolute -bottom-6 -right-6 text-9xl" style="opacity: 0.07; color: var(--neon);"></i>
           </div>
 
-          <!-- 소셜 링크 카드 -->
-          <div class="bento-card md:col-span-4 rounded-xl p-8 flex items-center justify-around">
-            <a href="https://github.com/taeksoolee" target="_blank" class="flex flex-col items-center gap-2 group">
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all text-2xl"
-                style="background: rgba(255,255,255,0.07); color: #94a3b8;"
-                onmouseenter="this.style.background='rgba(37,99,235,0.25)'; this.style.color='#60a5fa';"
-                onmouseleave="this.style.background='rgba(255,255,255,0.07)'; this.style.color='#94a3b8';">
-                <i class="fa-brands fa-github"></i>
-              </div>
-              <span class="text-[10px] font-black uppercase" style="color: var(--color-muted);">Github</span>
-            </a>
+          <!-- 링크 카드 -->
+          <div class="bento-card md:col-span-4 rounded-xl p-6 flex flex-col gap-1">
+            <h3 class="mono text-[11px] uppercase tracking-[0.18em] mb-2" style="color: var(--color-muted);">Links</h3>
+            ${[
+              { icon: 'fa-brands fa-github',  label: 'github.com/taeksoolee', url: 'https://github.com/taeksoolee' },
+              { icon: 'fa-brands fa-npm',     label: 'npmjs.com/~taeksoolee', url: 'https://www.npmjs.com/~taeksoolee' },
+              { icon: 'fa-solid fa-pen-nib',  label: 'blog.taeksoolee.com',   url: 'https://blog.taeksoolee.com' },
+            ].map(l => html`
+              <a href="${l.url}" target="_blank" rel="noopener"
+                class="mono flex items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] no-underline"
+                style="color: #94a3b8; transition: background 0.16s ease, color 0.16s ease;"
+                onmouseenter="this.style.background='rgba(56,189,248,0.08)'; this.style.color='#e2e8f0';"
+                onmouseleave="this.style.background='transparent'; this.style.color='#94a3b8';">
+                <i class="${l.icon} shrink-0" style="width: 14px; font-size: 13px;"></i>
+                <span class="truncate">${l.label}</span>
+                <i class="fa-solid fa-arrow-up-right-from-square ml-auto shrink-0" style="font-size: 9px; opacity: 0.6;"></i>
+              </a>
+            `)}
           </div>
 
         </div>
