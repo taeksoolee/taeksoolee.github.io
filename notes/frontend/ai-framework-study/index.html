@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>AI 에이전트 × 4 프레임워크 8라운드 실험 | Taeksoo Lee</title>
+  <meta name="description" content="AI 코딩 에이전트로 같은 앱을 React·Vue·Svelte·Angular로 8라운드 개발·채점한 연구의 결론 요약.">
+  <link rel="canonical" href="https://taeksoolee.com/notes/frontend/ai-framework-study/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI 에이전트 × 4 프레임워크 8라운드 실험">
+  <meta property="og:description" content="AI와 함께 개발할 때 React·Vue·Svelte·Angular는 무엇이 다른가.">
+  <meta property="og:url" content="https://taeksoolee.com/notes/frontend/ai-framework-study/">
+  <link rel="icon" type="image/png" href="/images/my-profile-img.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/notes/notes.css">
+</head>
+<body>
+
+  <header class="n-bar">
+    <a href="/" class="n-logo">Taeksoo</a>
+    <nav class="n-crumbs"><a href="/notes/">notes</a> / frontend</nav>
+  </header>
+
+  <div class="n-wrap">
+    <div class="n-doc">
+      <article class="n-article">
+
+        <p class="n-kicker">Frontend · AI · Research</p>
+        <h1 class="n-title">AI 에이전트에게 맡기면 React · Vue · Svelte · Angular는 어떻게 다른가</h1>
+        <p class="n-lead">
+          같은 앱을 네 프레임워크로 짓게 하고, 기획서를 바꿔 가며 여덟 라운드 동안 고쳐 나가게 한 뒤 매번 채점했다.
+          질문은 "어느 프레임워크가 낫냐"가 아니라 "AI와 함께 개발할 때 무엇이 달라지냐"였다.
+        </p>
+        <div class="n-meta">
+          <span>2026-10-14</span>
+          <span>실험 2026-09 종료</span>
+          <span>React · Vue · Svelte · Angular</span>
+        </div>
+
+        <a class="n-repo" href="./report.html">
+          <div>
+            <div class="n-repo-name">최종 보고서 열기 →</div>
+            <div class="n-repo-desc">라운드별 채점 · 코드베이스 감사 · 검증 방법 전체. 저장소의 report.html 원본 그대로.</div>
+          </div>
+        </a>
+
+        <a class="n-repo" href="https://github.com/taeksoolee/study-api-analyzer" target="_blank" rel="noopener">
+          <div>
+            <div class="n-repo-name">github.com/taeksoolee/study-api-analyzer</div>
+            <div class="n-repo-desc">기획서 8부 · 프롬프트 32종 · 네 구현 · 라운드별 스냅샷 · 최종 보고서(report.html). 동결된 연구 기록.</div>
+          </div>
+        </a>
+
+        <nav class="n-toc n-toc-inline" aria-label="목차">
+          <p class="n-toc-title">Contents</p>
+          <ol data-toc></ol>
+        </nav>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="answer">결론부터</h2>
+
+        <div class="n-table"><table>
+          <thead><tr><th>이렇게 쓸 거면</th><th>고를 것</th><th>대신 감수할 것</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>AI가 설계까지 하게 할 거면</td>
+              <td><strong>Svelte</strong> — 자유 라운드 3전 3승, 공식 MCP로 자기 코드 자가 검사</td>
+              <td>도메인 로직에 룬을 쓰지 말라고 한 번은 말해야 한다</td>
+            </tr>
+            <tr>
+              <td>구조를 정해 주고 AI가 실행하게 할 거면</td>
+              <td><strong>Angular</strong> — 구조 라운드 4전 4승, 계층 위반이 컴파일 에러</td>
+              <td>토큰 20% 더, 코어 112 kB는 영구 세금</td>
+            </tr>
+            <tr>
+              <td>싸게 많이 돌릴 거면</td>
+              <td><strong>React</strong> — 누적 최저 비용, 안 시켜도 분리함</td>
+              <td>"이렇게 만들어줘"엔 어긋나고, 긴 대화에서 스택 선택이 흔들린다</td>
+            </tr>
+            <tr>
+              <td>AI가 읽을 총량이 적어야 하면</td>
+              <td><strong>Vue</strong> — 변경 파급 최소, 연동 테스트 1개, 레이어 균형 최고</td>
+              <td>UI 킷이 가장 비싸고, 내장 프로파일러가 프로덕션에서 돌지 않는다</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <p>그 밖에 여덟 라운드에서 남은 관찰 셋.</p>
+        <ul>
+          <li>
+            <strong>구조를 옮기는 일은 기능을 만드는 일만큼 비싸다.</strong>
+            기능을 하나도 늘리지 않은 도메인 리팩터링 라운드(4차)가 생태계 라운드(3차)와 비슷한 토큰을 썼다.
+          </li>
+          <li>
+            <strong>살아남는 규칙은 "어겼을 때 보이는" 규칙이다.</strong>
+            강제를 전부 거둔 7차에 네 구현이 만장일치로 남긴 것은 grep이나 <code>tsc</code> 한 번에 걸리는 규칙
+            (도메인이 프레임워크를 import하지 않는다 등)이었다. 실패가 번들 안에만 나타나는 규칙은 다섯 라운드 동안 아무도 보지 못했다.
+          </li>
+          <li>
+            <strong>비용과 품질은 같은 방향으로 가지 않았다.</strong>
+            가장 오래 걸린 구현이 가장 깊은 문제를 찾은 라운드가 여럿이다.
+          </li>
+        </ul>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="design">실험 설계</h2>
+        <ul>
+          <li>네 에이전트를 한 메시지에서 <strong>병렬로</strong> 실행했다. 각자 프레임워크별 프롬프트와 <strong>같은 기획서</strong>만 받았다.</li>
+          <li>라운드마다 직전 결과물 위에서 이어서 작업했다. 1차에 지은 앱이 8차까지 이어진다.</li>
+          <li><strong>자체 보고는 근거로 쓰지 않았다.</strong> 빌드·단위·E2E를 직접 돌리고, 소스를 grep하고, 스냅샷끼리 diff해 채점했다.</li>
+          <li>4차부터는 E2E 스펙의 해시를 떠 동결하고 라운드 종료 후 대조했다. 2~8차 회귀 실격 0건.</li>
+        </ul>
+
+        <div class="n-table"><table>
+          <thead><tr><th>라운드</th><th>물은 것</th></tr></thead>
+          <tbody>
+            <tr><td>1 명세</td><td>문자열까지 못박은 명세를 얼마나 정확히 지키는가</td></tr>
+            <tr><td>2 설계</td><td>제약을 풀면 스스로 무엇을 설계하는가</td></tr>
+            <tr><td>3 생태계</td><td>표준 스택(라우터·상태·폼·쿼리·UI 킷)을 강제하면 무엇이 바뀌는가</td></tr>
+            <tr><td>4 도메인</td><td>행동을 얼리고 도메인을 떼어내면 다시 수렴하는가</td></tr>
+            <tr><td>5 슬라이스</td><td>Feature-Sliced Design으로 다시 자르면 변경이 싸지는가</td></tr>
+            <tr><td>6 인도</td><td>그 구조가 실제 기능 개발에서 값을 하는가</td></tr>
+            <tr><td>7 자유</td><td>처방을 전부 거둬도 남길 것인가</td></tr>
+            <tr><td>8 성능</td><td>스스로 재보고, 근거 있게 고치거나 고치지 않는가</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="n-stats">
+          <div class="n-stat"><b>8부 · 2,026줄</b><span>기획서</span></div>
+          <div class="n-stat"><b>8.4M</b><span>에이전트 토큰 · 약 15시간</span></div>
+          <div class="n-stat"><b>29,153줄</b><span>최종 소스 (+ 테스트 13,368줄)</span></div>
+          <div class="n-stat"><b>1,639 · 59</b><span>단위 테스트 · E2E, 전부 통과</span></div>
+        </div>
+
+        <h3 id="app">대상 앱 — API Analyzer</h3>
+        <p>
+          브라우저에서 HTTP 요청을 만들어 보내고 응답을 뜯어보는 도구. 백엔드가 없고 저장은 IndexedDB가 맡는다.
+          화면은 Console · Collections · Environments · History · Settings · 커맨드 팔레트.
+        </p>
+        <p>
+          작지만 아키텍처를 찌르도록 골랐다. 요청 경합 조건은 상태 모델을, Params ↔ URL 양방향 동기화는 순환 방지를,
+          <code>secret</code> 변수는 도메인·폼·목록·cURL·히스토리를 한꺼번에 가로지르는 변경을 요구한다.
+        </p>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="rounds">라운드별 순위</h2>
+        <p>
+          같은 네 에이전트, 같은 앱, 여덟 개의 다른 질문. <strong>네 프레임워크 모두 한 번 이상 1위를 했고, 한 번 이상 꼴찌를 했다.</strong>
+          순위가 라운드마다 재배열됐다는 사실 자체가 "어느 프레임워크가 낫다"는 질문이 잘못 놓였음을 보여준다.
+        </p>
+
+        <div class="n-table"><table>
+          <thead><tr>
+            <th></th><th class="num">1 명세</th><th class="num">2 설계</th><th class="num">3 생태계</th><th class="num">4 도메인</th>
+            <th class="num">5 슬라이스</th><th class="num">6 인도</th><th class="num">7 자유</th><th class="num">8 성능</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Angular</td><td class="num">3위</td><td class="num">4 · 87</td><td class="num">2 · 93</td><td class="num win">1 · 94</td><td class="num win">1 · 91</td><td class="num win">1 · 91</td><td class="num">2위</td><td class="num win">1위</td></tr>
+            <tr><td>Svelte</td><td class="num">4위</td><td class="num win">1 · 93</td><td class="num win">1 · 95</td><td class="num">4 · 91</td><td class="num">2 · 89</td><td class="num">2 · 90</td><td class="num win">1위</td><td class="num">2위</td></tr>
+            <tr><td>React</td><td class="num win">1위</td><td class="num">3 · 89</td><td class="num">4 · 89</td><td class="num">3 · 92</td><td class="num">4 · 85</td><td class="num">2 · 90</td><td class="num">3위</td><td class="num">4위</td></tr>
+            <tr><td>Vue</td><td class="num">2위</td><td class="num">2 · 90</td><td class="num">3 · 90</td><td class="num win">1 · 94</td><td class="num">3 · 88</td><td class="num">4 · 81</td><td class="num">4위</td><td class="num">3위</td></tr>
+          </tbody>
+        </table></div>
+        <p class="n-table-note">순위 · 점수. 1·7·8차는 순위만 매겼다. 4차는 Angular와 Vue가 공동 1위.</p>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="modes">AI 사용은 반대 방향 두 모드로 갈린다</h2>
+        <p>
+          1위 칸이 Svelte와 Angular로 깨끗하게 둘로 나뉜다. 그리고 그 둘은 서로의 거울상이다 —
+          한쪽이 이긴 라운드에서 다른 쪽이 꼴찌였다. 어느 프레임워크도 두 모드를 동시에 잘하지 못했다.
+        </p>
+
+        <div class="n-table"><table>
+          <thead><tr><th></th><th>위임 모드 — "알아서 만들어줘"</th><th>지시 모드 — "이 구조로 해줘"</th></tr></thead>
+          <tbody>
+            <tr><td>라운드</td><td>2 설계 · 3 생태계 · 7 자유</td><td>4 DDD · 5 FSD · 6 인도 · 8 성능</td></tr>
+            <tr><td>이긴 쪽</td><td><strong>Svelte</strong> 3전 3승</td><td><strong>Angular</strong> 4전 4승</td></tr>
+            <tr><td>진 쪽</td><td>Angular 2차 87점 — 전체 유일 꼴찌</td><td>Svelte 4차 깨진 테스트 48개</td></tr>
+            <tr><td>이유</td><td>룬·단일 파일로 보일러플레이트가 가장 적다. AI가 쓸 양이 적으면 틀릴 지점도 적다</td><td>DI가 관례가 아니라 실제 아키텍처다. 레이어 협상이 프레임워크에서 이미 끝나 있다</td></tr>
+            <tr><td>AI 실수가</td><td>MCP <code>svelte-autofixer</code>가 잡는다</td><td>컴파일 에러가 된다 (<code>tsconfig.domain.json</code> + 경계 스크립트)</td></tr>
+          </tbody>
+        </table></div>
+
+        <p>
+          나머지 둘은 이 축의 양끝이 아니라 중간에 있다. React는 싼 일반형(누적 최저 비용, 안 시켜도 분리함),
+          Vue는 무난한데 생태계에 함정이 있다.
+        </p>
+
+        <div class="n-callout">
+          <p class="n-callout-title">공식 AI 도구에 투자한 둘이 8라운드 중 7승</p>
+          <p>
+            Angular(공식 스킬)와 Svelte(공식 MCP 서버)는 최근 API가 가장 크게 바뀐 둘이다. 학습 데이터에는 옛 문법이 압도적으로 많고,
+            공식 도구가 정확히 그 격차를 메운다. 다만 상관이지 인과가 아니다 — 1차에서 공식 스킬을 받은 둘은 토큰을 30~53% 더 쓰고도
+            둘 다 색상 버그를 출하했다. 도구는 최신 API를 맞추는 데 값을 했지 명세를 지키는 데는 하지 않았다.
+          </p>
+        </div>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="safety">AI가 무엇을 부쉈는지 알 수 있는가</h2>
+        <p>
+          혼자 AI로 개발할 때 가장 중요한 축은 속도도 비용도 아니다. <strong>AI가 낸 변경이 무엇을 깨뜨렸는지 30초 안에 아는가</strong>이다.
+          네 구현 모두 순수 계층을 분리해 <code>pnpm test</code> 한 번이 2~4초로 끝났고,
+          프레임워크 없이 도는 테스트 비율은 Svelte 93% · Vue 82% · Angular 79% · React 73%였다.
+        </p>
+        <p>
+          그런데 이 축에서 프레임워크 차이보다 큰 것이 하나 있었다 — <strong>E2E를 계약으로 얼리는 것.</strong>
+          4차부터 E2E 스펙을 동결하자 회귀 실격이 0건이 됐고, 이건 네 프레임워크에서 똑같이 성립했다.
+        </p>
+        <p><strong>프레임워크는 바꿀 수 있다. AI가 무엇을 부쉈는지 모르는 상태는 되돌릴 수 없다.</strong></p>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="audit">완성된 코드베이스를 물려받는다면</h2>
+        <p>
+          여덟 라운드 뒤 42,521줄에서 <code>any</code> · <code>@ts-ignore</code> · TODO · lint 억제가 넷 다 0이었다.
+          순위는 그 위에서 갈렸고, 라운드 성적과는 아래 둘이 뒤바뀐다.
+        </p>
+
+        <div class="n-table"><table>
+          <thead><tr><th class="num">순위</th><th>프레임워크</th><th>강점</th><th>대가</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Svelte</td><td>편집 단위가 가장 작다 — 최대 파일 238줄, 프레임워크 없이 도는 테스트 93%</td><td>필드 하나 추가에 소스 10 + 테스트 9 파일이 움직인다</td></tr>
+            <tr><td class="num">2</td><td>Angular</td><td>개념이 4파일 21줄에 응축되고, 위반은 타입 검사기가 막는다</td><td>기능의 55%가 한 파일(422줄), 경계 검사기가 0개 파일을 봐도 초록</td></tr>
+            <tr><td class="num">3</td><td>Vue</td><td>AI가 읽을 총량이 가장 적다 — 변경 파급 795줄, 연동 테스트 1개</td><td>순수 파일 하나(284줄)가 여섯 역할을 한다</td></tr>
+            <tr><td class="num">4</td><td>React</td><td>이 연구 최고의 핵심 파일(63줄), 도메인이 어떤 패키지도 import하지 않는다</td><td>의존성 17개, 커스텀 심볼 282개, 검증의 27%가 jsdom을 탄다</td></tr>
+          </tbody>
+        </table></div>
+
+        <p>
+          "싸게 만든다"(React, 누적 1.91M 토큰 최저)와 "물려받기 좋다"(Vue)는 같은 것이 아니다.
+          둘 중 무엇이 중요한지는 프로젝트가 정한다.
+        </p>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="limits">이 연구가 답하지 못한 것</h2>
+        <ul>
+          <li><strong>프레임워크당 N=1이다.</strong> 순위의 1~3점 차이는 노이즈와 구분되지 않는다.</li>
+          <li>에이전트 품질과 프레임워크 품질이 분리되지 않았다. 모델도 하나, 앱도 하나(백엔드 없는 5화면)다. SSR · 대용량 데이터 · 실시간 · 팀 협업은 재지 않았다.</li>
+          <li><strong>긴 세션에서의 붕괴를 재지 않았다.</strong> 라운드마다 독립 실행이었고, "AI가 100턴째에 자기 구조를 잊는가"는 측정하지 않았다. 실제 개인 개발에서 가장 자주 일어나는 일인데 빠져 있다.</li>
+        </ul>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="more">더 보기</h2>
+        <p>
+          라운드별 채점 근거, 코드베이스 감사 지표, 검증 방법 전체는 최종 보고서에 있다.
+          저장소의 <code>report.html</code>을 여기에 그대로 옮겨 두었다.
+        </p>
+        <ul>
+          <li><a href="https://github.com/taeksoolee/study-api-analyzer" target="_blank" rel="noopener">저장소 README</a> — 요약 · 실험 설계 · 디렉터리 안내</li>
+          <li><a href="./report.html">최종 보고서</a> — 라운드별 채점 · 코드베이스 감사 · 결론 (<a href="https://github.com/taeksoolee/study-api-analyzer/blob/main/report.html" target="_blank" rel="noopener">원본</a>)</li>
+          <li><a href="https://github.com/taeksoolee/study-api-analyzer/tree/main/prd" target="_blank" rel="noopener"><code>prd/</code></a> — 라운드별 기획서 01~08</li>
+          <li><a href="https://github.com/taeksoolee/study-api-analyzer/tree/main/prompt" target="_blank" rel="noopener"><code>prompt/</code></a> — 프레임워크별 프롬프트 32종</li>
+        </ul>
+        <p>
+          4차에서 쓴 "도메인은 프레임워크를 import하지 않는다" 규칙은 백엔드에서도 같은 모양으로 쓴다 —
+          <a href="/notes/backend/hono-architecture/">Hono 헥사고날 아키텍처 가이드</a>.
+        </p>
+
+        <footer class="n-foot">
+          <a href="/notes/">← 모든 노트</a>
+          <a href="/">taeksoolee.com</a>
+          <a href="https://github.com/taeksoolee" target="_blank" rel="noopener">github</a>
+        </footer>
+      </article>
+
+      <aside class="n-aside">
+        <nav class="n-toc" aria-label="목차">
+          <p class="n-toc-title">Contents</p>
+          <ol data-toc></ol>
+        </nav>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // h2 로 목차를 만들고, 스크롤 위치에 맞춰 현재 항목을 표시한다.
+    (() => {
+      const heads = [...document.querySelectorAll('.n-article h2[id]')];
+      const lists = document.querySelectorAll('[data-toc]');
+      lists.forEach((ol) => {
+        ol.innerHTML = heads
+          .map((h) => `<li><a href="#${h.id}">${h.textContent}</a></li>`)
+          .join('');
+      });
+
+      if (!('IntersectionObserver' in window)) return;
+      const links = (id) => document.querySelectorAll(`[data-toc] a[href="#${id}"]`);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          document.querySelectorAll('[data-toc] a.is-active').forEach((a) => a.classList.remove('is-active'));
+          links(e.target.id).forEach((a) => a.classList.add('is-active'));
+        });
+      }, { rootMargin: '-80px 0px -70% 0px' });
+      heads.forEach((h) => io.observe(h));
+    })();
+  </script>
+</body>
+</html>

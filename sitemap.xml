@@ -25,6 +25,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://taeksoolee.com/notes/frontend/ai-framework-study/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://taeksoolee.com/notes/frontend/ai-framework-study/report.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://taeksoolee.com/notes/backend/hono-architecture/</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
