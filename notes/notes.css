@@ -113,7 +113,7 @@ a:hover { text-decoration: underline; }
   padding: 0.12em 0.4em; border-radius: 5px;
   background: rgba(56, 189, 248, 0.08);
   border: 1px solid rgba(56, 189, 248, 0.16);
-  color: #bae6fd; word-break: break-all;
+  color: #bae6fd; overflow-wrap: anywhere;
 }
 
 /* 코드 블록 */
