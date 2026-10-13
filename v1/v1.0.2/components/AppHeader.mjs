@@ -39,7 +39,7 @@ export class AppHeader extends LitElement {
 
         <div class="flex-1">
           <a href="#" class="font-sora font-extrabold text-xl tracking-tighter neon-text" style="color: #7dd3fc;">
-            Taeksoo<span class="mono font-normal" style="color: #475569;">.dev</span>
+            Taeksoo
           </a>
         </div>
 
