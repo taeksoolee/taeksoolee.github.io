@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Hono 헥사고날 아키텍처 가이드 | Taeksoo Lee</title>
+  <meta name="description" content="Hono + Drizzle + Zod 백엔드를 기능 중심 헥사고날 아키텍처로 구성하고, Hono RPC 로 프론트엔드까지 타입을 잇는 방법.">
+  <link rel="canonical" href="https://taeksoolee.com/notes/backend/hono-architecture/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hono 헥사고날 아키텍처 가이드">
+  <meta property="og:description" content="기능 중심 헥사고날 구조와 Hono RPC 로 E2E 타입 안전성 확보하기.">
+  <meta property="og:url" content="https://taeksoolee.com/notes/backend/hono-architecture/">
+  <link rel="icon" type="image/png" href="/images/my-profile-img.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="/notes/notes.css">
+</head>
+<body>
+
+  <header class="n-bar">
+    <a href="/" class="n-logo">Taeksoo<span>.dev</span></a>
+    <nav class="n-crumbs"><a href="/notes/">notes</a> / backend</nav>
+  </header>
+
+  <div class="n-wrap">
+    <div class="n-doc">
+      <article class="n-article">
+
+        <p class="n-kicker">Backend · Architecture</p>
+        <h1 class="n-title">Hono 헥사고날 아키텍처 가이드</h1>
+        <p class="n-lead">
+          비즈니스 로직을 Hono·Drizzle·Zod 로부터 떼어 놓고,
+          Hono RPC 로 프론트엔드까지 CodeGen 없이 타입을 잇는 구조.
+        </p>
+        <div class="n-meta">
+          <span>2026-10-14</span>
+          <span>Hono · Drizzle ORM · Zod · TypeScript</span>
+        </div>
+
+        <nav class="n-toc n-toc-inline" aria-label="목차">
+          <p class="n-toc-title">Contents</p>
+          <ol data-toc></ol>
+        </nav>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="overview">1. 아키텍처 개요</h2>
+        <p>
+          <strong>기능 중심 헥사고날 아키텍처(Feature-based Hexagonal Architecture)</strong>를 채택해,
+          비즈니스 로직(Domain Core)을 외부 프레임워크와 DB 기술(Hono, Drizzle, Zod 등)로부터 격리합니다.
+        </p>
+        <p>
+          또한 <strong>Hono RPC</strong> 로 백엔드 라우터의 타입을 프론트엔드에 그대로 넘겨,
+          별도의 CodeGen 없이 요청·응답 타입을 끝에서 끝까지 공유합니다.
+        </p>
+
+        <div class="n-code"><pre><code class="language-plaintext">        [ Client (React / Next.js) ]
+                     │
+                     ▼  Hono RPC / HTTP
+┌──────────────────────────────────────────────────────┐
+│  Inbound Adapter   (Hono Routes + Zod Validator)     │
+│        │                                             │
+│        ▼                                             │
+│  ┌────────────────────────────────────────────────┐  │
+│  │  Domain Core   (Use Cases · Entities · Ports)  │  │
+│  │  - no external dependencies                    │  │
+│  └───────────────────────┬────────────────────────┘  │
+│                          │ Outbound Port (interface) │
+│                          ▼                           │
+│  Outbound Adapter  (Drizzle ORM / External APIs)     │
+└──────────────────────────────────────────────────────┘</code></pre></div>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="structure">2. 디렉토리 구조</h2>
+
+        <div class="n-code"><pre><code class="language-plaintext">src/
+├── features/                          # 기능(도메인)별 모듈 격리 구역
+│   ├── users/
+│   │   ├── domain/                    # [CORE] 순수 비즈니스 로직 (외부 의존성 0)
+│   │   │   ├── user.entity.ts         # 도메인 엔티티
+│   │   │   ├── user.errors.ts         # 도메인 에러
+│   │   │   ├── ports/
+│   │   │   │   └── user-repository.port.ts   # Outbound Port
+│   │   │   └── use-cases/
+│   │   │       ├── create-user.use-case.ts
+│   │   │       └── get-user.use-case.ts
+│   │   │
+│   │   ├── adapters/                  # [INFRA] 구체적인 기술 구현체
+│   │   │   ├── inbound/http/          # 들어오는 요청 (Driving)
+│   │   │   │   ├── users.routes.ts    # Hono 라우터 (RPC 노출)
+│   │   │   │   └── users.dto.ts       # Zod 스키마
+│   │   │   └── outbound/persistence/  # 나가는 요청 (Driven)
+│   │   │       ├── drizzle-user.repository.ts
+│   │   │       └── user.schema.ts     # Drizzle 테이블 스키마
+│   │   │
+│   │   ├── testing/                   # 테스트용 포트 구현체 (in-memory)
+│   │   │   └── in-memory-user.repository.ts
+│   │   │
+│   │   └── users.module.ts            # Composition Root: 구현체를 조립해 라우터를 내보냄
+│   │
+│   └── auth/                          # 같은 구조 반복
+│
+├── shared/                            # 전역 인프라 · 공통 모듈
+│   ├── config/env.ts
+│   ├── db/client.ts
+│   ├── middleware/
+│   │   ├── auth.middleware.ts
+│   │   └── logger.middleware.ts
+│   └── http/
+│       └── error-handler.ts           # app.onError 용 전역 에러 핸들러
+│
+└── index.ts                           # 진입점 + RPC 용 AppType export</code></pre></div>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="rules">3. 핵심 규칙과 의존성 원칙</h2>
+        <ol>
+          <li>
+            <strong><code>domain/</code> 은 순수하게.</strong>
+            <ul>
+              <li><code>hono</code>, <code>drizzle-orm</code>, <code>zod</code> 등 외부 npm 패키지를 <code>import</code> 하지 않습니다.</li>
+              <li>순수 TypeScript 로 엔티티·에러·유즈케이스와 자기 도메인의 포트 인터페이스만 정의합니다.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>의존성은 한 방향으로.</strong>
+            <ul>
+              <li><code>Adapters</code> → <code>Domain (Ports · Use Cases)</code> → <code>Entities</code></li>
+              <li><code>Domain</code> 이 <code>Adapters</code> 나 <code>Shared</code> 를 참조하는 것은 금지입니다.</li>
+              <li>Inbound Adapter 도 Outbound Adapter 를 직접 알지 않습니다. 둘을 묶는 일은 <strong>Composition Root</strong>(<code>users.module.ts</code>) 만 합니다.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Feature 끼리는 독립적으로.</strong>
+            <ul>
+              <li><code>features/users</code> 는 <code>features/auth</code> 의 <code>adapters</code> 를 직접 참조하지 않고, 필요하면 <code>domain/ports</code> 인터페이스를 통해 연결합니다.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="example">4. 단계별 구현 예시</h2>
+
+        <h3 id="step-1">Step 1. Entity · Error · Port 정의 (<code>domain/</code>)</h3>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/domain/user.entity.ts</div>
+<pre><code class="language-ts">export interface User {
+  id: string;
+  email: string;
+  name: string;
+  createdAt: Date;
+}
+
+export type NewUser = Omit&lt;User, 'id' | 'createdAt'&gt;;</code></pre>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/domain/user.errors.ts</div>
+<pre><code class="language-ts">export class UserAlreadyExistsError extends Error {
+  constructor(readonly email: string) {
+    super(`User already exists: ${email}`);
+    this.name = 'UserAlreadyExistsError';
+  }
+}</code></pre>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/domain/ports/user-repository.port.ts</div>
+<pre><code class="language-ts">import type { NewUser, User } from '../user.entity';
+
+export interface UserRepositoryPort {
+  save(user: NewUser): Promise&lt;User&gt;;
+  findByEmail(email: string): Promise&lt;User | null&gt;;
+}</code></pre>
+        </div>
+
+        <h3 id="step-2">Step 2. Use Case 구현 (<code>domain/use-cases/</code>)</h3>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/domain/use-cases/create-user.use-case.ts</div>
+<pre><code class="language-ts">import type { User } from '../user.entity';
+import type { UserRepositoryPort } from '../ports/user-repository.port';
+import { UserAlreadyExistsError } from '../user.errors';
+
+export class CreateUserUseCase {
+  constructor(private readonly userRepository: UserRepositoryPort) {}
+
+  async execute(email: string, name: string): Promise&lt;User&gt; {
+    const existing = await this.userRepository.findByEmail(email);
+    if (existing) {
+      throw new UserAlreadyExistsError(email);
+    }
+
+    return this.userRepository.save({ email, name });
+  }
+}</code></pre>
+        </div>
+
+        <h3 id="step-3">Step 3. Outbound Adapter 구현 (<code>adapters/outbound/</code>)</h3>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/adapters/outbound/persistence/user.schema.ts</div>
+<pre><code class="language-ts">import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+
+export const usersTable = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull().unique(),
+  name: text('name').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});</code></pre>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/adapters/outbound/persistence/drizzle-user.repository.ts</div>
+<pre><code class="language-ts">import { eq } from 'drizzle-orm';
+import { db } from '../../../../../shared/db/client';
+import type { NewUser, User } from '../../../domain/user.entity';
+import type { UserRepositoryPort } from '../../../domain/ports/user-repository.port';
+import { usersTable } from './user.schema';
+
+// DB 행 → 도메인 엔티티. 테이블 컬럼이 바뀌어도 도메인은 그대로 둔다.
+const toDomain = (row: typeof usersTable.$inferSelect): User =&gt; ({
+  id: row.id,
+  email: row.email,
+  name: row.name,
+  createdAt: row.createdAt,
+});
+
+export class DrizzleUserRepository implements UserRepositoryPort {
+  async findByEmail(email: string): Promise&lt;User | null&gt; {
+    const [row] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+    return row ? toDomain(row) : null;
+  }
+
+  async save(user: NewUser): Promise&lt;User&gt; {
+    const [row] = await db.insert(usersTable).values(user).returning();
+    return toDomain(row);
+  }
+}</code></pre>
+        </div>
+
+        <h3 id="step-4">Step 4. Inbound Adapter 구현 (<code>adapters/inbound/</code>)</h3>
+
+        <div class="n-callout">
+          <p class="n-callout-title">Hono RPC 주의</p>
+          <p>
+            Hono RPC 가 프론트엔드로 타입을 넘기려면 <code>new Hono().get().post()</code> 처럼
+            <strong>메서드 체이닝을 유지</strong>해야 합니다. <code>app.get(...)</code> 을 문장으로 끊어 쓰면 타입 추론이 끊깁니다.
+          </p>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/adapters/inbound/http/users.dto.ts</div>
+<pre><code class="language-ts">import { z } from 'zod';
+
+export const createUserSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(2),
+});</code></pre>
+        </div>
+
+        <p>
+          라우터는 구현체를 직접 만들지 않고 <strong>유즈케이스를 인자로 받는 팩토리</strong>로 둡니다.
+          도메인 에러는 여기서 HTTP 상태 코드로 바꿉니다. 이렇게 하면 409 응답도 RPC 타입에 실려 프론트엔드에서 분기할 수 있습니다.
+        </p>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/adapters/inbound/http/users.routes.ts</div>
+<pre><code class="language-ts">import { Hono } from 'hono';
+import { zValidator } from '@hono/zod-validator';
+import type { CreateUserUseCase } from '../../../domain/use-cases/create-user.use-case';
+import { UserAlreadyExistsError } from '../../../domain/user.errors';
+import { createUserSchema } from './users.dto';
+
+export const createUserRoutes = (createUser: CreateUserUseCase) =&gt;
+  new Hono()
+    .post('/', zValidator('json', createUserSchema), async (c) =&gt; {
+      const { email, name } = c.req.valid('json');
+      try {
+        const user = await createUser.execute(email, name);
+        return c.json(user, 201);
+      } catch (err) {
+        if (err instanceof UserAlreadyExistsError) {
+          return c.json({ error: 'USER_ALREADY_EXISTS' as const }, 409);
+        }
+        throw err; // 예상하지 못한 에러는 전역 onError 로
+      }
+    });</code></pre>
+        </div>
+
+        <h3 id="step-5">Step 5. Composition Root (<code>users.module.ts</code>)</h3>
+        <p>
+          포트와 구현체를 실제로 연결하는 곳은 여기 하나입니다.
+          DB 를 바꾸거나 테스트용 구현체를 끼울 때도 이 파일만 고칩니다.
+        </p>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/users.module.ts</div>
+<pre><code class="language-ts">import { CreateUserUseCase } from './domain/use-cases/create-user.use-case';
+import { DrizzleUserRepository } from './adapters/outbound/persistence/drizzle-user.repository';
+import { createUserRoutes } from './adapters/inbound/http/users.routes';
+
+const userRepository = new DrizzleUserRepository();
+const createUserUseCase = new CreateUserUseCase(userRepository);
+
+export const userRoutes = createUserRoutes(createUserUseCase);</code></pre>
+        </div>
+
+        <h3 id="step-6">Step 6. 진입점 · 전역 에러 핸들러 · AppType export</h3>
+
+        <div class="n-callout">
+          <p class="n-callout-title">에러 처리는 미들웨어가 아니라 onError</p>
+          <p>
+            Hono 는 핸들러에서 던진 에러를 내부에서 잡아 <code>app.onError</code> 로 넘깁니다.
+            그래서 <code>app.use('*', ...)</code> 미들웨어 안에서 <code>try { await next() } catch</code> 로 감싸도 잡히지 않습니다.
+          </p>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/shared/http/error-handler.ts</div>
+<pre><code class="language-ts">import type { ErrorHandler } from 'hono';
+import { HTTPException } from 'hono/http-exception';
+
+export const errorHandler: ErrorHandler = (err, c) =&gt; {
+  if (err instanceof HTTPException) {
+    return err.getResponse();
+  }
+  console.error(err);
+  return c.json({ error: 'INTERNAL_SERVER_ERROR' }, 500);
+};</code></pre>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/index.ts</div>
+<pre><code class="language-ts">import { Hono } from 'hono';
+import { userRoutes } from './features/users/users.module';
+import { errorHandler } from './shared/http/error-handler';
+import { loggerMiddleware } from './shared/middleware/logger.middleware';
+
+const app = new Hono();
+
+// 1. 공통 미들웨어 · 에러 핸들러
+app.use('*', loggerMiddleware);
+app.onError(errorHandler);
+
+// 2. 피처별 라우터 연결 (체이닝 결과를 변수로 받아야 타입이 남는다)
+const routes = app.route('/api/users', userRoutes);
+
+// 3. 서버 실행용 기본 export
+export default app;
+
+// 4. 프론트엔드 공유용 — 값이 아니라 타입만 내보낸다
+export type AppType = typeof routes;</code></pre>
+        </div>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="client">5. 프론트엔드 연동 (Hono RPC Client)</h2>
+        <p>
+          프론트엔드는 백엔드의 실행 코드가 아니라 <code>AppType</code> <strong>타입만</strong> 가져옵니다.
+          <code>import type</code> 이라 번들에는 백엔드 코드가 한 줄도 들어가지 않습니다.
+          (모노레포처럼 프론트엔드에서 백엔드 소스 경로가 보이는 구성을 가정합니다.)
+        </p>
+
+        <div class="n-code">
+          <div class="n-code-name">client/src/lib/api-client.ts</div>
+<pre><code class="language-ts">import { hc } from 'hono/client';
+import type { AppType } from '../../../backend/src/index';
+
+export const client = hc&lt;AppType&gt;('http://localhost:3000');
+
+export async function submitForm() {
+  const res = await client.api.users.$post({
+    json: { email: 'user@example.com', name: 'Hong' },
+  });
+
+  if (res.status === 409) {
+    const { error } = await res.json(); // 'USER_ALREADY_EXISTS'
+    return;
+  }
+
+  if (res.ok) {
+    const data = await res.json(); // { id, email, name, createdAt } 로 추론
+    console.log(data.id, new Date(data.createdAt));
+  }
+}</code></pre>
+        </div>
+
+        <div class="n-callout">
+          <p class="n-callout-title">Date 는 string 으로 온다</p>
+          <p>
+            응답은 JSON 을 거치므로 <code>createdAt: Date</code> 는 클라이언트에서 <code>string</code> 으로 추론됩니다.
+            날짜로 쓰려면 <code>new Date(data.createdAt)</code> 처럼 직접 변환합니다.
+          </p>
+        </div>
+
+        <!-- ─────────────────────────────────────────────── -->
+        <h2 id="testing">6. 테스트 전략</h2>
+
+        <h3 id="test-unit">Use Case 단위 테스트</h3>
+        <p>
+          도메인이 포트에만 의존하므로 DB 나 Hono 없이 인메모리 구현체 하나로 바로 검증할 수 있습니다.
+          이 구현체는 <code>testing/</code> 에 두고 단위·통합 테스트에서 함께 씁니다.
+        </p>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/testing/in-memory-user.repository.ts</div>
+<pre><code class="language-ts">import type { NewUser, User } from '../domain/user.entity';
+import type { UserRepositoryPort } from '../domain/ports/user-repository.port';
+
+export class InMemoryUserRepository implements UserRepositoryPort {
+  private users: User[] = [];
+
+  async findByEmail(email: string) {
+    return this.users.find((u) =&gt; u.email === email) ?? null;
+  }
+
+  async save(input: NewUser) {
+    const user = { ...input, id: crypto.randomUUID(), createdAt: new Date() };
+    this.users.push(user);
+    return user;
+  }
+}</code></pre>
+        </div>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/domain/use-cases/create-user.use-case.test.ts</div>
+<pre><code class="language-ts">import { describe, expect, it } from 'vitest';
+import { InMemoryUserRepository } from '../../testing/in-memory-user.repository';
+import { UserAlreadyExistsError } from '../user.errors';
+import { CreateUserUseCase } from './create-user.use-case';
+
+describe('CreateUserUseCase', () =&gt; {
+  it('같은 이메일로 두 번 가입하면 UserAlreadyExistsError', async () =&gt; {
+    const useCase = new CreateUserUseCase(new InMemoryUserRepository());
+
+    await useCase.execute('a@example.com', 'Hong');
+
+    await expect(useCase.execute('a@example.com', 'Kim'))
+      .rejects.toBeInstanceOf(UserAlreadyExistsError);
+  });
+});</code></pre>
+        </div>
+
+        <h3 id="test-route">라우트 통합 테스트</h3>
+        <p>
+          라우터가 유즈케이스를 인자로 받기 때문에 테스트에서는 인메모리 구현체를 끼우면 됩니다.
+          <code>app.request()</code> 는 서버를 띄우지 않고 메모리 안에서 요청을 처리합니다.
+        </p>
+
+        <div class="n-code">
+          <div class="n-code-name">src/features/users/adapters/inbound/http/users.routes.test.ts</div>
+<pre><code class="language-ts">import { describe, expect, it } from 'vitest';
+import { CreateUserUseCase } from '../../../domain/use-cases/create-user.use-case';
+import { InMemoryUserRepository } from '../../../testing/in-memory-user.repository';
+import { createUserRoutes } from './users.routes';
+
+const post = (app: ReturnType&lt;typeof createUserRoutes&gt;, body: unknown) =&gt;
+  app.request('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+describe('POST /api/users', () =&gt; {
+  const app = createUserRoutes(new CreateUserUseCase(new InMemoryUserRepository()));
+
+  it('생성 201 → 중복 409', async () =&gt; {
+    const body = { email: 'a@example.com', name: 'Hong' };
+    expect((await post(app, body)).status).toBe(201);
+    expect((await post(app, body)).status).toBe(409);
+  });
+
+  it('검증 실패는 400', async () =&gt; {
+    expect((await post(app, { email: 'not-an-email', name: 'H' })).status).toBe(400);
+  });
+});</code></pre>
+        </div>
+
+        <footer class="n-foot">
+          <a href="/notes/">← 모든 노트</a>
+          <a href="/">taeksoolee.com</a>
+          <a href="https://github.com/taeksoolee" target="_blank" rel="noopener">github</a>
+        </footer>
+      </article>
+
+      <aside class="n-aside">
+        <nav class="n-toc" aria-label="목차">
+          <p class="n-toc-title">Contents</p>
+          <ol data-toc></ol>
+        </nav>
+      </aside>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    if (window.hljs) hljs.highlightAll();
+
+    // h2 로 목차를 만들고, 스크롤 위치에 맞춰 현재 항목을 표시한다.
+    (() => {
+      const heads = [...document.querySelectorAll('.n-article h2[id]')];
+      const lists = document.querySelectorAll('[data-toc]');
+      lists.forEach((ol) => {
+        ol.innerHTML = heads
+          .map((h) => `<li><a href="#${h.id}">${h.textContent}</a></li>`)
+          .join('');
+      });
+
+      if (!('IntersectionObserver' in window)) return;
+      const links = (id) => document.querySelectorAll(`[data-toc] a[href="#${id}"]`);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          document.querySelectorAll('[data-toc] a.is-active').forEach((a) => a.classList.remove('is-active'));
+          links(e.target.id).forEach((a) => a.classList.add('is-active'));
+        });
+      }, { rootMargin: '-80px 0px -70% 0px' });
+      heads.forEach((h) => io.observe(h));
+    })();
+  </script>
+</body>
+</html>

@@ -65,6 +65,7 @@ export class AppHeader extends LitElement {
           <nav class="hidden md:flex items-center gap-6 mono text-[11px] uppercase tracking-[0.18em]">
             <a href="#about"    class="nav-link" style="color: #94a3b8;">about</a>
             <a href="#projects" class="nav-link" style="color: #94a3b8;">works</a>
+            <a href="/notes/"   class="nav-link" style="color: #94a3b8;">notes</a>
             <a href="https://github.com/taeksoolee" target="_blank" rel="noopener"
               class="nav-link flex items-center" style="color: #94a3b8;" title="GitHub">
               <i class="fa-brands fa-github" style="font-size: 16px;"></i>
